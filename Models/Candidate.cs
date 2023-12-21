@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using Project2.Models;
+using System;
 using System.ComponentModel.DataAnnotations; 
 
-public class Candidate
+public class Candidate : Person
 {
     static int CandidateIncrementation = 1000;
-    [Required]
-    public Guid CandidateID { get; set; }
+    //[Required]
+    //public Guid CandidateID { get; set; }
 
     [Required]
     public int CandidateNumber { get; set; }
@@ -67,11 +69,12 @@ public class Candidate
     public string MobileNumber { get; set; } 
 
   
-    public Candidate()
+    public Candidate() : base()
     {
         // Initialize the CandidateID with a new GUID
-        CandidateID = Guid.NewGuid();
-        CandidateNumber = ++CandidateIncementation;
+        PersonID = Guid.NewGuid();
+        CandidateNumber = ++CandidateIncrementation;
+        base.role = Role.Candidate;
     }
 
 }
