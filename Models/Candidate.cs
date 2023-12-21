@@ -3,7 +3,7 @@ using Project2.Models;
 using System;
 using System.ComponentModel.DataAnnotations; 
 
-public class Candidate : Person
+public class Candidate : User
 {
     static int CandidateIncrementation = 1000;
     //[Required]
@@ -69,10 +69,10 @@ public class Candidate : Person
     public string MobileNumber { get; set; } 
 
   
-    public Candidate() : base()
+    public Candidate(string username, string password, Guid userID) : base(username, password, userID)
     {
         // Initialize the CandidateID with a new GUID
-        PersonID = Guid.NewGuid();
+        
         CandidateNumber = ++CandidateIncrementation;
         base.role = Role.Candidate;
     }
