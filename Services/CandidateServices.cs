@@ -18,11 +18,13 @@
 
         public void CreateCandidate(CandidateDTO candidateDTO)
         {
+            int maxCandidateNumber = context.Candidates.Max(c => (int?)c.CandidateNumber) ?? 1000; // Starting from 1001
             var candidate = new Candidate
             {
                 // Assuming CandidateID is set elsewhere or automatically
 
                 // Direct mapping from DTO to Candidate properties
+                CandidateNumber = maxCandidateNumber + 1,
                 FirstName = candidateDTO.FirstName,
                 MiddleName = candidateDTO.MiddleName,
                 LastName = candidateDTO.LastName,
@@ -41,9 +43,10 @@
                 StateOrTerritoryOrProvince = candidateDTO.StateOrTerritoryOrProvince,
                 TownOrCity = candidateDTO.TownOrCity,
                 PostalCode = candidateDTO.PostalCode,
-
                 LandlineNumber = candidateDTO.LandlineNumber,
-                MobileNumber = candidateDTO.MobileNumber
+                MobileNumber = candidateDTO.MobileNumber,
+                Password = candidateDTO.Password,
+                role =Models.User.Role.Candidate,
             };
 
             context.Candidates.Add(candidate);

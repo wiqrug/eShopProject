@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project2.Models;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 public class CandidateDTO
@@ -61,6 +62,8 @@ public class CandidateDTO
 
     [StringLength(20)]
     public string MobileNumber { get; set; }
+
+    public string Password { get; set; }
 
 
 

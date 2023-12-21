@@ -5,11 +5,10 @@ using System.ComponentModel.DataAnnotations;
 
 public class Candidate : User
 {
-    static int CandidateIncrementation = 1000;
     //[Required]
     //public Guid CandidateID { get; set; }
 
-    [Required]
+
     public int CandidateNumber { get; set; }
 
     [Required]
@@ -38,10 +37,7 @@ public class Candidate : User
     public string PhotoIDNumber { get; set; } 
 
     public DateTime? PhotoIDIssueDate { get; set; }
-    [Required]
-    [StringLength(100)]
-    [EmailAddress]
-    public string Email { get; set; }
+
 
     [StringLength(200)]
     public string Address { get; set; } 
@@ -66,15 +62,11 @@ public class Candidate : User
     public string LandlineNumber { get; set; } 
 
     [StringLength(20)]
-    public string MobileNumber { get; set; } 
+    public string MobileNumber { get; set; }
 
-  
-    public Candidate(string username, string password, Guid userID) : base(username, password, userID)
+
+    public Candidate() : base()
     {
-        // Initialize the CandidateID with a new GUID
-        
-        CandidateNumber = ++CandidateIncrementation;
-        base.role = Role.Candidate;
-    }
 
+    }
 }

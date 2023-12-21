@@ -5,12 +5,22 @@ namespace Project2.Models
 {
     public class User
     {
-        public User(string username, string password, Guid userID)
+        [Key]
+        public Guid UserID { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        [EmailAddress]
+        public string Email { get; set; }
+        public Role role { get; set; }
+        public string Password { get; set; } 
+        public User(Guid userID)
         {
-            UserID = Guid.NewGuid();  //Isos na min xreiazetai
-            Username = username;
-            Password = password;
+            UserID = Guid.NewGuid();  
+
         }
+        public User() { }
+
 
         public enum Role
         {
@@ -19,10 +29,7 @@ namespace Project2.Models
             QC,
             Marker
         }
-        [Key]
-        public Guid UserID { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public Role role { get; set; }
+
+
     }
 }

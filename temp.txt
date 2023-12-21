@@ -2,3 +2,7 @@ TODOS
 
 
 na ftiaksoume ta models
+
+Candidate Model is done and is functional.
+
+Need to create Admin,Marker,qc.
