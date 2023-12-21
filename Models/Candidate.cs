@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 public class Candidate
 {
-    static int CandidateIncementation = 1000;
+    static int CandidateIncrementation = 1000;
     [Required]
     public Guid CandidateID { get; set; }
 
