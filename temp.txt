@@ -1,6 +1,3 @@
 TODOS
 
 
-Make candidate number an integer that automatically increases for each candidate
-
-Candidate number should not be inside the body of post request for update

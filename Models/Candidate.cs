@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 public class Candidate
 {
+    static int CandidateIncementation = 1000;
     [Required]
     public Guid CandidateID { get; set; }
 
     [Required]
-    [StringLength(50)] 
-    public string CandidateNumber { get; set; }
+    public int CandidateNumber { get; set; }
 
     [Required]
     [StringLength(100)]
@@ -71,6 +71,7 @@ public class Candidate
     {
         // Initialize the CandidateID with a new GUID
         CandidateID = Guid.NewGuid();
+        CandidateNumber = ++CandidateIncementation;
     }
 
 }

@@ -23,7 +23,6 @@
                 // Assuming CandidateID is set elsewhere or automatically
 
                 // Direct mapping from DTO to Candidate properties
-                CandidateNumber = candidateDTO.CandidateNumber,
                 FirstName = candidateDTO.FirstName,
                 MiddleName = candidateDTO.MiddleName,
                 LastName = candidateDTO.LastName,
@@ -51,7 +50,7 @@
             context.SaveChanges();
         }
 
-        public void UpdateCandidate(string candidateNumber,CandidateDTO candidateDTO)
+        public void UpdateCandidate(int candidateNumber,CandidateDTO candidateDTO)
         {
             //if candidateNumber exists in Candidates.candidate Number, then assign it to var candidate
             //var candidate = context.Candidates.FirstOrDefault(candidateNumber);
