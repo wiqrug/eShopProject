@@ -8,7 +8,6 @@ namespace Project2.Services
     {
         public ApplicationDBContext(DbContextOptions options) : base(options)
         {
-
         }
         //public DbSet<Admin> Admins { get; set; }
         public DbSet<User> Users { get; set; }

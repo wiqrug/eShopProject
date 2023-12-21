@@ -40,7 +40,7 @@ namespace Project2.Controllers
         // but actually admins will be hardCoded
 
 
-        [HttpPost("/admin/addCandidate")]
+        [HttpPost("/admin/add-candidate")]
         public IActionResult addCandidate(CandidateDTO candidateDTO, string email, string password)
         {
             if (adminsServices.isAdmin(email, password)) { candidateServices.CreateCandidate(candidateDTO);
@@ -68,5 +68,46 @@ namespace Project2.Controllers
             else return BadRequest("You are not an admin bro, what are you trying to do!");
    
         }
+
+        [HttpGet("admin/get-candidates")]   // Show List of Candidates
+        public IActionResult GetCandidates(string email, string password)
+        {
+            if (adminsServices.isAdmin(email, password)) { return Ok(adminsServices.GetCandidates()); }
+            else
+            { return BadRequest("You are not an admin mofo"); };
+        }
+
+        [HttpGet("admin/get-candidate-by-number/{candidateNumber}")]
+        public IActionResult getCandidateByNumber(int candidateNumber,string email,string password)
+        {
+            if (adminsServices.isAdmin(email, password))
+            {
+                var candidate = adminsServices.GetCandidateById(candidateNumber);
+                if (candidate == null)
+                { return BadRequest("Candidate is not found"); }
+                else { return Ok(candidate); }
+            }
+            else return BadRequest("You are not an admin brotha");
+        }
+
+        [HttpPut("admin/update-candidate/{candidateNumber}")]   // Update Candidate
+        public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO,string email,string password)
+        {
+            if (adminsServices.isAdmin(email, password))
+            {
+                if (candidateNumber == null)
+                {
+                    return BadRequest("Candidate number doesnt exist");
+                }
+                candidateServices.UpdateCandidate(candidateNumber, candidateDTO);
+
+                return Ok();
+            }
+            else return BadRequest("You are not an admin brotha");
+        }
+
+
+
+
     }
 }

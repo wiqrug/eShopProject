@@ -9,12 +9,7 @@
             this.context = context;
         }
 
-        public List<Candidate> GetCandidates()
-        {
-            var candidates = context.Candidates.ToList();
-            return  candidates;
 
-        }
 
         public void CreateCandidate(CandidateDTO candidateDTO)
         {

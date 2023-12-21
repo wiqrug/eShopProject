@@ -15,11 +15,7 @@ namespace Project2.Controllers
             this.candidateServices = candidateServices;
         }
 
-        [HttpGet]   // Show List of Candidates
-        public IActionResult GetCandidates()
-        {
-            return Ok(candidateServices.GetCandidates());
-        }
+
 
         //[HttpGet("{id}")]   // Show Candidate
         //public IActionResult GetCandidate(int id)

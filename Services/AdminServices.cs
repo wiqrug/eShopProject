@@ -56,7 +56,19 @@ namespace Project2.Services
 
             return true;
         }
+        public List<Candidate> GetCandidates()
+        {
+            var candidates = context.Candidates.ToList();
+            return candidates;
 
+        }
 
+        //Additional check if candidate exists or no
+        public Candidate GetCandidateById(int candidateNumber)
+        {
+            var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
+            return candidate;
+        }
+     
     }
 }
