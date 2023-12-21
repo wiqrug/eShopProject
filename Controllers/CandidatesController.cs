@@ -41,21 +41,6 @@ namespace Project2.Controllers
             return Ok();
         }
 
-        //[HttpDelete("{id}")]    // Delete Candidate
-        //public IActionResult DeleteCandidate(int id)
-        //{
-        //    var candidate = context.Candidates.Find(id);
-
-        //    if (candidate == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    context.Candidates.Remove(candidate);
-        //    context.SaveChanges();
-
-        //    return Ok(candidate);
-        //}
 
         [HttpPut("{candidateNumber}")]   // Update Candidate
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO)
