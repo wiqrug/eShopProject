@@ -1,109 +1,56 @@
-﻿//using Microsoft.AspNetCore.Http;
-//using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Project2.Models;
+using Project2.Services;
 
-//using Project2.Services;
+namespace Project2.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CertificatesController : ControllerBase
+    {
+        private readonly CertificateServices certificateServices;
 
-//namespace Project2.Controllers
-//{
-//    [Route("api/[controller]")]
-//    [ApiController]
-//    public class CertificatesController : ControllerBase
-//    {
-//        private readonly ApplicationDBContext context;
+        public CertificatesController(CertificateServices certificateServices)
+        {
+            this.certificateServices = certificateServices;
+        }
 
-//        public CertificatesController(ApplicationDBContext context)
-//        {
-//            this.context = context;
-//        }
+        [HttpGet]   // Show List of Certificates
+        public IActionResult GetCertificates()
+        {
+            return Ok(certificateServices.GetCertificates());
+        }
 
-//        [HttpGet]   // Show List of Certificates
-//        public IActionResult GetCertificates()
-//        {
-//            var certificates = context.Certificates.ToList();
+        [HttpGet("{TitleOfCertificate}")]   // Show Certificate
+        public IActionResult GetCertificate(string TitleOfCertificate)
+        {
+           return Ok(certificateServices.GetCertificateByTitle(TitleOfCertificate));
+        }
 
-//            return Ok(certificates);
-//        }
+        [HttpPost]  // Create Certificate
+        public IActionResult CreateCertificate(CertificateDTO certificateDTO)
+        {
+            certificateServices.CreateCertificate(certificateDTO);
+            return Ok();
+        }
 
-//        // Prepei na kanoume print ta certificates vasismena stin ID
-//        //[HttpGet("{id}")]   // Show Certificate
-//        //public IActionResult GetCertificate(int id)
-//        //{
-//        //    var certificate = context.Certificates.Find(id);
+        [HttpDelete("{TitleOfCertificate}")]    // Delete Certificate
+        public IActionResult DeleteCertificate(string TitleOfCertificate)
+        {
+            if (!certificateServices.DeleteCertificate(TitleOfCertificate))
+            {
+                return NotFound("This certificate does not exist!");
+            }
 
-//        //    if (certificate == null)
-//        //    {
-//        //        return NotFound();
-//        //    }
-//        //    return Ok(certificate);
-//        //}
+            return Ok();
+        }
 
-//        [HttpPost]  // Create Certificate
-//        public IActionResult CreateCertificate(CertificateDTO certificateDTO)
-//        {
-//            Certificate certificate = new Certificate()
-//            {
-//                CertificateTitle = certificateDTO.CertificateTitle,
-//                CandidateFullName = certificateDTO.CandidateFullName,
-//                AssessmentTestCode = certificateDTO.AssessmentTestCode,
-//                ExaminationDateTime = certificateDTO.ExaminationDateTime,
-//                ScoreReportDate = certificateDTO.ScoreReportDate,
-//                //-------------------------------------------------------------
-//                CandidateScore = certificateDTO.CandidateScore,
-//                MaximumScore = certificateDTO.MaximumScore,
-//                PercentageScore = certificateDTO.PercentageScore,
-//                AssessmentResultLabel = certificateDTO.AssessmentResultLabel,
-//                //-------------------------------------------------------------
-//                Description = certificateDTO.Description
-//            };
-
-//            context.Certificates.Add(certificate);
-//            context.SaveChanges();
-
-//            return Ok(certificate);
-//        }
-
-//        [HttpDelete("{id}")]    // Delete Certificate
-//        public IActionResult DeleteContact(int id)
-//        {
-//            var certificate = context.Certificates.Find(id);
-
-//            if (certificate == null)
-//            {
-//                return NotFound();
-//            }
-
-//            context.Certificates.Remove(certificate);
-//            context.SaveChanges();
-
-//            return Ok(certificate);
-//        }
-
-//        [HttpPut("{id}")]   // Update Certificate
-//        public IActionResult UpdateCertificate(int id, CertificateDTO certificateDTO)
-//        {
-//            var certificate = context.Certificates.Find(id);
-
-//            if (certificate == null)
-//            {
-//                return NotFound();
-//            }
-
-//            certificate.CertificateTitle = certificateDTO.CertificateTitle;
-//            certificate.CandidateFullName = certificateDTO.CandidateFullName;
-//            certificate.AssessmentTestCode = certificateDTO.AssessmentTestCode;
-//            certificate.ExaminationDateTime = certificateDTO.ExaminationDateTime;
-//            certificate.ScoreReportDate = certificateDTO.ScoreReportDate;
-//            //---------------------------------------------------------------------------
-//            certificate.CandidateScore = certificateDTO.CandidateScore;
-//            certificate.MaximumScore = certificateDTO.MaximumScore;
-//            certificate.PercentageScore = certificateDTO.PercentageScore;
-//            certificate.AssessmentResultLabel = certificateDTO.AssessmentResultLabel;
-//            //---------------------------------------------------------------------------
-//            certificate.Description = certificateDTO.Description;
-
-//            context.SaveChanges();
-
-//            return Ok(certificate);
-//        }
-//    }
-//}
+        [HttpPut("{TitleOfCertificate}")]   // Update Certificate
+        public IActionResult UpdateCertificate(string TitleOfCertificate, CertificateDTO certificateDTO)
+        {
+            certificateServices.UpdateCertificate(TitleOfCertificate, certificateDTO);
+            return Ok();
+        }
+    }
+}

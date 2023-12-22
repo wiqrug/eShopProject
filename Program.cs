@@ -11,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<CandidateServices>();
 builder.Services.AddScoped<AdminServices>();
+builder.Services.AddScoped<CertificateServices>();
 
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
 {
