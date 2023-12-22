@@ -30,14 +30,19 @@ public class CandidateCertificates
     public string TopicDescriptions { get; set; }
     public string TopicScores { get; set; }
 
+    public DateTime CreatedAt { get; set; }
+
     // Navigation properties
     public virtual Candidate Candidate { get; set; }
     public virtual Certificate Certificate { get; set; }
+
+
 
     
     public CandidateCertificates()
     {
         RecordID = Guid.NewGuid();
+        CreatedAt=DateTime.Now;
     }
 
     

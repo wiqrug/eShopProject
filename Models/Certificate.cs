@@ -22,6 +22,7 @@ public class Certificate
     [Required]
     public int MaximumScore { get; set; }
 
+    public DateTime CreatedAt { get; set; }
     public ICollection<Exam> Exams { get; set; }
 
     // Constructor
@@ -29,6 +30,7 @@ public class Certificate
     {
         // Initialize the CertificateID with a new GUID
         CertificateID = Guid.NewGuid();
+        CreatedAt = DateTime.Now;
     }
 
 }
