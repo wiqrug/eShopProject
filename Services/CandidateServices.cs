@@ -50,9 +50,9 @@
 
         public void UpdateCandidate(int candidateNumber,CandidateDTO candidateDTO)
         {
-            //if candidateNumber exists in Candidates.candidate Number, then assign it to var candidate
-            //var candidate = context.Candidates.FirstOrDefault(candidateNumber);
+            //Make user able to change whatever he wants 
 
+            // x=y?t=1:t=2;
 
             var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber==candidateNumber);
 

@@ -1,11 +1,13 @@
 ﻿using Azure.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Project2.Models
 {
     public class User
     {
         [Key]
+        [JsonIgnore]
         public Guid UserID { get; set; }
 
         [Required]
