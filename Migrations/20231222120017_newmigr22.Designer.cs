@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project2.Services;
 
@@ -11,9 +12,11 @@ using Project2.Services;
 namespace Project2.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231222120017_newmigr22")]
+    partial class newmigr22
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,11 +34,6 @@ namespace Project2.Migrations
                     b.Property<string>("AssessmentResultLabel")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AssessmentTestCode")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<Guid>("CandidateID")
                         .HasColumnType("uniqueidentifier");
@@ -72,6 +70,11 @@ namespace Project2.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("AssessmentTestCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<DateTime>("ExaminationDate")
                         .HasColumnType("datetime2");
 
@@ -89,32 +92,6 @@ namespace Project2.Migrations
                     b.HasKey("CertificateID");
 
                     b.ToTable("Certificates");
-                });
-
-            modelBuilder.Entity("Project2.Models.Exam", b =>
-                {
-                    b.Property<Guid>("ExamId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("AwardedMarks")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("CertificateID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ExamDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PossibleMarks")
-                        .HasColumnType("int");
-
-                    b.HasKey("ExamId");
-
-                    b.HasIndex("CertificateID");
-
-                    b.ToTable("Exams", (string)null);
                 });
 
             modelBuilder.Entity("Project2.Models.User", b =>
@@ -275,17 +252,6 @@ namespace Project2.Migrations
                     b.Navigation("Certificate");
                 });
 
-            modelBuilder.Entity("Project2.Models.Exam", b =>
-                {
-                    b.HasOne("Certificate", "Certificate")
-                        .WithMany("Exams")
-                        .HasForeignKey("CertificateID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Certificate");
-                });
-
             modelBuilder.Entity("Candidate", b =>
                 {
                     b.HasOne("Project2.Models.User", null)
@@ -302,11 +268,6 @@ namespace Project2.Migrations
                         .HasForeignKey("Project2.Models.Admin", "UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Certificate", b =>
-                {
-                    b.Navigation("Exams");
                 });
 #pragma warning restore 612, 618
         }

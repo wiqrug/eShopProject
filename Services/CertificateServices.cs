@@ -31,7 +31,7 @@ namespace Project2.Services
 
                 // Direct mapping from DTO to Certificate properties
                 TitleOfCertificate = certificateDTO.TitleOfCertificate,
-                AssessmentTestCode = certificateDTO.AssessmentTestCode,
+
                 ExaminationDate = certificateDTO.ExaminationDate,
                 ScoreReportDate = certificateDTO.ScoreReportDate,
                 MaximumScore = certificateDTO.MaximumScore
@@ -59,7 +59,7 @@ namespace Project2.Services
 
             // Update candidate properties with values from candidateDTO
             certificate.TitleOfCertificate = certificateDTO.TitleOfCertificate;
-            certificate.AssessmentTestCode = certificateDTO.AssessmentTestCode;
+
             certificate.ExaminationDate = certificateDTO.ExaminationDate;
             certificate.ScoreReportDate = certificateDTO.ScoreReportDate;
             certificate.MaximumScore = certificateDTO.MaximumScore;

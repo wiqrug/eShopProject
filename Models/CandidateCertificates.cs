@@ -16,6 +16,12 @@ public class CandidateCertificates
     [ForeignKey("Certificate")] 
     public Guid CertificateID { get; set; }
 
+    //This is just a random string (does not contain the exam by itself
+    [Required]
+    [StringLength(50)]
+    public string AssessmentTestCode { get; set; }
+
+
     public int? CandidateScore { get; set; } 
     public float? PercentageScore { get; set; } 
     public string AssessmentResultLabel { get; set; } 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project2.Services;
 
@@ -11,9 +12,11 @@ using Project2.Services;
 namespace Project2.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231222115518_newmigr-ation")]
+    partial class newmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,12 +35,7 @@ namespace Project2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AssessmentTestCode")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<Guid>("CandidateID")
+                    b.Property<Guid>("CandidateId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("CandidateScore")
@@ -59,11 +57,11 @@ namespace Project2.Migrations
 
                     b.HasKey("RecordID");
 
-                    b.HasIndex("CandidateID");
+                    b.HasIndex("CandidateId");
 
                     b.HasIndex("CertificateID");
 
-                    b.ToTable("CandidateCertificates");
+                    b.ToTable("CandidateCertificates", (string)null);
                 });
 
             modelBuilder.Entity("Certificate", b =>
@@ -88,33 +86,7 @@ namespace Project2.Migrations
 
                     b.HasKey("CertificateID");
 
-                    b.ToTable("Certificates");
-                });
-
-            modelBuilder.Entity("Project2.Models.Exam", b =>
-                {
-                    b.Property<Guid>("ExamId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("AwardedMarks")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("CertificateID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ExamDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PossibleMarks")
-                        .HasColumnType("int");
-
-                    b.HasKey("ExamId");
-
-                    b.HasIndex("CertificateID");
-
-                    b.ToTable("Exams", (string)null);
+                    b.ToTable("Certificates", (string)null);
                 });
 
             modelBuilder.Entity("Project2.Models.User", b =>
@@ -260,28 +232,17 @@ namespace Project2.Migrations
                 {
                     b.HasOne("Candidate", "Candidate")
                         .WithMany()
-                        .HasForeignKey("CandidateID")
+                        .HasForeignKey("CandidateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Certificate", "Certificate")
-                        .WithMany()
+                        .WithMany("CandidateCertificates")
                         .HasForeignKey("CertificateID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Candidate");
-
-                    b.Navigation("Certificate");
-                });
-
-            modelBuilder.Entity("Project2.Models.Exam", b =>
-                {
-                    b.HasOne("Certificate", "Certificate")
-                        .WithMany("Exams")
-                        .HasForeignKey("CertificateID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("Certificate");
                 });
@@ -306,7 +267,7 @@ namespace Project2.Migrations
 
             modelBuilder.Entity("Certificate", b =>
                 {
-                    b.Navigation("Exams");
+                    b.Navigation("CandidateCertificates");
                 });
 #pragma warning restore 612, 618
         }

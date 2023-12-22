@@ -1,18 +1,17 @@
-﻿using System;
+﻿using Project2.Models;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 public class Certificate
 {
     [Required]
+    [Key]
     public Guid CertificateID { get; set; }
 
     [Required]
     [StringLength(200)] // Adjust the length based on your requirements
     public string TitleOfCertificate { get; set; }
 
-    [Required]
-    [StringLength(50)]
-    public string AssessmentTestCode { get; set; }
 
     [Required]
     public DateTime ExaminationDate { get; set; }
@@ -23,6 +22,7 @@ public class Certificate
     [Required]
     public int MaximumScore { get; set; }
 
+    public ICollection<Exam> Exams { get; set; }
 
     // Constructor
     public Certificate()
