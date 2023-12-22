@@ -41,7 +41,8 @@
                 LandlineNumber = candidateDTO.LandlineNumber,
                 MobileNumber = candidateDTO.MobileNumber,
                 Password = candidateDTO.Password,
-                role =Models.User.Role.Candidate,
+                role = Models.User.Role.Candidate,
+
             };
 
             context.Candidates.Add(candidate);

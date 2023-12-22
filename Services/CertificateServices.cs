@@ -34,7 +34,7 @@ namespace Project2.Services
 
                 ExaminationDate = certificateDTO.ExaminationDate,
                 ScoreReportDate = certificateDTO.ScoreReportDate,
-                MaximumScore = certificateDTO.MaximumScore
+                MaximumScore = certificateDTO.MaximumScore,
             };
 
             context.Certificates.Add(certificate);

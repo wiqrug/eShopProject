@@ -22,6 +22,7 @@ public class Certificate
     [Required]
     public int MaximumScore { get; set; }
 
+    public DateTime CreatedAt { get; set; }
     public ICollection<Exam> Exams { get; set; }
 
     public DateTime CreatedAt { get; set; }

@@ -39,7 +39,7 @@ namespace Project2.Controllers
         //In fact before doing this i must validate that user = admin
         // but actually admins will be hardCoded
 
-
+        //fix this to call adminsServices
         [HttpPost("/admin/add-candidate")]
         public IActionResult addCandidate(CandidateDTO candidateDTO, string email, string password)
         {
