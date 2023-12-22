@@ -6,15 +6,20 @@ public class CandidateCertificates
 {
     [Required]
     [Key]
-    public Guid RecordID { get; set; } 
+    public Guid RecordID { get; set; }
 
     [Required]
-    [ForeignKey("Candidate")] 
-    public Guid CandidateID { get; set; }
+    [ForeignKey("Candidate")]
+    public int CandidateNumber { get; set; }
 
     [Required]
     [ForeignKey("Certificate")] 
     public Guid CertificateID { get; set; }
+
+
+    //[Required]
+    //[StringLength(50)]
+    //public string AssessmentTestCode { get; set; }
 
     public int? CandidateScore { get; set; } 
     public float? PercentageScore { get; set; } 
@@ -28,7 +33,7 @@ public class CandidateCertificates
     public virtual Candidate Candidate { get; set; }
     public virtual Certificate Certificate { get; set; }
 
-    
+
     public CandidateCertificates()
     {
         RecordID = Guid.NewGuid();

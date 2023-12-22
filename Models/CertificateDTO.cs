@@ -9,9 +9,6 @@ namespace Project2.Models
         [StringLength(200)] // Adjust the length based on your requirements
         public string TitleOfCertificate { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string AssessmentTestCode { get; set; }
 
         [Required]
         public DateTime ExaminationDate { get; set; }

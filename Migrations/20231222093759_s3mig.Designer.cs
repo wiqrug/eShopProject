@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project2.Services;
 
@@ -11,9 +12,11 @@ using Project2.Services;
 namespace Project2.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231222093759_s3mig")]
+    partial class s3mig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,14 +35,11 @@ namespace Project2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CandidateNumber")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CandidateID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("CandidateScore")
                         .HasColumnType("int");
-
-                    b.Property<Guid>("CandidateUserID")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CertificateID")
                         .HasColumnType("uniqueidentifier");
@@ -57,7 +57,7 @@ namespace Project2.Migrations
 
                     b.HasKey("RecordID");
 
-                    b.HasIndex("CandidateUserID");
+                    b.HasIndex("CandidateID");
 
                     b.HasIndex("CertificateID");
 
@@ -69,6 +69,11 @@ namespace Project2.Migrations
                     b.Property<Guid>("CertificateID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AssessmentTestCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("ExaminationDate")
                         .HasColumnType("datetime2");
@@ -232,7 +237,7 @@ namespace Project2.Migrations
                 {
                     b.HasOne("Candidate", "Candidate")
                         .WithMany()
-                        .HasForeignKey("CandidateUserID")
+                        .HasForeignKey("CandidateID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -11,10 +11,6 @@ public class Certificate
     public string TitleOfCertificate { get; set; }
 
     [Required]
-    [StringLength(50)]
-    public string AssessmentTestCode { get; set; }
-
-    [Required]
     public DateTime ExaminationDate { get; set; }
 
     [Required]

@@ -8,7 +8,7 @@ public class Candidate : User
     //[Required]
     //public Guid CandidateID { get; set; }
 
-
+    [Required]
     public int CandidateNumber { get; set; }
 
     [Required]

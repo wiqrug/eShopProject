@@ -48,7 +48,7 @@
             context.SaveChanges();
         }
 
-        public void UpdateCandidate(int candidateNumber,CandidateDTO candidateDTO)
+        public void UpdateCandidate(int? candidateNumber,CandidateDTO candidateDTO)
         {
             //Make user able to change whatever he wants 
 

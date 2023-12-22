@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project2.Services;
 
@@ -11,9 +12,11 @@ using Project2.Services;
 namespace Project2.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231222102807_nmgr2")]
+    partial class nmgr2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,9 +41,6 @@ namespace Project2.Migrations
                     b.Property<int?>("CandidateScore")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("CandidateUserID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("CertificateID")
                         .HasColumnType("uniqueidentifier");
 
@@ -56,10 +56,6 @@ namespace Project2.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RecordID");
-
-                    b.HasIndex("CandidateUserID");
-
-                    b.HasIndex("CertificateID");
 
                     b.ToTable("CandidateCertificates");
                 });
@@ -226,25 +222,6 @@ namespace Project2.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("Admins", (string)null);
-                });
-
-            modelBuilder.Entity("CandidateCertificates", b =>
-                {
-                    b.HasOne("Candidate", "Candidate")
-                        .WithMany()
-                        .HasForeignKey("CandidateUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Certificate", "Certificate")
-                        .WithMany()
-                        .HasForeignKey("CertificateID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Candidate");
-
-                    b.Navigation("Certificate");
                 });
 
             modelBuilder.Entity("Candidate", b =>
