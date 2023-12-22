@@ -26,6 +26,8 @@ public class CandidateCertificates
     public float? PercentageScore { get; set; } 
     public string AssessmentResultLabel { get; set; } 
 
+    public DateTime CreatedAt { get; set; }
+
     // JSON fields for topic descriptions and scores
     public string TopicDescriptions { get; set; }
     public string TopicScores { get; set; }
@@ -38,6 +40,7 @@ public class CandidateCertificates
     public CandidateCertificates()
     {
         RecordID = Guid.NewGuid();
+        CreatedAt = DateTime.Now;
     }
 
     

@@ -24,11 +24,13 @@ public class Certificate
 
     public ICollection<Exam> Exams { get; set; }
 
+    public DateTime CreatedAt { get; set; }
     // Constructor
     public Certificate()
     {
         // Initialize the CertificateID with a new GUID
         CertificateID = Guid.NewGuid();
+        CreatedAt = DateTime.Now;
     }
 
 }

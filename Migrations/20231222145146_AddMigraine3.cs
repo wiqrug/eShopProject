@@ -5,7 +5,7 @@
 namespace Project2.Migrations
 {
     /// <inheritdoc />
-    public partial class newmigration : Migration
+    public partial class AddMigraine3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

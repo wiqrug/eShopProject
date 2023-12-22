@@ -24,9 +24,9 @@ namespace Project2.Services
             modelBuilder.Entity<Exam>().ToTable("Exams");
 
             modelBuilder.Entity<Exam>()
-     .HasOne(e => e.Certificate)
-     .WithMany(c => c.Exams)
-     .HasForeignKey(e => e.CertificateID);
+             .HasOne(e => e.Certificate)
+             .WithMany(c => c.Exams)
+             .HasForeignKey(e => e.CertificateID);
         }
         public DbSet<Certificate> Certificates { get; set; }
         public DbSet<CandidateCertificates> CandidateCertificates { get; set; }
