@@ -16,7 +16,9 @@ namespace Project2.Services
         public DbSet<CandidateExam> CandidateExams { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
         public DbSet<CandidateCertificates> CandidateCertificates { get; set; }
+        public DbSet<Marker> Markers { get; set; }
 
+        public DbSet<QualityControl> QualityControls { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder); // Call the base method
@@ -29,6 +31,9 @@ namespace Project2.Services
             modelBuilder.Entity<CandidateExam>().ToTable("CandidateExams");
             modelBuilder.Entity<Certificate>().ToTable("Certificates");
             modelBuilder.Entity<CandidateCertificates>().ToTable("CandidateCertificates");
+            modelBuilder.Entity<Marker>().ToTable("Markers");
+            modelBuilder.Entity<QualityControl>().ToTable("QualityControls");
+
 
         //    Configure the relationship between Exam and Certificate
             modelBuilder.Entity<Exam>()

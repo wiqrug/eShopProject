@@ -16,15 +16,18 @@ Using the previous objects of Candidate and Certificate you are required to prod
 	se ola ta certificates created at										DONE
 	se ola ta candidate certificates created at									DONE	
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+TODO SERVICES
 
+Split these tasks to each person in the team 
 
-
-
-
+    • A list of all the obtained Certificates of a Candidate
     • A list of all the Certificates a Candidate can acquire								//Update in order to not purchase already purchased
     • A list of all the marks per Topic per Certificate a Candidate has sat for
-    • A list of all the obtained Certificates of a Candidate
+   
     • A list of all the Certificates of a Candidate that did not obtain
     • A list of all the Certificates that were obtained by date
     • Count of the Passed / Failed Certificates per date range
+
