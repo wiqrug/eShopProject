@@ -52,21 +52,13 @@ namespace Project2.Migrations
                     b.Property<float?>("PercentageScore")
                         .HasColumnType("real");
 
-                    b.Property<string>("TopicDescriptions")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TopicScores")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("RecordID");
 
                     b.HasIndex("CandidateID");
 
                     b.HasIndex("CertificateID");
 
-                    b.ToTable("CandidateCertificates");
+                    b.ToTable("CandidateCertificates", (string)null);
                 });
 
             modelBuilder.Entity("Certificate", b =>
@@ -94,7 +86,34 @@ namespace Project2.Migrations
 
                     b.HasKey("CertificateID");
 
-                    b.ToTable("Certificates");
+                    b.ToTable("Certificates", (string)null);
+                });
+
+            modelBuilder.Entity("Project2.Models.CandidateExam", b =>
+                {
+                    b.Property<Guid>("CandidateExamID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CandidateID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ExamID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Mark")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TakenAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CandidateExamID");
+
+                    b.HasIndex("CandidateID");
+
+                    b.HasIndex("ExamID");
+
+                    b.ToTable("CandidateExams", (string)null);
                 });
 
             modelBuilder.Entity("Project2.Models.Exam", b =>
@@ -282,6 +301,25 @@ namespace Project2.Migrations
                     b.Navigation("Candidate");
 
                     b.Navigation("Certificate");
+                });
+
+            modelBuilder.Entity("Project2.Models.CandidateExam", b =>
+                {
+                    b.HasOne("Candidate", "Candidate")
+                        .WithMany()
+                        .HasForeignKey("CandidateID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project2.Models.Exam", "Exam")
+                        .WithMany()
+                        .HasForeignKey("ExamID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Candidate");
+
+                    b.Navigation("Exam");
                 });
 
             modelBuilder.Entity("Project2.Models.Exam", b =>
