@@ -12,13 +12,8 @@ using Project2.Services;
 namespace Project2.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-<<<<<<<< HEAD:Migrations/20231222143621_mgr123.Designer.cs
-    [Migration("20231222143621_mgr123")]
-    partial class mgr123
-========
-    [Migration("20231223110019_GINETHAVMA")]
+    [Migration("20231223113613_GINETHAVMA")]
     partial class GINETHAVMA
->>>>>>>> 2ccb6791a939bc65d8e0209a9728b517ac7a7666:Migrations/20231223110019_GINETHAVMA.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
