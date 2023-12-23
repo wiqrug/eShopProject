@@ -11,13 +11,15 @@ namespace Project2.Models
         public string ExamDescription { get; set; }
         public int AwardedMarks { get; set; }
         public int PossibleMarks { get; set; }
-        public Certificate Certificate { get; set; }
+
+        //public Certificate Certificate { get; set; }
 
 
         [Required]
-        [ForeignKey("Certificates")]
+        [ForeignKey("Certificate")]
         public Guid CertificateID { get; set; }
 
+        public virtual Certificate Certificate { get; set; }
         public Exam()
         {
             CertificateID = new Guid();

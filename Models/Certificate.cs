@@ -23,7 +23,8 @@ public class Certificate
     public int MaximumScore { get; set; }
 
     public DateTime CreatedAt { get; set; }
-    public ICollection<Exam> Exams { get; set; }
+
+    public virtual ICollection<Exam> Exams { get; set; }
 
     // Constructor
     public Certificate()

@@ -12,8 +12,8 @@ using Project2.Services;
 namespace Project2.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20231221135235_GIORGOSMig")]
-    partial class GIORGOSMig
+    [Migration("20231223110019_GINETHAVMA")]
+    partial class GINETHAVMA
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,11 @@ namespace Project2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("AssessmentTestCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<Guid>("CandidateID")
                         .HasColumnType("uniqueidentifier");
 
@@ -44,16 +49,11 @@ namespace Project2.Migrations
                     b.Property<Guid>("CertificateID")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<float?>("PercentageScore")
                         .HasColumnType("real");
-
-                    b.Property<string>("TopicDescriptions")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TopicScores")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RecordID");
 
@@ -61,7 +61,7 @@ namespace Project2.Migrations
 
                     b.HasIndex("CertificateID");
 
-                    b.ToTable("CandidateCertificates");
+                    b.ToTable("CandidateCertificates", (string)null);
                 });
 
             modelBuilder.Entity("Certificate", b =>
@@ -70,10 +70,8 @@ namespace Project2.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AssessmentTestCode")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ExaminationDate")
                         .HasColumnType("datetime2");
@@ -91,7 +89,60 @@ namespace Project2.Migrations
 
                     b.HasKey("CertificateID");
 
-                    b.ToTable("Certificates");
+                    b.ToTable("Certificates", (string)null);
+                });
+
+            modelBuilder.Entity("Project2.Models.CandidateExam", b =>
+                {
+                    b.Property<Guid>("CandidateExamID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CandidateID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ExamID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Mark")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TakenAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CandidateExamID");
+
+                    b.HasIndex("CandidateID");
+
+                    b.HasIndex("ExamID");
+
+                    b.ToTable("CandidateExams", (string)null);
+                });
+
+            modelBuilder.Entity("Project2.Models.Exam", b =>
+                {
+                    b.Property<Guid>("ExamId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AwardedMarks")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("CertificateID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ExamDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PossibleMarks")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExamId");
+
+                    b.HasIndex("CertificateID");
+
+                    b.ToTable("Exams", (string)null);
                 });
 
             modelBuilder.Entity("Project2.Models.User", b =>
@@ -99,6 +150,15 @@ namespace Project2.Migrations
                     b.Property<Guid>("UserID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("role")
                         .HasColumnType("int");
@@ -135,10 +195,8 @@ namespace Project2.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -206,6 +264,29 @@ namespace Project2.Migrations
                     b.ToTable("Candidates", (string)null);
                 });
 
+            modelBuilder.Entity("Project2.Models.Admin", b =>
+                {
+                    b.HasBaseType("Project2.Models.User");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MobileNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Admins", (string)null);
+                });
+
             modelBuilder.Entity("CandidateCertificates", b =>
                 {
                     b.HasOne("Candidate", "Candidate")
@@ -225,6 +306,36 @@ namespace Project2.Migrations
                     b.Navigation("Certificate");
                 });
 
+            modelBuilder.Entity("Project2.Models.CandidateExam", b =>
+                {
+                    b.HasOne("Candidate", "Candidate")
+                        .WithMany()
+                        .HasForeignKey("CandidateID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project2.Models.Exam", "Exam")
+                        .WithMany()
+                        .HasForeignKey("ExamID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Candidate");
+
+                    b.Navigation("Exam");
+                });
+
+            modelBuilder.Entity("Project2.Models.Exam", b =>
+                {
+                    b.HasOne("Certificate", "Certificate")
+                        .WithMany("Exams")
+                        .HasForeignKey("CertificateID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Certificate");
+                });
+
             modelBuilder.Entity("Candidate", b =>
                 {
                     b.HasOne("Project2.Models.User", null)
@@ -232,6 +343,20 @@ namespace Project2.Migrations
                         .HasForeignKey("Candidate", "UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Project2.Models.Admin", b =>
+                {
+                    b.HasOne("Project2.Models.User", null)
+                        .WithOne()
+                        .HasForeignKey("Project2.Models.Admin", "UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Certificate", b =>
+                {
+                    b.Navigation("Exams");
                 });
 #pragma warning restore 612, 618
         }

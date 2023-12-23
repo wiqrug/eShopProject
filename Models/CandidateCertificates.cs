@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Project2.Models;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema; 
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class CandidateCertificates
 {
@@ -16,7 +17,7 @@ public class CandidateCertificates
     [ForeignKey("Certificate")] 
     public Guid CertificateID { get; set; }
 
-    //This is just a random string (does not contain the exam by itself
+    //This is just a random string (does not contain the exam by itself)
     [Required]
     [StringLength(50)]
     public string AssessmentTestCode { get; set; }
@@ -27,10 +28,13 @@ public class CandidateCertificates
     public string AssessmentResultLabel { get; set; } 
 
     // JSON fields for topic descriptions and scores
-    public string TopicDescriptions { get; set; }
-    public string TopicScores { get; set; }
+    //public string TopicDescriptions { get; set; }
+    //public string TopicScores { get; set; }
 
     public DateTime CreatedAt { get; set; }
+
+    
+  
 
     // Navigation properties
     public virtual Candidate Candidate { get; set; }

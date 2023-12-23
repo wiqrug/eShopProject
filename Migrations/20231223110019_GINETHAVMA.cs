@@ -5,7 +5,7 @@
 namespace Project2.Migrations
 {
     /// <inheritdoc />
-    public partial class newmigr3332 : Migration
+    public partial class GINETHAVMA : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
