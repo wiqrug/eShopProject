@@ -18,8 +18,7 @@ namespace Project2.Models
         public string Password { get; set; } 
         public User(Guid userID)
         {
-            UserID = Guid.NewGuid();  
-
+            UserID = Guid.NewGuid();
         }
         public User() { }
 
