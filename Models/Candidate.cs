@@ -64,11 +64,10 @@
         [StringLength(20)]
         public string MobileNumber { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 
+    public Candidate() : base()
+    {
 
-        public Candidate() : base()
-        {
-            CreatedAt = DateTime.Now;
-          }
     }
+}

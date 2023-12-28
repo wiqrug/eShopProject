@@ -9,7 +9,7 @@ namespace Project2.Models
         [Key]
         public Guid ExamId { get; set; }
         public string ExamDescription { get; set; }
-        public int AwardedMarks { get; set; }
+        public int? AwardedMarks { get; set; }
         public int PossibleMarks { get; set; }
 
         //public Certificate Certificate { get; set; }
@@ -19,7 +19,9 @@ namespace Project2.Models
         [ForeignKey("Certificate")]
         public Guid CertificateID { get; set; }
 
+
         public  Certificate Certificate { get; set; }
+
         public Exam()
         {
             CertificateID = new Guid();

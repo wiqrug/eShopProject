@@ -12,8 +12,8 @@ using Project2.Services;
 namespace Project2.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20231223110019_GINETHAVMA")]
-    partial class GINETHAVMA
+    [Migration("20231224101122_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -287,6 +287,52 @@ namespace Project2.Migrations
                     b.ToTable("Admins", (string)null);
                 });
 
+            modelBuilder.Entity("Project2.Models.Marker", b =>
+                {
+                    b.HasBaseType("Project2.Models.User");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MobileNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Markers", (string)null);
+                });
+
+            modelBuilder.Entity("Project2.Models.QualityControl", b =>
+                {
+                    b.HasBaseType("Project2.Models.User");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MobileNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("QualityControls", (string)null);
+                });
+
             modelBuilder.Entity("CandidateCertificates", b =>
                 {
                     b.HasOne("Candidate", "Candidate")
@@ -350,6 +396,24 @@ namespace Project2.Migrations
                     b.HasOne("Project2.Models.User", null)
                         .WithOne()
                         .HasForeignKey("Project2.Models.Admin", "UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Project2.Models.Marker", b =>
+                {
+                    b.HasOne("Project2.Models.User", null)
+                        .WithOne()
+                        .HasForeignKey("Project2.Models.Marker", "UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Project2.Models.QualityControl", b =>
+                {
+                    b.HasOne("Project2.Models.User", null)
+                        .WithOne()
+                        .HasForeignKey("Project2.Models.QualityControl", "UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

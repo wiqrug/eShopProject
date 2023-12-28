@@ -24,7 +24,9 @@ public class Certificate
 
     public DateTime CreatedAt { get; set; }
 
-    public  ICollection<Exam> Exams { get; set; }
+
+    public List<Exam> Exams { get; set; }
+
 
     // Constructor
     public Certificate()

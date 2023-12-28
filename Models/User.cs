@@ -17,6 +17,7 @@ namespace Project2.Models
         public Role role { get; set; }
         public string Password { get; set; } 
 
+
         //possibly wrong code
         public User(Guid userID)
         {
@@ -28,6 +29,7 @@ namespace Project2.Models
         {
             UserID = Guid.NewGuid();
         }
+
 
 
         public enum Role
