@@ -89,7 +89,39 @@ namespace Project2.Services
             return ObtainedCerts;
         }
 
+        public List<Certificate> GetUnobtainedCertificates(int candidateNumber)
+        {
 
+            Candidate candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
+            if (candidate == null)
+            {
+
+                return new List<Certificate>();
+            }
+
+
+            List<Certificate> UnobtainedCertificates = new List<Certificate>();
+
+            var boughtCertificates = context.CandidateCertificates
+                                            .Where(x => x.CandidateID == candidate.UserID)
+                                            .Include(x => x.Certificate)  // Eagerly load Certificate
+                                            .ThenInclude(c => c.Exams)    // Eagerly load Exams related to Certificate
+                                            .Select(x => x.Certificate)
+                                            .ToList();
+
+            foreach (var certificate in boughtCertificates)
+            {
+                foreach (var exam in certificate.Exams)
+                {
+                    if (exam.AwardedMarks < 50)
+                    {
+                        UnobtainedCertificates.Add(certificate);
+
+                    }
+                }
+            }
+            return UnobtainedCertificates;
+        }
 
         public bool CreateCandidateCertificate(CandidateCertificatesDTO candidateCertificatesDTO)
         {
