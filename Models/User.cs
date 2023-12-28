@@ -8,7 +8,7 @@ namespace Project2.Models
     {
         [Key]
         [JsonIgnore]
-        public Guid UserID { get; set; }
+        public Guid UserID { get; private set; }
 
         [Required]
         [StringLength(100)]
@@ -16,11 +16,18 @@ namespace Project2.Models
         public string Email { get; set; }
         public Role role { get; set; }
         public string Password { get; set; } 
+
+        //possibly wrong code
         public User(Guid userID)
         {
             UserID = Guid.NewGuid();
         }
-        public User() { }
+
+        //Maybe this is a better implementation of the constructor, because we dont really need to have arguments in the ctor
+        public User()
+        {
+            UserID = Guid.NewGuid();
+        }
 
 
         public enum Role

@@ -19,7 +19,7 @@ namespace Project2.Models
         [ForeignKey("Certificate")]
         public Guid CertificateID { get; set; }
 
-        public virtual Certificate Certificate { get; set; }
+        public  Certificate Certificate { get; set; }
         public Exam()
         {
             CertificateID = new Guid();

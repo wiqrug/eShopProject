@@ -37,6 +37,7 @@ public class CandidateCertificates
   
 
     // Navigation properties
+    //should remove virtual
     public virtual Candidate Candidate { get; set; }
     public virtual Certificate Certificate { get; set; }
 
