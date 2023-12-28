@@ -12,8 +12,8 @@ using Project2.Services;
 namespace Project2.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20231223124526_othayma")]
-    partial class othayma
+    [Migration("20231224101122_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

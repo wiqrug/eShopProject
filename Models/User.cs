@@ -16,11 +16,10 @@ namespace Project2.Models
         public string Email { get; set; }
         public Role role { get; set; }
         public string Password { get; set; } 
-        public User(Guid userID)
+        public User()
         {
             UserID = Guid.NewGuid();
         }
-        public User() { }
 
 
         public enum Role

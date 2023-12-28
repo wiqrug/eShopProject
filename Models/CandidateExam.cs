@@ -18,8 +18,8 @@ namespace Project2.Models
 
         public DateTime TakenAt { get; set; }
 
-        public virtual Candidate Candidate { get; set; }
-        public virtual Exam Exam { get; set; }
+        public Candidate Candidate { get; set; }
+        public Exam Exam { get; set; }
 
         public CandidateExam()
         {

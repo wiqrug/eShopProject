@@ -29,6 +29,6 @@ Split these tasks to each person in the team
     • A list of all the marks per Topic per Certificate a Candidate has sat for
    
     
-    • A list of all the Certificates that were obtained by date
+    • A list of all the Certificates that were obtained by date (Alexis)
     • Count of the Passed / Failed Certificates per date range
 
