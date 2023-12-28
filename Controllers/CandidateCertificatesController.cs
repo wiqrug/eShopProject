@@ -19,14 +19,20 @@ namespace Project2.Controllers
         [HttpPost]
         public IActionResult CreateEnrollment(CandidateCertificatesDTO candidateCertificatesDTO)
         {
-            candidateCertificatesServices.CreateCandidateCertificate(candidateCertificatesDTO);
+            bool success = candidateCertificatesServices.CreateCandidateCertificate(candidateCertificatesDTO);
+
+            if (!success)
+            {
+                return BadRequest("Candidate or Certificate does not exist.");
+            }
+
             return Ok();
         }
 
 
 
 
-        [HttpGet("{candidateNumber}")]
+        [HttpGet("obtained/{candidateNumber}")]
         public IActionResult GetObtainedCertificates(int candidateNumber)
         {
             if(candidateNumber == null)
@@ -39,6 +45,31 @@ namespace Project2.Controllers
                 var obtainedCerts = candidateCertificatesServices.GetObtainedCertificates(candidateNumber);
                 return Ok(obtainedCerts);
             }
+        }
+
+        [HttpGet("unobtained/{candidateNumber}")]
+        public IActionResult GetUnobtainedCertificates(int candidateNumber)
+        {
+            if (candidateNumber == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+
+                var UnobtainedCertificates = candidateCertificatesServices.GetUnobtainedCertificates(candidateNumber);
+                return Ok(UnobtainedCertificates);
+            }
+
+        }
+
+
+
+        [HttpGet("CertificateCounts")]
+        public IActionResult GetCertificateCounts([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        {
+            var certificateCounts = candidateCertificatesServices.GetCertificateCountsByDateRange(startDate, endDate);
+            return Ok(certificateCounts);
         }
     }
 }

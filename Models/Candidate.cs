@@ -68,6 +68,6 @@
 
     public Candidate() : base()
     {
-
+        CreatedAt = DateTime.Now;
     }
 }
