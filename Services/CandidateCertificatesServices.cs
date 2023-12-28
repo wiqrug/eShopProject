@@ -91,25 +91,31 @@ namespace Project2.Services
 
 
 
-        public void CreateCandidateCertificate(CandidateCertificatesDTO candidateCertificatesDTO)
+        public bool CreateCandidateCertificate(CandidateCertificatesDTO candidateCertificatesDTO)
         {
-            
-            CandidateCertificates enrollment = new CandidateCertificates() 
+            var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateCertificatesDTO.CandidateNumber);
+            var certificate = context.Certificates.FirstOrDefault(x => x.TitleOfCertificate == candidateCertificatesDTO.TitleOfCertificate);
+
+            if (candidate == null || certificate == null)
             {
-                
-                Candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateCertificatesDTO.CandidateNumber),
-                Certificate = context.Certificates.FirstOrDefault(x => x.TitleOfCertificate == candidateCertificatesDTO.TitleOfCertificate),
-                CandidateID = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateCertificatesDTO.CandidateNumber).UserID,
-                CertificateID = context.Certificates.FirstOrDefault(x => x.TitleOfCertificate == candidateCertificatesDTO.TitleOfCertificate).CertificateID,
+                return false; // Or throw an exception
+            }
+
+            CandidateCertificates enrollment = new CandidateCertificates
+            {
+                Candidate = candidate,
+                Certificate = certificate,
+                CandidateID = candidate.UserID,
+                CertificateID = certificate.CertificateID,
                 CandidateScore = null,
                 PercentageScore = null,
                 AssessmentTestCode = "",
                 AssessmentResultLabel = ""
-                
             };
 
             context.CandidateCertificates.Add(enrollment);
             context.SaveChanges();
+            return true;
         }
     }
 }

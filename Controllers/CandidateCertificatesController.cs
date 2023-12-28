@@ -19,7 +19,13 @@ namespace Project2.Controllers
         [HttpPost]
         public IActionResult CreateEnrollment(CandidateCertificatesDTO candidateCertificatesDTO)
         {
-            candidateCertificatesServices.CreateCandidateCertificate(candidateCertificatesDTO);
+            bool success = candidateCertificatesServices.CreateCandidateCertificate(candidateCertificatesDTO);
+
+            if (!success)
+            {
+                return NotFound("Candidate or Certificate does not exist.");
+            }
+
             return Ok();
         }
 
