@@ -61,6 +61,8 @@ namespace Project2.Services
         }
 
 
+
+
         public List<Certificate> GetUnobtainedCertificates(int candidateNumber)
         {
 
@@ -93,6 +95,45 @@ namespace Project2.Services
                 }
             }
             return UnobtainedCertificates;
+        }
+
+
+        public List<Certificate> GetAvailableCertificates(int candidateNumber)
+        {
+            // Fetching the candidate
+            Candidate candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
+            if (candidate == null)
+            {
+
+                return new List<Certificate>();
+            }
+
+            List<Certificate> AvailableCertificates = new List<Certificate>();
+
+           
+
+            var boughtCertificates = context.CandidateCertificates
+                                            .Where(x => x.CandidateID == candidate.UserID)
+                                            .Include(x => x.Certificate)  // Eagerly load Certificate
+                                            .ThenInclude(c => c.Exams)    // Eagerly load Exams related to Certificate
+                                            .Select(x => x.Certificate)
+                                            .ToList();
+
+
+            var allCertificatesId = context.Certificates
+                                 
+                                   .ToList();
+
+            var ac = allCertificatesId.Except(boughtCertificates).ToList();
+            
+
+            foreach (var certificate in ac)
+            {
+                AvailableCertificates.Add(certificate);
+            }
+
+            return AvailableCertificates;
+
         }
 
 

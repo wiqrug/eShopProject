@@ -63,6 +63,21 @@ namespace Project2.Controllers
 
         }
 
+        [HttpGet("available/{candidateNumber}")]
+
+        public IActionResult GetAvailableCertificates(int candidateNumber)
+        {
+            if (candidateNumber == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var availableCertificates = candidateCertificatesServices.GetAvailableCertificates(candidateNumber);
+                return Ok(availableCertificates);
+            }
+
+        }
 
 
         [HttpGet("CertificateCounts")]
