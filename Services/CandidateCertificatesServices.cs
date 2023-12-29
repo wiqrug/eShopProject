@@ -10,7 +10,7 @@ namespace Project2.Services
     public class CandidateCertificatesServices
     {
         private readonly ApplicationDBContext context;
-        private const int passingScore = 50; // Define your passing score
+        private const int passingScore = 50; 
 
         public CandidateCertificatesServices(ApplicationDBContext context)
         {
@@ -147,5 +147,91 @@ namespace Project2.Services
 
             return result;
         }
+        public List<Certificate> GetAvailableCertificates(int candidateNumber)
+        {
+            // Fetching the candidate
+            Candidate candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
+            if (candidate == null)
+            {
+
+                return new List<Certificate>();
+            }
+
+            List<Certificate> AvailableCertificates = new List<Certificate>();
+
+
+
+            var boughtCertificates = context.CandidateCertificates
+                                            .Where(x => x.CandidateID == candidate.UserID)
+                                            .Include(x => x.Certificate)  // Eagerly load Certificate
+                                            .ThenInclude(c => c.Exams)    // Eagerly load Exams related to Certificate
+                                            .Select(x => x.Certificate)
+                                            .ToList();
+
+
+            var allCertificatesId = context.Certificates
+                                   .ToList();
+
+            var availCert = allCertificatesId.Except(boughtCertificates).ToList();
+
+
+            foreach (var certificate in availCert)
+            {
+                AvailableCertificates.Add(certificate);
+            }
+
+            return AvailableCertificates;
+
+        }
+
+        public List<Certificate> GetObtainedCertificatesByDate(int candidateNumber, DateTime startDate, DateTime endDate)
+        {
+            Candidate candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
+            if (candidate == null)
+            {
+                return new List<Certificate>();
+            }
+
+            List<Certificate> ObtainedCerts = new List<Certificate>();
+
+            var boughtCertificates = context.CandidateCertificates
+                                            .Where(x => x.CandidateID == candidate.UserID)
+                                            .Include(x => x.Certificate)
+                                            .ThenInclude(c => c.Exams)
+                                            .Select(x => x.Certificate)
+                                            .ToList();
+
+            foreach (var certificate in boughtCertificates)
+            {
+                int passedExamsCount = 0;
+
+                foreach (var exam in certificate.Exams)
+                {
+                    if (exam.AwardedMarks > 50)
+                    {
+                        passedExamsCount++;
+                    }
+                }
+
+                if (passedExamsCount == certificate.Exams.Count)
+                {
+                    ObtainedCerts.Add(certificate);
+                }
+            }
+
+            List<Certificate> ObtainedCertsByDate = new List<Certificate>();
+
+            foreach (var certificate in ObtainedCerts)
+            {
+                if (certificate.CreatedAt >= startDate && certificate.CreatedAt <= endDate)
+                {
+                    ObtainedCertsByDate.Add(certificate);
+                }
+            }
+
+            return ObtainedCertsByDate;
+        }
+
+
     }
 }

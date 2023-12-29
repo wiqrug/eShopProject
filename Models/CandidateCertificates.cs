@@ -18,7 +18,7 @@ public class CandidateCertificates
     public Guid CertificateID { get; set; }
 
     //This is just a random string (does not contain the exam by itself)
-    [Required]
+    [Required]  
     [StringLength(50)]
     public string? AssessmentTestCode { get; set; }  //ANTI GIA CODE AS EINAI DATE GIA PIO EUKOLA KAI ANTI GIA CreatedAt, NO?
 
