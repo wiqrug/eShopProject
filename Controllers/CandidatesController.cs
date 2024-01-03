@@ -9,33 +9,36 @@ namespace Project2.Controllers
     public class CandidatesController : ControllerBase
     {
         private readonly CandidateServices candidateServices;
+        private readonly ILogger<CandidatesController> logger; // Add logger
 
-        public CandidatesController(CandidateServices candidateServices)
+        public CandidatesController(CandidateServices candidateServices, ILogger<CandidatesController> logger)
         {
             this.candidateServices = candidateServices;
+            this.logger = logger;
         }
-
-
-
-        //[HttpGet("{id}")]   // Show Candidate
-        //public IActionResult GetCandidate(int id)
-        //{
-        //    var candidate = context.Candidates.Find(id);
-
-        //    if (candidate == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(candidate);
-        //}
 
         [HttpPost]  // Create Candidate
         public IActionResult CreateCandidate(CandidateDTO candidateDTO)
         {
-            candidateServices.CreateCandidate(candidateDTO);
-            return Ok();
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    logger.LogError($"Invalid model state: {string.Join(", ", errors)}");
+                    return BadRequest(new { message = "Invalid data provided", details = errors });
+                }
+
+                candidateServices.CreateCandidate(candidateDTO);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"An error occurred in CreateCandidate: {ex.Message}");
+                return StatusCode(500, "An internal error occurred"); // Generic error for unhandled exceptions
+            }
         }
+
 
 
         [HttpPut("{candidateNumber}")]   // Update Candidate

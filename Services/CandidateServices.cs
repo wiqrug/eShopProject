@@ -1,4 +1,5 @@
-﻿namespace Project2.Services
+﻿
+namespace Project2.Services
 {
     public class CandidateServices
     {

@@ -16,58 +16,57 @@
         public string FirstName { get; set; }
 
         [StringLength(100)]
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
         [Required]
         [StringLength(100)]
         public string LastName { get; set; }
 
         [StringLength(50)]
-        public string Gender { get; set; } 
+        public string? Gender { get; set; } 
 
         [StringLength(100)]
-        public string NativeLanguage { get; set; } 
+        public string? NativeLanguage { get; set; } 
 
         public DateTime? BirthDate { get; set; }
 
         [StringLength(50)]
-        public string PhotoIDType { get; set; } 
+        public string? PhotoIDType { get; set; } 
 
         [StringLength(50)]
-        public string PhotoIDNumber { get; set; } 
+        public string? PhotoIDNumber { get; set; } 
 
         public DateTime? PhotoIDIssueDate { get; set; }
 
 
         [StringLength(200)]
-        public string Address { get; set; } 
+        public string? Address { get; set; } 
 
         [StringLength(200)]
-        public string AddressLine2 { get; set; } 
-
-        [Required]
-        [StringLength(100)]
-        public string CountryOfResidence { get; set; }
+        public string? AddressLine2 { get; set; } 
 
         [StringLength(100)]
-        public string StateOrTerritoryOrProvince { get; set; } 
+        public string? CountryOfResidence { get; set; }
 
         [StringLength(100)]
-        public string TownOrCity { get; set; } 
+        public string? StateOrTerritoryOrProvince { get; set; } 
+
+        [StringLength(100)]
+        public string? TownOrCity { get; set; } 
 
         [StringLength(20)]
-        public string PostalCode { get; set; } 
+        public string? PostalCode { get; set; } 
 
         [StringLength(20)]
-        public string LandlineNumber { get; set; } 
+        public string? LandlineNumber { get; set; } 
 
         [StringLength(20)]
-        public string MobileNumber { get; set; }
+        public string? MobileNumber { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
     public Candidate() : base()
     {
-
+        CreatedAt = DateTime.Now;
     }
 }

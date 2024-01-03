@@ -25,9 +25,9 @@ namespace Project2.Controllers
         }
 
         [HttpPost("Register")]
-        public IActionResult Register(UserDto userDto)
+        public IActionResult Register([FromBody] CandidateDTO candidateDTO)
         {
-            var emailCount = context.Users.Count(u => u.Email == userDto.Email);
+            var emailCount = context.Users.Count(u => u.Email == candidateDTO.Email);
             if (emailCount > 0)
             {
                 ModelState.AddModelError("Email", "This Email address is alread used");
@@ -35,32 +35,34 @@ namespace Project2.Controllers
             }
 
             //encrypt the password
-            var passwordHasher = new PasswordHasher<User>();
-            var encryptedPassword = passwordHasher.HashPassword(new Models.User(), userDto.Password);
+            var passwordHasher = new PasswordHasher<Candidate>();
+            var encryptedPassword = passwordHasher.HashPassword(new Candidate(), candidateDTO.Password);
 
-            User user = new User()
+            Candidate candidate = new Candidate()
             {
-                Email = userDto.Email,
+                Email = candidateDTO.Email,
                 Password = encryptedPassword,
-                role = userDto.role
+                FirstName = candidateDTO.FirstName,
+                LastName = candidateDTO.LastName
 
             };
 
-            context.Users.Add(user);
+            context.Users.Add(candidate);
             context.SaveChanges();
 
-            var jwt = CreateJWToken(user);
+            var jwt = CreateJWToken(candidate);
 
-            UserProfileDto userProfileDto = new UserProfileDto()
+            CandidateProfileDTO candidateProfileDTO = new CandidateProfileDTO()
             {
-                Email = userDto.Email,
-                role = userDto.role
+                Email = candidateDTO.Email,
+                FirstName = candidateDTO.FirstName,
+                LastName = candidateDTO.LastName
             };
 
             var response = new
             {
                 Token = jwt,
-                User = userProfileDto
+                User = candidateProfileDTO
             };
 
             return Ok(response);
@@ -69,18 +71,18 @@ namespace Project2.Controllers
         [HttpPost("Login")]
         public IActionResult Login(string email, string password)
         {
-            var user = context.Users.FirstOrDefault(u => u.Email == email);
+            var candidate = context.Candidates.FirstOrDefault(u => u.Email == email);
 
-            if (user == null)
+            if (candidate == null)
             {
                 ModelState.AddModelError("Error", "Email or password is not valid");
                 return BadRequest(ModelState);
             }
 
             //verify the password
-            var passwordHasher = new PasswordHasher<User>();
+            var passwordHasher = new PasswordHasher<Candidate>();
 
-            var result = passwordHasher.VerifyHashedPassword(new User(), user.Password, password);
+            var result = passwordHasher.VerifyHashedPassword(new Candidate(), candidate.Password, password);
 
             if (result == PasswordVerificationResult.Failed)
             {
@@ -88,18 +90,18 @@ namespace Project2.Controllers
                 return BadRequest(ModelState);
             }
 
-            var jwt = CreateJWToken(user);
-            var userProfileDto = new UserProfileDto()
+            var jwt = CreateJWToken(candidate);
+            var candidateProfileDTO = new CandidateProfileDTO()
             {
-                Email = user.Email,
-                role = user.role
+                Email = candidate.Email,
+
 
             };
 
             var response = new
             {
                 Token = jwt,
-                User = userProfileDto
+                User = candidateProfileDTO
             };
 
             return Ok(response);
@@ -107,26 +109,26 @@ namespace Project2.Controllers
 
 
         [Authorize]
-        [HttpGet("AuthorizeAuthenticatedUsers")]
-        public IActionResult AuthorizeAuthenticatedUSers()
+        [HttpGet("AuthorizeAuthenticatedCandidates")]
+        public IActionResult AuthorizeAuthenticatedCandidates()
         {
-            return Ok("You are authorized client");
+            return Ok("Authorized candidate");
         }
 
         [Authorize(Roles = "admin")]
         [HttpGet("AuthorizeAdmin")]
         public IActionResult AuthorizeAdmin()
         {
-            return Ok("You are authorized Admin");
+            return Ok("Authorized Admin");
         }
 
 
-        private string CreateJWToken(User user)
+        private string CreateJWToken(Candidate candidate)
         {
             List<Claim> claims = new List<Claim>()
             {
-                new Claim("id",  ""+user.UserID),
-                new Claim("role","" +  Models.User.Role.Admin)
+                new Claim("id",  ""+candidate.UserID),
+                //new Claim("role","" +  Models.User.Role.Candidate)
             };
 
             string strKey = configuration["JwtSettings:Key"]!;
@@ -141,7 +143,6 @@ namespace Project2.Controllers
                     claims: claims,
                     expires: DateTime.Now.AddDays(1),
                     signingCredentials: creds
-
                 );
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
