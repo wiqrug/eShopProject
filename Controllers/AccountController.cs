@@ -55,6 +55,8 @@ namespace Project2.Controllers
             CandidateProfileDTO candidateProfileDTO = new CandidateProfileDTO()
             {
                 Email=candidateDTO.Email,
+                FirstName=candidateDTO.FirstName,
+                LastName=candidateDTO.LastName
                 
             };
 
