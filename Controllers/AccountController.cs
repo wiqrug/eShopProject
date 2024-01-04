@@ -23,52 +23,52 @@ namespace Project2.Controllers
             this.configuration = configuration;
             this.context = context;
         }
+        //--------
+        //[HttpPost("Register")]
+        //public IActionResult Register(CandidateDTO candidateDTO)
+        //{
+        //    var emailCount = context.Users.Count(u => u.Email == candidateDTO.Email);
+        //    if (emailCount > 0)
+        //    {
+        //        ModelState.AddModelError("Email", "This Email address is alread used");
+        //        return BadRequest(ModelState);
+        //    }
 
-        [HttpPost("Register")]
-        public IActionResult Register(CandidateDTO candidateDTO)
-        {
-            var emailCount = context.Users.Count(u => u.Email == candidateDTO.Email);
-            if (emailCount > 0)
-            {
-                ModelState.AddModelError("Email", "This Email address is alread used");
-                return BadRequest(ModelState);
-            }
+        //    //encrypt the password
+        //    var passwordHasher = new PasswordHasher<Candidate>();
+        //    var encryptedPassword = passwordHasher.HashPassword(new Candidate(), candidateDTO.Password);
 
-            //encrypt the password
-            var passwordHasher = new PasswordHasher<Candidate>();
-            var encryptedPassword = passwordHasher.HashPassword(new Candidate(), candidateDTO.Password);
+        //    Candidate candidate = new Candidate()
+        //    {
+        //        Email = candidateDTO.Email,
+        //        Password = encryptedPassword,
+        //        FirstName = candidateDTO.FirstName,
+        //        LastName= candidateDTO.LastName
 
-            Candidate candidate = new Candidate()
-            {
-                Email = candidateDTO.Email,
-                Password = encryptedPassword,
-                FirstName = candidateDTO.FirstName,
-                LastName= candidateDTO.LastName
+        //    };
 
-            };
+        //    context.Users.Add(candidate);
+        //    context.SaveChanges();
 
-            context.Users.Add(candidate);
-            context.SaveChanges();
+        //    //var jwt = CreateJWToken(candidate);
 
-            var jwt = CreateJWToken(candidate);
-
-            CandidateProfileDTO candidateProfileDTO = new CandidateProfileDTO()
-            {
-                Email=candidateDTO.Email,
-                FirstName=candidateDTO.FirstName,
-                LastName=candidateDTO.LastName
+        //    CandidateProfileDTO candidateProfileDTO = new CandidateProfileDTO()
+        //    {
+        //        Email=candidateDTO.Email,
+        //        FirstName=candidateDTO.FirstName,
+        //        LastName=candidateDTO.LastName
                 
-            };
+        //    };
 
-            var response = new
-            {
-                Token = jwt,
-                User = candidateProfileDTO
-            };
+        //    var response = new
+        //    {
+        //        //Token = jwt,
+        //        User = candidateProfileDTO
+        //    };
 
-            return Ok(response);
-        }
-
+        //    return Ok(response);
+        //}
+        //-----------
         [HttpPost("Login")]
         public IActionResult Login(string email, string password)
         {
@@ -95,6 +95,8 @@ namespace Project2.Controllers
             var candidateProfileDTO = new CandidateProfileDTO()
             {
                 Email = candidate.Email,
+                FirstName= candidate.FirstName,
+                LastName= candidate.LastName
                 
 
             };

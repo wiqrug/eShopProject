@@ -1,4 +1,6 @@
-﻿namespace Project2.Services
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Project2.Services
 {
     public class CandidateServices
     {
@@ -9,10 +11,23 @@
             this.context = context;
         }
 
-
+        public bool EmailExists(string email)
+        {
+            var emailCount = context.Users.Count(u => u.Email == email);
+            return emailCount > 0;
+        }
 
         public void CreateCandidate(CandidateDTO candidateDTO)
         {
+            
+                      
+        
+             
+            //encrypt the password
+            var passwordHasher = new PasswordHasher<Candidate>();
+            var encryptedPassword = passwordHasher.HashPassword(new Candidate(), candidateDTO.Password);
+
+
             int maxCandidateNumber = context.Candidates.Max(c => (int?)c.CandidateNumber) ?? 1000; // Starting from 1001
             var candidate = new Candidate
             {
@@ -40,15 +55,15 @@
                 PostalCode = candidateDTO.PostalCode,
                 LandlineNumber = candidateDTO.LandlineNumber,
                 MobileNumber = candidateDTO.MobileNumber,
-                Password = candidateDTO.Password,
+                Password = encryptedPassword,
                 role = Models.User.Role.Candidate,
 
             };
 
             context.Candidates.Add(candidate);
             context.SaveChanges();
+        
         }
-
         public void UpdateCandidate(int candidateNumber,CandidateDTO candidateDTO)
         {
             //Make user able to change whatever he wants 

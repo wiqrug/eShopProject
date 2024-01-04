@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project2.Services;
 
@@ -33,6 +34,12 @@ namespace Project2.Controllers
         [HttpPost]  // Create Candidate
         public IActionResult CreateCandidate(CandidateDTO candidateDTO)
         {
+            if (candidateServices.EmailExists(candidateDTO.Email))
+            {
+                return BadRequest("This email address is already in use");
+            }
+
+
             candidateServices.CreateCandidate(candidateDTO);
             return Ok();
         }
