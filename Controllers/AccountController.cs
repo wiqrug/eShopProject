@@ -69,9 +69,9 @@ namespace Project2.Controllers
         }
 
         [HttpPost("Login")]
-        public IActionResult Login(string email, string password)
+        public IActionResult Login([FromBody] User user)
         {
-            var candidate = context.Candidates.FirstOrDefault(u => u.Email == email);
+            var candidate = context.Candidates.FirstOrDefault(u => u.Email == user.Email);
 
             if (candidate == null)
             {
@@ -82,7 +82,7 @@ namespace Project2.Controllers
             //verify the password
             var passwordHasher = new PasswordHasher<Candidate>();
 
-            var result = passwordHasher.VerifyHashedPassword(new Candidate(), candidate.Password, password);
+            var result = passwordHasher.VerifyHashedPassword(new Candidate(), candidate.Password, user.Password);
 
             if (result == PasswordVerificationResult.Failed)
             {
