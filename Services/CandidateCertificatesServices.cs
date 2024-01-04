@@ -51,10 +51,11 @@ namespace Project2.Services
                     }
                 }
 
-                if (passedExamsCount == certificate.Exams.Count)
+                if (passedExamsCount == certificate.Exams.Count && passedExamsCount!=0)
                 {
                     ObtainedCerts.Add(certificate);
                 }
+                
             }
 
             return ObtainedCerts;
@@ -98,9 +99,10 @@ namespace Project2.Services
 
         public bool CreateCandidateCertificate(CandidateCertificatesDTO candidateCertificatesDTO)
         {
+            
             var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateCertificatesDTO.CandidateNumber);
             var certificate = context.Certificates.FirstOrDefault(x => x.TitleOfCertificate == candidateCertificatesDTO.TitleOfCertificate);
-
+            
             if (candidate == null || certificate == null)
             {
                 return false; // Or throw an exception
@@ -232,6 +234,39 @@ namespace Project2.Services
             return ObtainedCertsByDate;
         }
 
+        public List<Exam> GetMarksPerExamPerCertificate(int? candidateNumber)
+        {
+            var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber)!;
+
+            if (candidate == null)
+            {
+                return new List<Exam>();
+            }
+
+            // Searching for certificates of this candidtate
+            var certificates = context.CandidateCertificates
+                                    .Where(x => x.CandidateID == candidate.UserID)
+                                    .Include(x => x.Certificate)
+                                    //.ThenInclude(c => c.Exams)
+                                    .Select(x => x.Certificate)
+                                    .ToList();
+
+
+            
+            List<Exam> CertificatesMarks = new List<Exam>();
+
+            foreach (var cert in certificates)
+            {
+                var examAwardedMarks = context.CandidateExams
+                            .Where(x => x.CandidateID == candidate.UserID && x.Exam.CertificateID == cert.CertificateID)
+                            .Select(x => x.Exam)
+                            .ToList();
+
+                CertificatesMarks = examAwardedMarks;
+            }
+
+            return CertificatesMarks;
+        }
 
     }
 }

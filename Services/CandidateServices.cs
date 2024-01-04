@@ -69,7 +69,7 @@ namespace Project2.Services
             //Make user able to change whatever he wants 
 
             // x=y?t=1:t=2;
-
+            
             var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber==candidateNumber);
 
             // Update candidate properties with values from candidateDTO
@@ -96,7 +96,7 @@ namespace Project2.Services
             candidate.MobileNumber = candidateDTO.MobileNumber;
 
             context.SaveChanges();
-
+            
         }
 
  

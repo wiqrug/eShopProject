@@ -33,6 +33,35 @@ Split these tasks to each person in the team
 
     • Count of the Passed / Failed Certificates per date range								//Alekos	DONE
 
+    -------------------------------------------------------------------------------------------------------------------------
 
+    4/1/2024  NewTasks
+
+    -- API gia candidates na kanei update kai sta null pedia na krataei ta palia ++
+
+-- sto candidateCerificatesController  to action getMarksPerExamPerCertificate  export ti logiki se service ++
+
+-- elenxos apo to header me to token mas
+
+-- accountController diaxwrismos ++
+
+-- builder.Services.AddScope sto program gia to accountServices ++
+
+-- Encapsulation sto Marker qualityControl admin kai Candidates +
+
+-- Create repository fakelos kainourgios create function for every duplicated code   [!!!!] inject to application dbcontext  (isws addservice sto addscope)
+
+-- IServices impliment to Interface kai IService mesa ston constractor +
+
+-- properties ston Certificate public string Description kai int Price +++
+
+-- sta exams properties : xronos , title ++
+
+-- pinakas questions(prop:string question, strin answer A, answer B, answer C , answer D, correctAnswer, examID[foreign])  +navigation property   
+many to one exam( anapoda)  dld: ena exam mporei na exei polla questions+++
+
+-- Na apothikeuoume to Date otan ena Certificate ginetai obtained me elenxo an einai obtained to Certificate
+
+-- Initialize to data to Tables.
 
 

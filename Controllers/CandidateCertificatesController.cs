@@ -20,8 +20,11 @@ namespace Project2.Controllers
         }
 
         [HttpPost]
+        //an exeis parei certificate?
+
         public IActionResult CreateEnrollment(CandidateCertificatesDTO candidateCertificatesDTO)
         {
+            
             bool success = candidateCertificatesServices.CreateCandidateCertificate(candidateCertificatesDTO);
 
             if (!success)
@@ -112,37 +115,41 @@ namespace Project2.Controllers
             {
                 return BadRequest("Couldn't find candidate without specifics!");
             }
-
-            // Searching if the candidate exists
-            var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber)!;
-
-            if (context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber) == null)
+            else 
             {
-                return NotFound("Candidate not found!");
+                var x = candidateCertificatesServices.GetMarksPerExamPerCertificate(candidateNumber);
+                    return Ok(x);
             }
+            
+            //var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber)!;
 
-            // Searching for certificates of this candidtate
-            var certificates = context.CandidateCertificates
-                                    .Where(x => x.CandidateID == candidate.UserID)
-                                    .Include(x => x.Certificate)  // Eagerly load Certificate
-                                                                  //.ThenInclude(c => c.Exams)    // Eagerly load Exams related to Certificate
-                                    .Select(x => x.Certificate)
-                                    .ToList();
+            //if (context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber) == null)
+            //{
+            //    return NotFound("Candidate not found!");
+            //}
+
+            //// Searching for certificates of this candidtate
+            //var certificates = context.CandidateCertificates
+            //                        .Where(x => x.CandidateID == candidate.UserID)
+            //                        .Include(x => x.Certificate)  // Eagerly load Certificate
+            //                                                      //.ThenInclude(c => c.Exams)    // Eagerly load Exams related to Certificate
+            //                        .Select(x => x.Certificate)
+            //                        .ToList();
 
 
-            var CertificatesMarks = new Dictionary<string, List<Exam>>();
+            //var CertificatesMarks = new Dictionary<string, List<Exam>>();
 
-            foreach (var cert in certificates)
-            {
-                var examAwardedMarks = context.CandidateExams
-                            .Where(x => x.CandidateID == candidate.UserID)
-                            .Select(x => x.Exam)
-                            .ToList();
+            //foreach (var cert in certificates)
+            //{
+            //    var examAwardedMarks = context.CandidateExams
+            //                .Where(x => x.CandidateID == candidate.UserID)
+            //                .Select(x => x.Exam)
+            //                .ToList();
 
-                CertificatesMarks[cert.TitleOfCertificate] = examAwardedMarks;
-            }
+            //    CertificatesMarks[cert.TitleOfCertificate] = examAwardedMarks;
+            //}
 
-            return Ok(CertificatesMarks);
+            //return Ok(CertificatesMarks);
         }
     }
 }
