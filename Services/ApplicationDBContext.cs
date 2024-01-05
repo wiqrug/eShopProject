@@ -73,13 +73,13 @@ namespace Project2.Services
             modelBuilder.Entity<Questions>()
                 .HasOne(e => e.Exam)
                 .WithMany(c=>c.Questions)
-                .HasForeignKey(c => c.ExamID);
+                .HasForeignKey(c => c.ExamId);
                  
 
             modelBuilder.Entity<Exam>()
                 .HasMany(e => e.Questions)
                 .WithOne(c => c.Exam)
-                .HasForeignKey(c => c.ExamID);
+                .HasForeignKey(c => c.ExamId);
         }
     }
 }

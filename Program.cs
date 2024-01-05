@@ -38,6 +38,7 @@ builder.Services.AddScoped<AdminServices>();
 builder.Services.AddScoped<CertificateServices>();
 builder.Services.AddScoped<CandidateCertificatesServices>();
 builder.Services.AddScoped<ExamService>();
+builder.Services.AddScoped<CertificateServices>();
 
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
 {
@@ -64,7 +65,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 
 var app = builder.Build();
-
+app.UseCors(options => options.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin => true));
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

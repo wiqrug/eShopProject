@@ -35,6 +35,9 @@ namespace Project2.Services
                 ExaminationDate = certificateDTO.ExaminationDate,
                 ScoreReportDate = certificateDTO.ScoreReportDate,
                 MaximumScore = certificateDTO.MaximumScore,
+                Description = certificateDTO.Description,
+                Prices = certificateDTO.Prices,
+                ImageSrc = certificateDTO.ImageSrc
             };
 
             context.Certificates.Add(certificate);
@@ -63,6 +66,9 @@ namespace Project2.Services
             certificate.ExaminationDate = certificateDTO.ExaminationDate;
             certificate.ScoreReportDate = certificateDTO.ScoreReportDate;
             certificate.MaximumScore = certificateDTO.MaximumScore;
+            certificate.Description = certificateDTO.Description;
+            certificate.Prices = certificateDTO.Prices;
+            certificate.ImageSrc = certificateDTO.ImageSrc;
 
             context.SaveChanges();
 

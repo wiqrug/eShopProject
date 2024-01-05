@@ -31,7 +31,9 @@ namespace Project2.Services
                 ExamDescription = examDto.ExamDescription,
                 AwardedMarks = examDto.AwardedMarks,
                 PossibleMarks = examDto.PossibleMarks,
-                CertificateID = examDto.CertificateID
+                CertificateID = examDto.CertificateID,
+                Title= examDto.Title,
+                Time= examDto.Time
             };
 
             _context.Exams.Add(exam);
@@ -47,6 +49,8 @@ namespace Project2.Services
                 exam.AwardedMarks = examDto.AwardedMarks;
                 exam.PossibleMarks = examDto.PossibleMarks;
                 exam.CertificateID = examDto.CertificateID;
+               exam.Title = examDto.Title;
+                exam.Time = examDto.Time;
 
                 _context.SaveChanges();
             }

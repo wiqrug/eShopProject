@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project2.Services;
 
@@ -11,9 +12,11 @@ using Project2.Services;
 namespace Project2.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240105150253_FifthMigration")]
+    partial class FifthMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,7 +188,7 @@ namespace Project2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ExamId")
+                    b.Property<Guid>("ExamID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("questions")
@@ -194,7 +197,7 @@ namespace Project2.Migrations
 
                     b.HasKey("questionsID");
 
-                    b.HasIndex("ExamId");
+                    b.HasIndex("ExamID");
 
                     b.ToTable("Questions", (string)null);
                 });
@@ -409,7 +412,7 @@ namespace Project2.Migrations
                 {
                     b.HasOne("Project2.Models.Exam", "Exam")
                         .WithMany("Questions")
-                        .HasForeignKey("ExamId")
+                        .HasForeignKey("ExamID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

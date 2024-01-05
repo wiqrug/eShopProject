@@ -8,10 +8,10 @@ namespace Project2.Models
         [Required]
         [Key]
         public Guid ExamId { get; set; }
-        public string ExamDescription { get; set; }
+        public string? ExamDescription { get; set; }
         public int? AwardedMarks { get; set; }
-        public int PossibleMarks { get; set; }
-
+        public int? PossibleMarks { get; set; }
+        [Required]
         public string Title { get; set; }
         public int Time {  get; set; }  
 
