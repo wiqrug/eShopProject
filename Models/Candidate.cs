@@ -11,16 +11,12 @@
 
         public int CandidateNumber { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string FirstName { get; set; } 
+       
 
     [StringLength(100)]
         public string MiddleName { get; set; } = "";
 
-    [Required]
-        [StringLength(100)]
-        public string LastName { get; set; }
+    
 
     [StringLength(50)]
         public string Gender { get; set; } = "";
@@ -39,8 +35,7 @@
     public DateTime? PhotoIDIssueDate { get; set; } 
 
 
-    [StringLength(200)]
-        public string Address { get; set; } = "";
+    
 
     [StringLength(200)]
         public string AddressLine2 { get; set; } = "";
@@ -61,8 +56,15 @@
     [StringLength(20)]
         public string LandlineNumber { get; set; } = "";
 
-    [StringLength(20)]
-        public string MobileNumber { get; set; } = "";
+    [Required]
+    [StringLength(30)]
+    public string FirstName { get; set; }
+    [Required]
+    [StringLength(30)]
+    public string LastName { get; set; }
+    public string Address { get; set; }
+
+    public string MobileNumber { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

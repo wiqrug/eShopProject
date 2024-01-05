@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Project2.Models;
 
 namespace Project2.Services
 {

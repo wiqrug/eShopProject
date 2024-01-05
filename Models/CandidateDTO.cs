@@ -7,14 +7,14 @@ public class CandidateDTO
 
 
     [Required]
-    [StringLength(100)]
+    [StringLength(30)]
     public string FirstName { get; set; } 
 
     [StringLength(100)]
     public string MiddleName { get; set; } = "";
 
     [Required]
-    [StringLength(100)]
+    [StringLength(30)]
     public string LastName { get; set; } 
 
     [Required]
@@ -62,7 +62,7 @@ public class CandidateDTO
 
     [StringLength(20)]
     public string MobileNumber { get; set; } = "";
-    
+    [StringLength(300)]
     public string Password { get; set; } 
 
 

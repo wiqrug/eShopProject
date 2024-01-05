@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -30,6 +31,8 @@ builder.Services.AddSwaggerGen(
         });
         options.OperationFilter<SecurityRequirementsOperationFilter>();
     });
+builder.Services.AddScoped<IPasswordHasher<Candidate>, PasswordHasher<Candidate>>();
+builder.Services.AddScoped<AccountServices>();
 builder.Services.AddScoped<CandidateServices>();
 builder.Services.AddScoped<AdminServices>();
 builder.Services.AddScoped<CertificateServices>();

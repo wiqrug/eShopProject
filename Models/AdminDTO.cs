@@ -12,7 +12,7 @@ namespace Project2.Models
 
         public string Address { get; set; }
         public string MobileNumber { get; set; }
-
+        [EmailAddress]
         public string Email { get; set; }
 
         public string Password { get; set; }
