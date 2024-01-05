@@ -26,6 +26,12 @@ public class Certificate
 
 
     public List<Exam> Exams { get; set; }
+    [Required]
+    public string Description { get; set; }
+
+    public int Prices { get; set; }
+    public string ImageSrc { get; set; }
+
 
 
     // Constructor

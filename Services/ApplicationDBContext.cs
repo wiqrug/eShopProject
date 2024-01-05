@@ -17,6 +17,7 @@ namespace Project2.Services
         public DbSet<Certificate> Certificates { get; set; }
         public DbSet<CandidateCertificates> CandidateCertificates { get; set; }
         public DbSet<Marker> Markers { get; set; }
+        public DbSet<Questions> Questions { get; set; }
 
         public DbSet<QualityControl> QualityControls { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,6 +38,7 @@ namespace Project2.Services
             modelBuilder.Entity<CandidateCertificates>().ToTable("CandidateCertificates");
             modelBuilder.Entity<Marker>().ToTable("Markers");
             modelBuilder.Entity<QualityControl>().ToTable("QualityControls");
+            modelBuilder.Entity<Questions>().ToTable("Questions");
 
 
             //    Configure the relationship between Exam and Certificate
@@ -67,6 +69,17 @@ namespace Project2.Services
                 .HasForeignKey(cc => cc.CertificateID);
 
             // Add any additional relationship configurations here
+
+            modelBuilder.Entity<Questions>()
+                .HasOne(e => e.Exam)
+                .WithMany(c=>c.Questions)
+                .HasForeignKey(c => c.ExamID);
+                 
+
+            modelBuilder.Entity<Exam>()
+                .HasMany(e => e.Questions)
+                .WithOne(c => c.Exam)
+                .HasForeignKey(c => c.ExamID);
         }
     }
 }

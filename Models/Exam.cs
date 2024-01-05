@@ -12,6 +12,9 @@ namespace Project2.Models
         public int? AwardedMarks { get; set; }
         public int PossibleMarks { get; set; }
 
+        public string Title { get; set; }
+        public int Time {  get; set; }  
+
         //public Certificate Certificate { get; set; }
 
 
@@ -19,8 +22,10 @@ namespace Project2.Models
         [ForeignKey("Certificate")]
         public Guid CertificateID { get; set; }
 
+        public ICollection<Questions> Questions { get; set; }
 
         public  Certificate Certificate { get; set; }
+        //public Questions questions { get; set; }
 
         public Exam()
         {
