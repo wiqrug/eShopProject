@@ -66,4 +66,6 @@ public class CandidateDTO
     [StringLength(20)]
     public string? LandlineNumber { get; set; } = "";
 
+    public string? MobileNumber { get; set; }
+
 }

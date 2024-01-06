@@ -64,7 +64,7 @@ namespace Project2.Services
                 MobileNumber = candidateDTO.MobileNumber,
                 Password = candidateDTO.Password,
                 role = Models.User.Role.Candidate,
-
+             
             };
 
             context.Candidates.Add(candidate);
