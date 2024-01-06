@@ -33,21 +33,16 @@ namespace Project2.Services
             var boughtCertificates = context.CandidateCertificates
                                             .Where(x => x.CandidateId == candidate.UserId)
                                             .Include(x => x.Certificate)
-                                            .ThenInclude(c => c.Exams)    // Eagerly load Exams related to Certificate
-                                            .Select(x => x.Certificate)
                                             .ToList();
 
+            foreach (var candidateCertificate in boughtCertificates)
+            {
                 if (candidateCertificate.Mark >= 50)
                 {
                     ObtainedCerts.Add(candidateCertificate.Certificate);
                 }
             }
             Console.WriteLine(boughtCertificates);
-                        passedExamsCount++;
-                    }
-                }
-                    }
-                }
 
             return ObtainedCerts;
         }
@@ -61,10 +56,15 @@ namespace Project2.Services
 
                 return new List<Certificate>();
             }
+
+
+            List<Certificate> UnobtainedCertificates = new List<Certificate>();
+
+            var boughtCertificates = context.CandidateCertificates
                                            .Where(x => x.CandidateId == candidate.UserId)
                                            .Include(x => x.Certificate)
                                            .ToList();
-                                            .Where(x => x.CandidateId == candidate.UserId)
+
             foreach (var candidateCertificate in boughtCertificates)
             {
                 if (candidateCertificate.Mark < 50)
@@ -73,21 +73,16 @@ namespace Project2.Services
                 }
             }
 
-                        UnobtainedCertificates.Add(certificate);
-
-                    }
-                }
-            }
             return UnobtainedCertificates;
         }
 
-            var certificate = context.Certificates.FirstOrDefault(x => x.Title == candidateCertificatesDTO.Title);
 
+        public bool CreateCandidateCertificate(CandidateCertificatesDTO candidateCertificatesDTO)
         {
 
             var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateCertificatesDTO.CandidateNumber);
-            var certificate = context.Certificates.FirstOrDefault(x => x.TitleOfCertificate == candidateCertificatesDTO.TitleOfCertificate);
-            
+            var certificate = context.Certificates.FirstOrDefault(x => x.Title == candidateCertificatesDTO.Title);
+
             if (candidate == null || certificate == null)
             {
                 return false; // Or throw an exception
@@ -101,35 +96,36 @@ namespace Project2.Services
                 CertificateId = certificate.CertificateId,
             };
 
-            var result = new CertificateCountResult();
-        public List<Certificate> GetAvailableCertificates(int candidateNumber)
-            }
-
-            return result;
+            context.CandidateCertificates.Add(enrollment);
+            context.SaveChanges();
+            return true;
         }
+
+
         public List<Certificate> GetAvailableCertificates(int candidateNumber)
         {
             // Fetching the candidate
-
-
-            List<Certificate> AvailableCertificates = new List<Certificate>();
-
-
-
-            var boughtCertificates = context.CandidateCertificates
-            var allCertificatesId = context.Certificates
-                                   .ToList();
-
-            return availCert;
-            }
-        }
             Candidate candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
             if (candidate == null)
             {
+
+                return new List<Certificate>();
             }
 
-            return ObtainedCertsByDate;
+            var boughtCertificates = context.CandidateCertificates
+                                            .Where(x => x.CandidateId == candidate.UserId)
+                                            .Include(x => x.Certificate)  // Eagerly load Certificate
+                                            .Select(x => x.Certificate)
+                                            .ToList();
+
+            var allCertificatesId = context.Certificates
+                                   .ToList();
+            var availCert = allCertificatesId.Except(boughtCertificates).ToList();
+            return availCert;
+
         }
+
+
 
         public List<Exam> GetMarksPerExamPerCertificate(int? candidateNumber)
         {
