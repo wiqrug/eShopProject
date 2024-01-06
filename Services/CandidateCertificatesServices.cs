@@ -27,22 +27,22 @@ namespace Project2.Services
                 // If the candidate is not found, return an empty list
                 return new List<Certificate>();
             }
-
-            Dictionary<Certificate, int> ExamsPassed = new Dictionary<Certificate, int>();
             List<Certificate> ObtainedCerts = new List<Certificate>();
 
             // Modify the query to use eager loading correctly
             var boughtCertificates = context.CandidateCertificates
                                             .Where(x => x.CandidateId == candidate.UserId)
+                                            .Include(x => x.Certificate)
                                             .ToList();
 
             foreach (var candidateCertificate in boughtCertificates)
-            { 
-                    if (candidateCertificate.Mark > 50)
-                    {
-                        ObtainedCerts.Add(candidateCertificate.Certificate);
-                    }
+            {
+                if (candidateCertificate.Mark >= 50)
+                {
+                    ObtainedCerts.Add(candidateCertificate.Certificate);
+                }
             }
+            Console.WriteLine(boughtCertificates);
 
             return ObtainedCerts;
         }
@@ -62,6 +62,7 @@ namespace Project2.Services
 
             var boughtCertificates = context.CandidateCertificates
                                            .Where(x => x.CandidateId == candidate.UserId)
+                                           .Include(x => x.Certificate)
                                            .ToList();
 
             foreach (var candidateCertificate in boughtCertificates)
@@ -100,7 +101,7 @@ namespace Project2.Services
             return true;
         }
 
-  
+
         public List<Certificate> GetAvailableCertificates(int candidateNumber)
         {
             // Fetching the candidate
