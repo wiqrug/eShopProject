@@ -40,7 +40,7 @@ namespace Project2.Controllers
         // but actually admins will be hardCoded
 
         //fix this to call adminsServices
-        [HttpPost("/admin/add-candidate")]
+        [HttpPost("/admin/addCandidate")]
         public IActionResult addCandidate(CandidateDTO candidateDTO, string email, string password)
         {
             if (adminsServices.isAdmin(email, password)) { candidateServices.CreateCandidate(candidateDTO);
@@ -51,7 +51,7 @@ namespace Project2.Controllers
 
         //Remove a Candidate
    
-        [HttpDelete("{candidate-number}")] // Delete Candidate
+        [HttpDelete("{candidateNumber}")] // Delete Candidate
         public IActionResult DeleteCandidate(int candidateNumber,string email, string password)
         {
             if (adminsServices.isAdmin(email, password))
@@ -69,7 +69,7 @@ namespace Project2.Controllers
    
         }
 
-        [HttpGet("admin/get-candidates")]   // Show List of Candidates
+        [HttpGet("admin/getCandidates")]   // Show List of Candidates
         public IActionResult GetCandidates(string email, string password)
         {
             if (adminsServices.isAdmin(email, password)) { return Ok(adminsServices.GetCandidates()); }
@@ -77,7 +77,7 @@ namespace Project2.Controllers
             { return BadRequest("You are not an admin mofo"); };
         }
 
-        [HttpGet("admin/get-candidate-by-number/{candidate-number}")]
+        [HttpGet("admin/get-candidate-by-number/{candidateNumber}")]
         public IActionResult getCandidateByNumber(int candidateNumber,string email,string password)
         {
             if (adminsServices.isAdmin(email, password))
@@ -90,7 +90,7 @@ namespace Project2.Controllers
             else return BadRequest("You are not an admin brotha");
         }
 
-        [HttpPut("admin/update-candidate/{candidate-number}")]   // Update Candidate
+        [HttpPut("admin/update-candidate/{candidateNumber}")]   // Update Candidate
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO,string email,string password)
         {
             if (adminsServices.isAdmin(email, password))

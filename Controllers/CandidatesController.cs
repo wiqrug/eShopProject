@@ -45,7 +45,7 @@ namespace Project2.Controllers
         }
 
 
-        [HttpPut("{candidate-number}")]   // Update Candidate
+        [HttpPut("{candidateNumber}")]   // Update Candidate
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO)
         {
             if (candidateNumber == null)

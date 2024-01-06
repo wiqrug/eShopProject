@@ -23,7 +23,7 @@ namespace Project2.Controllers
             return Ok(exams);
         }
 
-        [HttpGet("{title}")]
+        [HttpGet("{Title}")]
         public IActionResult GetById(Guid id)
         {
             var exam = _examService.GetExamById(id);
@@ -40,14 +40,14 @@ namespace Project2.Controllers
             return Ok();
         }
 
-        [HttpPut("{title}")]
+        [HttpPut("{Title}")]
         public IActionResult Update(Guid id, [FromBody] ExamDto examDto)
         {
             _examService.UpdateExam(id, examDto);
             return Ok();
         }
 
-        [HttpDelete("{title}")]
+        [HttpDelete("{Title}")]
         public IActionResult Delete(Guid id)
         {
             _examService.DeleteExam(id);
