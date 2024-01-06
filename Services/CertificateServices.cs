@@ -36,7 +36,7 @@ namespace Project2.Services
                 ScoreReportDate = certificateDTO.ScoreReportDate,
                 MaximumScore = certificateDTO.MaximumScore,
                 Description = certificateDTO.Description,
-                Prices = certificateDTO.Prices,
+                Price = certificateDTO.Price,
                 ImageSrc = certificateDTO.ImageSrc
             };
 
@@ -67,7 +67,7 @@ namespace Project2.Services
             certificate.ScoreReportDate = certificateDTO.ScoreReportDate;
             certificate.MaximumScore = certificateDTO.MaximumScore;
             certificate.Description = certificateDTO.Description;
-            certificate.Prices = certificateDTO.Prices;
+            certificate.Price = certificateDTO.Price;
             certificate.ImageSrc = certificateDTO.ImageSrc;
 
             context.SaveChanges();
