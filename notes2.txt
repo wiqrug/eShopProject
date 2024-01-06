@@ -1,0 +1,11 @@
+﻿fixed Exams class
+
+fixed User class 
+
+Admin remains the same, also AdminDto
+
+fixed CandidateCertificates
+
+fixed CandidateDto
+
+We need to add a default imageSrc in the Certificate.cs

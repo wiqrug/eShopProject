@@ -59,7 +59,7 @@ namespace Project2.Services
 
             var claims = new List<Claim>
     {
-        new Claim("id", candidate.UserID.ToString()),
+        new Claim("id", candidate.UserId.ToString()),
         // Add other claims as needed
     };
 

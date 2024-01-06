@@ -33,7 +33,7 @@ namespace Project2.Services
 
             // Modify the query to use eager loading correctly
             var boughtCertificates = context.CandidateCertificates
-                                            .Where(x => x.CandidateID == candidate.UserID)
+                                            .Where(x => x.CandidateId == candidate.UserId)
                                             .Include(x => x.Certificate)  // Eagerly load Certificate
                                             .ThenInclude(c => c.Exams)    // Eagerly load Exams related to Certificate
                                             .Select(x => x.Certificate)
@@ -76,7 +76,7 @@ namespace Project2.Services
             List<Certificate> UnobtainedCertificates = new List<Certificate>();
 
             var boughtCertificates = context.CandidateCertificates
-                                            .Where(x => x.CandidateID == candidate.UserID)
+                                            .Where(x => x.CandidateId == candidate.UserId)
                                             .Include(x => x.Certificate)  // Eagerly load Certificate
                                             .ThenInclude(c => c.Exams)    // Eagerly load Exams related to Certificate
                                             .Select(x => x.Certificate)
@@ -112,8 +112,8 @@ namespace Project2.Services
             {
                 Candidate = candidate,
                 Certificate = certificate,
-                CandidateID = candidate.UserID,
-                CertificateID = certificate.CertificateID,
+                CandidateId = candidate.UserId,
+                CertificateId = certificate.CertificateId,
                 CandidateScore = null,
                 PercentageScore = null,
                 AssessmentTestCode = "",
@@ -164,7 +164,7 @@ namespace Project2.Services
 
 
             var boughtCertificates = context.CandidateCertificates
-                                            .Where(x => x.CandidateID == candidate.UserID)
+                                            .Where(x => x.CandidateId == candidate.UserId)
                                             .Include(x => x.Certificate)  // Eagerly load Certificate
                                             .ThenInclude(c => c.Exams)    // Eagerly load Exams related to Certificate
                                             .Select(x => x.Certificate)
@@ -197,7 +197,7 @@ namespace Project2.Services
             List<Certificate> ObtainedCerts = new List<Certificate>();
 
             var boughtCertificates = context.CandidateCertificates
-                                            .Where(x => x.CandidateID == candidate.UserID)
+                                            .Where(x => x.CandidateId == candidate.UserId)
                                             .Include(x => x.Certificate)
                                             .ThenInclude(c => c.Exams)
                                             .Select(x => x.Certificate)
@@ -245,7 +245,7 @@ namespace Project2.Services
 
             // Searching for certificates of this candidtate
             var certificates = context.CandidateCertificates
-                                    .Where(x => x.CandidateID == candidate.UserID)
+                                    .Where(x => x.CandidateId == candidate.UserId)
                                     .Include(x => x.Certificate)
                                     //.ThenInclude(c => c.Exams)
                                     .Select(x => x.Certificate)
@@ -258,7 +258,7 @@ namespace Project2.Services
             foreach (var cert in certificates)
             {
                 var examAwardedMarks = context.CandidateExams
-                            .Where(x => x.CandidateID == candidate.UserID && x.Exam.CertificateID == cert.CertificateID)
+                            .Where(x => x.CandidateId == candidate.UserId && x.Exam.CertificateId == cert.CertificateId)
                             .Select(x => x.Exam)
                             .ToList();
 

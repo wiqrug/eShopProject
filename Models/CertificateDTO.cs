@@ -5,23 +5,11 @@ namespace Project2.Models
     public class CertificateDTO
     {
 
-        [Required]
+  
         [StringLength(200)] // Adjust the length based on your requirements
-        public string TitleOfCertificate { get; set; }
+        public string Title { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string AssessmentTestCode { get; set; }
-
-        [Required]
-        public DateTime ExaminationDate { get; set; }
-
-        [Required]
-        public DateTime ScoreReportDate { get; set; }
-
-        [Required]
-        public int MaximumScore { get; set; }
-        [Required]
+        [StringLength(150)]
         public string Description { get; set; }
         public int Price { get; set; }
         public string ImageSrc { get; set; }

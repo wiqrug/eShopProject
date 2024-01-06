@@ -48,7 +48,7 @@ namespace Project2.Services
             modelBuilder.Entity<Exam>()
                 .HasOne(e => e.Certificate)
                 .WithMany(c => c.Exams)
-                .HasForeignKey(e => e.CertificateID)
+                .HasForeignKey(e => e.CertificateId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Configure other relationships as necessary
@@ -56,17 +56,17 @@ namespace Project2.Services
             modelBuilder.Entity<CandidateExam>()
                 .HasOne(ce => ce.Candidate)
                 .WithMany()
-                .HasForeignKey(ce => ce.CandidateID);
+                .HasForeignKey(ce => ce.CandidateId);
 
             // Similarly, configure relationships for CandidateCertificates
             modelBuilder.Entity<CandidateCertificates>()
                 .HasOne(cc => cc.Candidate)
                 .WithMany()
-                .HasForeignKey(cc => cc.CandidateID);
+                .HasForeignKey(cc => cc.CandidateId);
             modelBuilder.Entity<CandidateCertificates>()
                 .HasOne(cc => cc.Certificate)
                 .WithMany()
-                .HasForeignKey(cc => cc.CertificateID);
+                .HasForeignKey(cc => cc.CertificateId);
 
             // Add any additional relationship configurations here
 

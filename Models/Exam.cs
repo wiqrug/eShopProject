@@ -1,37 +1,48 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Identity.Client;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Project2.Models
 {
     public class Exam
     {
-        [Required]
+        
         [Key]
         public Guid ExamId { get; set; }
-        public string? ExamDescription { get; set; }
-        public int? AwardedMarks { get; set; }
-        public int? PossibleMarks { get; set; }
-        [Required]
-        public string Title { get; set; }
-        public int Time {  get; set; }  
-
-        //public Certificate Certificate { get; set; }
-
 
         [Required]
         [ForeignKey("Certificate")]
-        public Guid CertificateID { get; set; }
+        public Guid CertificateId { get; set; }
 
+        [Required]
+        [StringLength(50)]
+        public string Title { get; set; }
+        [Required]
+        public string Description { get; set; }
+        [Required]
+        public int Time {  get; set; }  
+
+
+
+        //Navigation properties
         public ICollection<Questions> Questions { get; set; }
 
         public  Certificate Certificate { get; set; }
-        //public Questions questions { get; set; }
 
-        public Exam()
+        //Constructor
+        //Delete this later
+        //Added CertificateID = certificateId and also argument in the constructor
+        public Exam(Guid certificateId)
         {
-            CertificateID = new Guid();
+            ExamId = Guid.NewGuid();
+            CertificateId = certificateId;
         }
 
+        //Added empty constructor
+        public Exam() {
+            ExamId = Guid.NewGuid();
+        }
 
     }
 }

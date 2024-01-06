@@ -8,37 +8,24 @@ namespace Project2.Models
     {
         [Key]
         [JsonIgnore]
-        public Guid UserID { get; private set; }
+        //We have setter because the framework needs it
+        //TODO: Merge common properties of Admin and Candidate
+        public Guid UserId { get; private set; }
 
         [Required]
         [StringLength(100)]
         [EmailAddress]
         public string Email { get; set; }
+
+        [Required]
         public Role role { get; set; }
         [Required]
         [StringLength(300)]
         public string Password { get; set; }
-        //[Required]
-        //[StringLength(30)]
-        //public string FirstName { get; set; }
-        //[Required]
-        //[StringLength(30)]
-        //public string LastName { get; set; }
-        //public string Address { get; set; }
-        
-        //public string MobileNumber { get; set; }
-
-
-        //possibly wrong code
-        //public User(Guid userID)
-        //{
-        //    UserID = Guid.NewGuid();
-        //}
-
-        //Maybe this is a better implementation of the constructor, because we dont really need to have arguments in the ctor
+   
         public User()
         {
-            UserID = Guid.NewGuid();
+            UserId = Guid.NewGuid();
         }
 
 

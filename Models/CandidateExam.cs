@@ -6,15 +6,29 @@ namespace Project2.Models
     public class CandidateExam
     {
         [Key]
-        public Guid CandidateExamID { get; set; }
+        public Guid CandidateExamId { get; set; }
 
+        [Required]
         [ForeignKey("Candidate")]
-        public Guid CandidateID { get; set; }
+        public Guid CandidateId { get; set; }
 
+        [Required]
         [ForeignKey("Exam")]
-        public Guid ExamID { get; set; }
+        public Guid ExamId { get; set; }
 
-        public int Mark { get;set; }
+        private int _examMark;
+        public int ExamMark
+        {
+            get
+            {
+                return this._examMark;
+            }
+            set
+            {
+                this._examMark = value;
+                TakenAt = DateTime.Now;
+            }
+        }
 
         public DateTime TakenAt { get; set; }
 
@@ -23,7 +37,7 @@ namespace Project2.Models
 
         public CandidateExam()
         {
-            CandidateExamID = Guid.NewGuid();
+            CandidateExamId = Guid.NewGuid();
             TakenAt = DateTime.Now;
         }
     }
