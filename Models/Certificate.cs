@@ -12,6 +12,7 @@ public class Certificate
 
     [Required]
     [StringLength(200)] // Adjust the length based on your requirements
+    [DistinctValues(ErrorMessage = "Values must be distinct")]
     public string Title { get; set; }
 
     [Required]

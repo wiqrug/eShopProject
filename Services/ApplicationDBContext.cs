@@ -63,6 +63,7 @@ namespace Project2.Services
                 .HasOne(cc => cc.Candidate)
                 .WithMany()
                 .HasForeignKey(cc => cc.CandidateId);
+
             modelBuilder.Entity<CandidateCertificates>()
                 .HasOne(cc => cc.Certificate)
                 .WithMany()
@@ -72,14 +73,15 @@ namespace Project2.Services
 
             modelBuilder.Entity<Questions>()
                 .HasOne(e => e.Exam)
-                .WithMany(c=>c.Questions)
+                .WithMany(c => c.Questions)
                 .HasForeignKey(c => c.ExamId);
-                 
+
 
             modelBuilder.Entity<Exam>()
                 .HasMany(e => e.Questions)
                 .WithOne(c => c.Exam)
                 .HasForeignKey(c => c.ExamId);
+
         }
     }
 }

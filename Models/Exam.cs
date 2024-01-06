@@ -17,6 +17,7 @@ namespace Project2.Models
 
         [Required]
         [StringLength(50)]
+        [DistinctValues(ErrorMessage = "Values must be distinct")]
         public string Title { get; set; }
         [Required]
         public string Description { get; set; }

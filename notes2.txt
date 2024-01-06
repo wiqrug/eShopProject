@@ -9,3 +9,7 @@ fixed CandidateCertificates
 fixed CandidateDto
 
 We need to add a default imageSrc in the Certificate.cs
+
+
+
+put method to update everything should be patch method instead of put

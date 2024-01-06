@@ -29,7 +29,7 @@ namespace Project2.Controllers
 
         
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public IActionResult Login(string email, string password)
         {
 
@@ -55,14 +55,14 @@ namespace Project2.Controllers
 
 
         [Authorize]
-        [HttpGet("AuthorizeAuthenticatedCandidates")]
+        [HttpGet("authorize-authenticated-candidates")]
         public IActionResult AuthorizeAuthenticatedCandidates()
         {
             return Ok("Authorized candidate");
         }
 
         [Authorize(Roles = "admin")]
-        [HttpGet("AuthorizeAdmin")]
+        [HttpGet("authorize-admin")]
         public IActionResult AuthorizeAdmin()
         {
             return Ok("Authorized Admin");

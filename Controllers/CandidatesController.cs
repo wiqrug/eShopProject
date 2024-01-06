@@ -34,18 +34,17 @@ namespace Project2.Controllers
         [HttpPost]  // Create Candidate
         public IActionResult CreateCandidate(CandidateDTO candidateDTO)
         {
+            //Implement this method backend guys
             if (candidateServices.EmailExists(candidateDTO.Email))
             {
                 return BadRequest("This email address is already in use");
             }
-
-
             candidateServices.CreateCandidate(candidateDTO);
             return Ok();
         }
 
 
-        [HttpPut("{candidateNumber}")]   // Update Candidate
+        [HttpPut("{candidatNumber}")]   // Update Candidate
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO)
         {
             if (candidateNumber == null)

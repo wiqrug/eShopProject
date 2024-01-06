@@ -6,7 +6,7 @@ namespace Project2.Models
     public class CandidateCertificatesDTO
     {
         public int CandidateNumber { get; set; }
-        public string TitleOfCertificate { get; set; }
+        public string Title { get; set; }
 
 
     }

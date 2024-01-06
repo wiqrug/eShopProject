@@ -71,12 +71,12 @@ namespace Project2.Controllers
 
 
 
-        [HttpGet("CertificateCounts")]
-        public IActionResult GetCertificateCounts([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
-        {
-            var certificateCounts = candidateCertificatesServices.GetCertificateCountsByDateRange(startDate, endDate);
-            return Ok(certificateCounts);
-        }
+        //[HttpGet("certificate-counts")]
+        //public IActionResult GetCertificateCounts([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        //{
+        //    var certificateCounts = candidateCertificatesServices.GetCertificateCountsByDateRange(startDate, endDate);
+        //    return Ok(certificateCounts);
+        //}
 
         [HttpGet("available/{candidateNumber}")]
 
@@ -94,21 +94,9 @@ namespace Project2.Controllers
 
         }
 
-        [HttpGet("ByDate/{candidateNumber}")]
-        public IActionResult GetObtainedCertificatesByDate(int candidateNumber, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
-        {
-            if (candidateNumber == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                var obtainedCertsByDate = candidateCertificatesServices.GetObtainedCertificatesByDate(candidateNumber, startDate, endDate);
-                return Ok(obtainedCertsByDate);
-            }
-        }
+ 
 
-        [HttpGet("api/Candidate/{candidateNumber}/CertificatesExamsHistory")]
+        [HttpGet("api/candidate/{candidateNumber}/certificatesExamsHistory")]
         public IActionResult GetMarksPerExamPerCertificate(int? candidateNumber)
         {
             if (candidateNumber == null)
@@ -120,7 +108,7 @@ namespace Project2.Controllers
                 var x = candidateCertificatesServices.GetMarksPerExamPerCertificate(candidateNumber);
                     return Ok(x);
             }
-            
+
             //var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber)!;
 
             //if (context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber) == null)
@@ -150,6 +138,22 @@ namespace Project2.Controllers
             //}
 
             //return Ok(CertificatesMarks);
+
+            //Needs fix (same does service)
+
+            //[HttpGet("ByDate/{candidate-number}")]
+            //public IActionResult GetObtainedCertificatesByDate(int candidateNumber, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+            //{
+            //    if (candidateNumber == null)
+            //    {
+            //        return BadRequest();
+            //    }
+            //    else
+            //    {
+            //        var obtainedCertsByDate = candidateCertificatesServices.GetObtainedCertificatesByDate(candidateNumber, startDate, endDate);
+            //        return Ok(obtainedCertsByDate);
+            //    }
+            //}
         }
     }
 }

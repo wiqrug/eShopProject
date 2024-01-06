@@ -16,7 +16,7 @@ public class CandidateCertificates
     [Required]
     [ForeignKey("Certificate")]
     public Guid CertificateId { get; set; }
-    private int? _mark;
+    private int? _mark=0;
     public int? Mark
     {
         get
@@ -26,9 +26,9 @@ public class CandidateCertificates
         set
         {
             this._mark = value;
-            CompletedAt= DateTime.Now;
+            CompletedAt = DateTime.Now;
         }
-    }
+    } 
 
     public DateTime CreatedAt { get; set; }
 

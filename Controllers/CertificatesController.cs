@@ -22,10 +22,10 @@ namespace Project2.Controllers
             return Ok(certificateServices.GetCertificates());
         }
 
-        [HttpGet("{TitleOfCertificate}")]   // Show Certificate
-        public IActionResult GetCertificate(string TitleOfCertificate)
+        [HttpGet("{Title}")]   // Show Certificate
+        public IActionResult GetCertificate(string Title)
         {
-           return Ok(certificateServices.GetCertificateByTitle(TitleOfCertificate));
+           return Ok(certificateServices.GetCertificateByTitle(Title));
         }
 
         [HttpPost]  // Create Certificate
@@ -35,10 +35,10 @@ namespace Project2.Controllers
             return Ok();
         }
 
-        [HttpDelete("{TitleOfCertificate}")]    // Delete Certificate
-        public IActionResult DeleteCertificate(string TitleOfCertificate)
+        [HttpDelete("{Title}")]    // Delete Certificate
+        public IActionResult DeleteCertificate(string Title)
         {
-            if (!certificateServices.DeleteCertificate(TitleOfCertificate))
+            if (!certificateServices.DeleteCertificate(Title))
             {
                 return NotFound("This certificate does not exist!");
             }
@@ -46,10 +46,10 @@ namespace Project2.Controllers
             return Ok();
         }
 
-        [HttpPut("{TitleOfCertificate}")]   // Update Certificate
-        public IActionResult UpdateCertificate(string TitleOfCertificate, CertificateDTO certificateDTO)
+        [HttpPut("{Title}")]   // Update Certificate
+        public IActionResult UpdateCertificate(string Title, CertificateDTO certificateDTO)
         {
-            certificateServices.UpdateCertificate(TitleOfCertificate, certificateDTO);
+            certificateServices.UpdateCertificate(Title, certificateDTO);
             return Ok();
         }
     }

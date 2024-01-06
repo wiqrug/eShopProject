@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations;
 public class CandidateDTO
 {
 
-    public int CandidateNumber { get; set; }
 
 
     [StringLength(30)]
