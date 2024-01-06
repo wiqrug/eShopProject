@@ -34,28 +34,14 @@ namespace Project2.Services
             // Modify the query to use eager loading correctly
             var boughtCertificates = context.CandidateCertificates
                                             .Where(x => x.CandidateId == candidate.UserId)
-                                            .Include(x => x.Certificate)  // Eagerly load Certificate
-                                            .ThenInclude(c => c.Exams)    // Eagerly load Exams related to Certificate
-                                            .Select(x => x.Certificate)
                                             .ToList();
 
-            foreach (var certificate in boughtCertificates)
+            foreach (var candidateCertificate in boughtCertificates)
             {
-                int passedExamsCount = 0;
-
-                foreach (var exam in certificate.Exams)
-                {
-                    if (exam.AwardedMarks > 50)
+                   if (candidateCertificate.Mark > 50)
                     {
-                        passedExamsCount++;
+                        ObtainedCerts.Add(candidateCertificate.Certificate);
                     }
-                }
-
-                if (passedExamsCount == certificate.Exams.Count && passedExamsCount!=0)
-                {
-                    ObtainedCerts.Add(certificate);
-                }
-                
             }
 
             return ObtainedCerts;
@@ -76,23 +62,17 @@ namespace Project2.Services
             List<Certificate> UnobtainedCertificates = new List<Certificate>();
 
             var boughtCertificates = context.CandidateCertificates
-                                            .Where(x => x.CandidateId == candidate.UserId)
-                                            .Include(x => x.Certificate)  // Eagerly load Certificate
-                                            .ThenInclude(c => c.Exams)    // Eagerly load Exams related to Certificate
-                                            .Select(x => x.Certificate)
-                                            .ToList();
+                                           .Where(x => x.CandidateId == candidate.UserId)
+                                           .ToList();
 
-            foreach (var certificate in boughtCertificates)
+            foreach (var candidateCertificate in boughtCertificates)
             {
-                foreach (var exam in certificate.Exams)
+                if (candidateCertificate.Mark < 50)
                 {
-                    if (exam.AwardedMarks < 50)
-                    {
-                        UnobtainedCertificates.Add(certificate);
-
-                    }
+                    UnobtainedCertificates.Add(candidateCertificate.Certificate);
                 }
             }
+
             return UnobtainedCertificates;
         }
 
@@ -101,7 +81,7 @@ namespace Project2.Services
         {
             
             var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateCertificatesDTO.CandidateNumber);
-            var certificate = context.Certificates.FirstOrDefault(x => x.TitleOfCertificate == candidateCertificatesDTO.TitleOfCertificate);
+            var certificate = context.Certificates.FirstOrDefault(x => x.Title == candidateCertificatesDTO.TitleOfCertificate);
             
             if (candidate == null || certificate == null)
             {
@@ -114,11 +94,6 @@ namespace Project2.Services
                 Certificate = certificate,
                 CandidateId = candidate.UserId,
                 CertificateId = certificate.CertificateId,
-                CandidateScore = null,
-                PercentageScore = null,
-                AssessmentTestCode = "",
-                AssessmentResultLabel = ""
-
             };
 
             context.CandidateCertificates.Add(enrollment);
@@ -127,7 +102,7 @@ namespace Project2.Services
         }
 
         //We need to have a date that is initialized when the exam is passed
-        public CertificateCountResult GetCertificateCountsByDateRange(DateTime startDate, DateTime endDate)
+/*        public CertificateCountResult GetCertificateCountsByDateRange(DateTime startDate, DateTime endDate)
         {
             var result = new CertificateCountResult();
 
@@ -149,44 +124,26 @@ namespace Project2.Services
 
             return result;
         }
-        public List<Certificate> GetAvailableCertificates(int candidateNumber)
+*/        public List<Certificate> GetAvailableCertificates(int candidateNumber)
         {
             // Fetching the candidate
             Candidate candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
             if (candidate == null)
             {
-
                 return new List<Certificate>();
             }
-
-            List<Certificate> AvailableCertificates = new List<Certificate>();
-
-
-
             var boughtCertificates = context.CandidateCertificates
                                             .Where(x => x.CandidateId == candidate.UserId)
                                             .Include(x => x.Certificate)  // Eagerly load Certificate
-                                            .ThenInclude(c => c.Exams)    // Eagerly load Exams related to Certificate
                                             .Select(x => x.Certificate)
                                             .ToList();
 
-
-            var allCertificatesId = context.Certificates
-                                   .ToList();
-
+            var allCertificatesId = context.Certificates.ToList();
             var availCert = allCertificatesId.Except(boughtCertificates).ToList();
-
-
-            foreach (var certificate in availCert)
-            {
-                AvailableCertificates.Add(certificate);
-            }
-
-            return AvailableCertificates;
-
+            return availCert;
         }
 
-        public List<Certificate> GetObtainedCertificatesByDate(int candidateNumber, DateTime startDate, DateTime endDate)
+/*        public List<Certificate> GetObtainedCertificatesByDate(int candidateNumber, DateTime startDate, DateTime endDate)
         {
             Candidate candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
             if (candidate == null)
@@ -233,7 +190,7 @@ namespace Project2.Services
 
             return ObtainedCertsByDate;
         }
-
+*/
         public List<Exam> GetMarksPerExamPerCertificate(int? candidateNumber)
         {
             var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber)!;

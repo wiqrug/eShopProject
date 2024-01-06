@@ -20,10 +20,6 @@ namespace Project2.Services
 
         public void CreateCandidate(CandidateDTO candidateDTO)
         {
-            
-                      
-        
-             
             //encrypt the password
             var passwordHasher = new PasswordHasher<Candidate>();
             var encryptedPassword = passwordHasher.HashPassword(new Candidate(), candidateDTO.Password);

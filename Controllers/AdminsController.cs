@@ -51,7 +51,7 @@ namespace Project2.Controllers
 
         //Remove a Candidate
    
-        [HttpDelete("{candidateNumber}")] // Delete Candidate
+        [HttpDelete("{candidate-number}")] // Delete Candidate
         public IActionResult DeleteCandidate(int candidateNumber,string email, string password)
         {
             if (adminsServices.isAdmin(email, password))
@@ -77,7 +77,7 @@ namespace Project2.Controllers
             { return BadRequest("You are not an admin mofo"); };
         }
 
-        [HttpGet("admin/get-candidate-by-number/{candidateNumber}")]
+        [HttpGet("admin/get-candidate-by-number/{candidate-number}")]
         public IActionResult getCandidateByNumber(int candidateNumber,string email,string password)
         {
             if (adminsServices.isAdmin(email, password))
@@ -90,7 +90,7 @@ namespace Project2.Controllers
             else return BadRequest("You are not an admin brotha");
         }
 
-        [HttpPut("admin/update-candidate/{candidateNumber}")]   // Update Candidate
+        [HttpPut("admin/update-candidate/{candidate-number}")]   // Update Candidate
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO,string email,string password)
         {
             if (adminsServices.isAdmin(email, password))

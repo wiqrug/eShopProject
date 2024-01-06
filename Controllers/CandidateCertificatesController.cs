@@ -38,7 +38,7 @@ namespace Project2.Controllers
 
 
 
-        [HttpGet("obtained/{candidateNumber}")]
+        [HttpGet("obtained/{candidate-number}")]
         public IActionResult GetObtainedCertificates(int candidateNumber)
         {
             if(candidateNumber == null)
@@ -53,7 +53,7 @@ namespace Project2.Controllers
             }
         }
 
-        [HttpGet("unobtained/{candidateNumber}")]
+        [HttpGet("unobtained/{candidate-number}")]
         public IActionResult GetUnobtainedCertificates(int candidateNumber)
         {
             if (candidateNumber == null)
@@ -71,14 +71,14 @@ namespace Project2.Controllers
 
 
 
-        [HttpGet("CertificateCounts")]
+/*        [HttpGet("CertificateCounts")]
         public IActionResult GetCertificateCounts([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
             var certificateCounts = candidateCertificatesServices.GetCertificateCountsByDateRange(startDate, endDate);
             return Ok(certificateCounts);
         }
-
-        [HttpGet("available/{candidateNumber}")]
+*/
+        [HttpGet("available/{candidate-number}")]
 
         public IActionResult GetAvailableCertificates(int candidateNumber)
         {
@@ -94,7 +94,7 @@ namespace Project2.Controllers
 
         }
 
-        [HttpGet("ByDate/{candidateNumber}")]
+/*        [HttpGet("ByDate/{candidateNumber}")]
         public IActionResult GetObtainedCertificatesByDate(int candidateNumber, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
             if (candidateNumber == null)
@@ -107,8 +107,8 @@ namespace Project2.Controllers
                 return Ok(obtainedCertsByDate);
             }
         }
-
-        [HttpGet("api/Candidate/{candidateNumber}/CertificatesExamsHistory")]
+*/
+        [HttpGet("api/candidate/{candidate-number}/certificates-exams-history")]
         public IActionResult GetMarksPerExamPerCertificate(int? candidateNumber)
         {
             if (candidateNumber == null)
