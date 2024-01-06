@@ -4,29 +4,31 @@ using Project2.Services;
 using System;
 
 namespace Project2.Controllers
+
+
 {
     [ApiController]
     [Route("api/[controller]")]
     public class ExamsController : ControllerBase
     {
-        private readonly ExamService _examService;
+        private readonly ExamService examService;
 
         public ExamsController(ExamService examService)
         {
-            _examService = examService;
+            this.examService = examService;
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var exams = _examService.GetAllExams();
+            var exams = examService.GetAllExams();
             return Ok(exams);
         }
 
         [HttpGet("{Title}")]
-        public IActionResult GetById(Guid id)
+        public IActionResult GetByTitle(string Title)
         {
-            var exam = _examService.GetExamById(id);
+            var exam = examService.GetExamByTitle(Title);
             if (exam == null)
                 return NotFound();
 
@@ -34,23 +36,23 @@ namespace Project2.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] ExamDto examDto)
+        public IActionResult Create([FromBody] ExamDto examDto, string Title)
         {
-            _examService.AddExam(examDto);
+            examService.AddExam(examDto, Title);
             return Ok();
         }
 
         [HttpPut("{Title}")]
-        public IActionResult Update(Guid id, [FromBody] ExamDto examDto)
+        public IActionResult Update(string Title, [FromBody] ExamDto examDto)
         {
-            _examService.UpdateExam(id, examDto);
+            examService.UpdateExam(Title, examDto);
             return Ok();
         }
 
         [HttpDelete("{Title}")]
-        public IActionResult Delete(Guid id)
+        public IActionResult Delete(string Title)
         {
-            _examService.DeleteExam(id);
+            examService.DeleteExam(Title);
             return Ok();
         }
     }

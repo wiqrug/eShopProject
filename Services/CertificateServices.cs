@@ -17,9 +17,9 @@ namespace Project2.Services
             return certificates;
         }
 
-        public Certificate GetCertificateByTitle(string TitleOfCertificate)
+        public Certificate GetCertificateByTitle(string Title)
         {
-            var certificate = context.Certificates.FirstOrDefault(x => x.TitleOfCertificate == TitleOfCertificate);
+            var certificate = context.Certificates.FirstOrDefault(x => x.Title == Title);
             return certificate;
         }
 
@@ -30,11 +30,7 @@ namespace Project2.Services
                 // Assuming CertificateID is set elsewhere or automatically
 
                 // Direct mapping from DTO to Certificate properties
-                TitleOfCertificate = certificateDTO.TitleOfCertificate,
-
-                ExaminationDate = certificateDTO.ExaminationDate,
-                ScoreReportDate = certificateDTO.ScoreReportDate,
-                MaximumScore = certificateDTO.MaximumScore,
+                Title = certificateDTO.Title,
                 Description = certificateDTO.Description,
                 Price = certificateDTO.Price,
                 ImageSrc = certificateDTO.ImageSrc
@@ -44,28 +40,11 @@ namespace Project2.Services
             context.SaveChanges();
         }
 
-        public void UpdateCertificate(string TitleOfCertificate, CertificateDTO certificateDTO)
+        public void UpdateCertificate(string Title, CertificateDTO certificateDTO)
         {
-            //if candidateNumber exists in Candidates.candidate Number, then assign it to var candidate
-            //var candidate = context.Candidates.FirstOrDefault(candidateNumber);
 
-            var certificate = context.Certificates.FirstOrDefault(x => x.TitleOfCertificate == TitleOfCertificate);
-
-            //If null should return error 
-            //Protash: na ginei IActionResult to function kai na gurnaei katey8eian notfound klp
-            //kai ston controller 8a grafoume
-            //return certificateServices.UpdateCertificate(TitleOfCertificate, certificateDTO);
-            //if (certificate == null)
-            //{
-                //NotFound("There is no certificate with that title");
-            //}
-
-            // Update candidate properties with values from candidateDTO
-            certificate.TitleOfCertificate = certificateDTO.TitleOfCertificate;
-
-            certificate.ExaminationDate = certificateDTO.ExaminationDate;
-            certificate.ScoreReportDate = certificateDTO.ScoreReportDate;
-            certificate.MaximumScore = certificateDTO.MaximumScore;
+            var certificate = context.Certificates.FirstOrDefault(x => x.Title == Title);
+            certificate.Title = certificateDTO.Title;
             certificate.Description = certificateDTO.Description;
             certificate.Price = certificateDTO.Price;
             certificate.ImageSrc = certificateDTO.ImageSrc;
@@ -74,18 +53,16 @@ namespace Project2.Services
 
         }
 
-        public bool DeleteCertificate(string TitleOfCertificate)
+        public bool DeleteCertificate(string Title)
         {
-            var certificate = context.Certificates.FirstOrDefault(x => x.TitleOfCertificate == TitleOfCertificate);
+            var certificate = context.Certificates.FirstOrDefault(x => x.Title == Title);
 
             if (certificate == null)
             {
                 return false;
             }
-
             context.Certificates.Remove(certificate);
             context.SaveChanges();
-
             return true;
         }
     }

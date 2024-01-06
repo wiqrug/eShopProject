@@ -78,7 +78,7 @@ namespace Project2.Controllers
         }
 
         [HttpGet("admin/get-candidate-by-number/{candidateNumber}")]
-        public IActionResult getCandidateByNumber(int candidateNumber,string email,string password)
+        public IActionResult getCandidateByNumber(int candidateNumber, string email,string password)
         {
             if (adminsServices.isAdmin(email, password))
             {

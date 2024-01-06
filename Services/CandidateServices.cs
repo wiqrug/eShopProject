@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Project2.Models;
+﻿
+
 
 namespace Project2.Services
 {
@@ -20,11 +20,6 @@ namespace Project2.Services
 
         public void CreateCandidate(CandidateDTO candidateDTO)
         {
-            //encrypt the password
-            var passwordHasher = new PasswordHasher<Candidate>();
-            var encryptedPassword = passwordHasher.HashPassword(new Candidate(), candidateDTO.Password);
-
-
             int maxCandidateNumber = context.Candidates.Max(c => (int?)c.CandidateNumber) ?? 1000; // Starting from 1001
             var candidate = new Candidate
             {
@@ -52,21 +47,21 @@ namespace Project2.Services
                 PostalCode = candidateDTO.PostalCode,
                 LandlineNumber = candidateDTO.LandlineNumber,
                 MobileNumber = candidateDTO.MobileNumber,
-                Password = encryptedPassword,
+                Password = candidateDTO.Password,
                 role = Models.User.Role.Candidate,
 
             };
 
             context.Candidates.Add(candidate);
             context.SaveChanges();
-        
         }
+
         public void UpdateCandidate(int candidateNumber,CandidateDTO candidateDTO)
         {
             //Make user able to change whatever he wants 
 
             // x=y?t=1:t=2;
-            
+
             var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber==candidateNumber);
 
             // Update candidate properties with values from candidateDTO
@@ -93,9 +88,10 @@ namespace Project2.Services
             candidate.MobileNumber = candidateDTO.MobileNumber;
 
             context.SaveChanges();
-            
+
         }
 
- 
+        //Needs implementation
+    
     }
 }

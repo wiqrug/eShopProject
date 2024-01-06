@@ -7,63 +7,61 @@ namespace Project2.Services
 {
     public class ExamService
     {
-        private readonly ApplicationDBContext _context;
+        private readonly ApplicationDBContext context;
 
         public ExamService(ApplicationDBContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public List<Exam> GetAllExams()
         {
-            return _context.Exams.ToList();
+            return context.Exams.ToList();
         }
 
-        public Exam GetExamById(Guid examId)
+        public Exam GetExamByTitle(string Title)
         {
-            return _context.Exams.FirstOrDefault(e => e.ExamId == examId);
+            return context.Exams.FirstOrDefault(e => e.Title == Title);
         }
 
-        public void AddExam(ExamDto examDto)
+        public void AddExam(ExamDto examDto, string Title)
         {
-            var exam = new Exam
+            Guid certificateId = context.Certificates
+                                    .Where(e => e.Title == Title)
+                                    .Select(e => e.CertificateId)
+                                    .FirstOrDefault();
+
+            var exam = new Exam(certificateId)
             {
-                ExamDescription = examDto.ExamDescription,
-                AwardedMarks = examDto.AwardedMarks,
-                PossibleMarks = examDto.PossibleMarks,
-                CertificateId = examDto.CertificateId,
-                Title= examDto.Title,
-                Time= examDto.Time,
-
+                Title = examDto.Title,
+                Description = examDto.Description,
+                Time = examDto.Time,
             };
 
-            _context.Exams.Add(exam);
-            _context.SaveChanges();
+            context.Exams.Add(exam);
+            context.SaveChanges();
         }
 
-        public void UpdateExam(Guid examId, ExamDto examDto)
+        public void UpdateExam(string Title, ExamDto examDto)
         {
-            var exam = _context.Exams.FirstOrDefault(e => e.ExamId == examId);
+            var exam = context.Exams.FirstOrDefault(e => e.Title == Title);
             if (exam != null)
             {
-                exam.ExamDescription = examDto.ExamDescription;
-                exam.AwardedMarks = examDto.AwardedMarks;
-                exam.PossibleMarks = examDto.PossibleMarks;
-                exam.CertificateId = examDto.CertificateId;
-               exam.Title = examDto.Title;
+                exam.Title = examDto.Title;
+                exam.Description = examDto.Description;
                 exam.Time = examDto.Time;
 
-                _context.SaveChanges();
+                context.SaveChanges();
             }
         }
 
-        public void DeleteExam(Guid examId)
+        public void DeleteExam(string Title)
         {
-            var exam = _context.Exams.FirstOrDefault(e => e.ExamId == examId);
+            var exam = context.Exams.FirstOrDefault(e => e.Title == Title);
             if (exam != null)
             {
-                _context.Exams.Remove(exam);
-                _context.SaveChanges();
+                context.Exams.Remove(exam);
+                context.SaveChanges();
             }
         }
     }
