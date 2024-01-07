@@ -38,7 +38,7 @@ namespace Project2.Controllers
 
 
 
-        [HttpGet("obtained/{candidate-number}")]
+        [HttpGet("obtained/{candidateNumber}")]
         public IActionResult GetObtainedCertificates(int candidateNumber)
         {
             if(candidateNumber == null)
@@ -53,7 +53,7 @@ namespace Project2.Controllers
             }
         }
 
-        [HttpGet("unobtained/{candidate-number}")]
+        [HttpGet("unobtained/{candidateNumber}")]
         public IActionResult GetUnobtainedCertificates(int candidateNumber)
         {
             if (candidateNumber == null)
@@ -78,6 +78,7 @@ namespace Project2.Controllers
         //    return Ok(certificateCounts);
         //}
 
+        [HttpGet("/availableCertificates")]
         public IActionResult GetAvailableCertificates(int candidateNumber)
         {
             if (candidateNumber == null)

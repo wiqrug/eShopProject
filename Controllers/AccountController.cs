@@ -55,14 +55,14 @@ namespace Project2.Controllers
 
 
         [Authorize]
-        [HttpGet("authorize-authenticated-candidates")]
+        [HttpGet("authorizeAuthenticatedCandidates")]
         public IActionResult AuthorizeAuthenticatedCandidates()
         {
             return Ok("Authorized candidate");
         }
 
         [Authorize(Roles = "admin")]
-        [HttpGet("authorize-admin")]
+        [HttpGet("authorizeAdmin")]
         public IActionResult AuthorizeAdmin()
         {
             return Ok("Authorized Admin");
