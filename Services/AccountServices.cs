@@ -20,16 +20,16 @@ namespace Project2.Services
             this.configuration = configuration;
         }
 
-        public (bool Success, string Token, CandidateProfileDTO User) Login(string email, string password)
+        public (bool Success, string Token, CandidateProfileDTO User) Login(User user)
         {
-            var candidate = context.Candidates.FirstOrDefault(u => u.Email == email);
+            var candidate = context.Candidates.FirstOrDefault(u => u.Email == user.Email);
 
             if (candidate == null)
             {
                 return (false, null, null);
             }
 
-            var result = passwordHasher.VerifyHashedPassword(new Candidate(), candidate.Password, password);
+            var result = passwordHasher.VerifyHashedPassword(new Candidate(), candidate.Password, user.Password);
 
             if (result == PasswordVerificationResult.Failed)
             {

@@ -30,10 +30,10 @@ namespace Project2.Controllers
         
 
         [HttpPost("login")]
-        public IActionResult Login(string email, string password)
+        public IActionResult Login(User userLogin)
         {
 
-            var (success, token, user) = accountServices.Login(email, password);
+            var (success, token, user) = accountServices.Login(userLogin);
 
             if (!success)
             {
