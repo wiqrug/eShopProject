@@ -17,9 +17,9 @@ namespace Project2.Controllers
     {
         private readonly IConfiguration configuration;
         private readonly ApplicationDBContext context;
-        private readonly LoginService loginService;
+        private readonly AccountServices loginService;
 
-        public AccountController(IConfiguration configuration, ApplicationDBContext context, LoginService loginService)
+        public AccountController(IConfiguration configuration, ApplicationDBContext context, AccountServices loginService)
         {
             this.configuration = configuration;
             this.context = context;
@@ -71,7 +71,7 @@ namespace Project2.Controllers
         }
 
         [HttpPost("Login")]
-        public IActionResult Login([FromBody] User user)
+        public IActionResult Login([FromBody] UserDto user)
         {
             var response = loginService.Login(user);
 

@@ -8,21 +8,21 @@ using System.Text;
 
 namespace Project2.Services
 {
-    public class LoginService
+    public class AccountServices
     {
 
         private readonly ApplicationDBContext context;
         public readonly IConfiguration configuration;
 
 
-        public LoginService(ApplicationDBContext context, IConfiguration configuration)
+        public AccountServices(ApplicationDBContext context, IConfiguration configuration)
         {
             this.context = context;
             this.configuration = configuration;
         }
 
 
-        public object Login([FromBody] User user)
+        public object Login([FromBody] UserDto user)
         {
             var candidate = context.Candidates.FirstOrDefault(u => u.Email == user.Email);
 
@@ -54,7 +54,7 @@ namespace Project2.Services
             var candidateProfileDTO = new CandidateProfileDTO()
             {
                 Email = candidate.Email, //edo vazoume osa stoixeia tou candidate theloume na 
-                                         //na exoume sto front
+                CandidateNumber = candidate.CandidateNumber                         //na exoume sto front
 
             };
 
