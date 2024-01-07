@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Project2.Models;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,106 +8,91 @@ using System.Text;
 
 namespace Project2.Services
 {
-    public class AccountServices
+    public class LoginService
     {
-        private ApplicationDBContext context;
-        private readonly IPasswordHasher<Candidate> passwordHasher;
-        private readonly IConfiguration configuration;
-        
-        public AccountServices(ApplicationDBContext context, IPasswordHasher<Candidate> passwordHasher, IConfiguration configuration)
+
+        private readonly ApplicationDBContext context;
+        public readonly IConfiguration configuration;
+
+
+        public LoginService(ApplicationDBContext context, IConfiguration configuration)
         {
             this.context = context;
-            this.passwordHasher = passwordHasher;
             this.configuration = configuration;
         }
 
-        public (bool Success, string Token, CandidateProfileDTO User) Login(User user)
+
+        public object Login([FromBody] User user)
         {
             var candidate = context.Candidates.FirstOrDefault(u => u.Email == user.Email);
 
             if (candidate == null)
             {
-                return (false, null, null);
+                object errorMessage = "Email or password is not valid";
+                return (errorMessage);
             }
+
+            //verify the password
+            var passwordHasher = new PasswordHasher<Candidate>();
 
             var result = passwordHasher.VerifyHashedPassword(new Candidate(), candidate.Password, user.Password);
 
             if (result == PasswordVerificationResult.Failed)
             {
-                return (false, null, null);
+                object errorMessage = "Wrong Password";
+                return (errorMessage);
             }
 
+            /*            if(an einai admin){
+                            na kanei tin parakato diadikasia gia admin stoixeia
+                            }
+                            else{
+                                na kanei to idio gia candidate stoixeia
+                            }
+            */
             var jwt = CreateJWToken(candidate);
-            var candidateProfileDTO = new CandidateProfileDTO
+            var candidateProfileDTO = new CandidateProfileDTO()
             {
-                Email = candidate.Email,
-                FirstName = candidate.FirstName,
-                LastName = candidate.LastName
+                Email = candidate.Email, //edo vazoume osa stoixeia tou candidate theloume na 
+                                         //na exoume sto front
+
             };
 
-            return (true, jwt, candidateProfileDTO);
+            var response = new
+            {
+                Token = jwt,
+                User = candidateProfileDTO
+            };
+
+            return response;
         }
-
-
 
 
         private string CreateJWToken(Candidate candidate)
         {
-            if (candidate == null)
+            List<Claim> claims = new List<Claim>()
             {
-                throw new ArgumentNullException(nameof(candidate), "Candidate cannot be null.");
-            }
+                new Claim("id",  candidate.UserId.ToString()),
+                new Claim("role", candidate.role.ToString())
+            };
 
-            var claims = new List<Claim>
-    {
-        new Claim("id", candidate.UserId.ToString()),
-        // Add other claims as needed
-    };
-
-            string strKey = configuration["JwtSettings:Key"];
-            if (string.IsNullOrEmpty(strKey))
-            {
-                throw new InvalidOperationException("JWT Key is not set in the configuration.");
-            }
+            string strKey = configuration["JwtSettings:Key"]!;
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(strKey));
+
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var issuer = configuration["JwtSettings:Issuer"];
-            var audience = configuration["JwtSettings:Audience"];
-
             var token = new JwtSecurityToken(
-                issuer: issuer,
-                audience: audience,
-                claims: claims,
-                expires: DateTime.Now.AddDays(1),
-                signingCredentials: creds
-            );
+                    issuer: configuration["JwtSettings:Issuer"],
+                    audience: configuration["JwtSettings:Audience"],
+                    claims: claims,
+                    expires: DateTime.Now.AddDays(1),
+                    signingCredentials: creds
+                );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return jwt;
         }
-
-        //    private string CreateJWToken(Candidate candidate)
-        //    {
-        //        var claims = new[]
-        //        {
-        //    new Claim(JwtRegisteredClaimNames.Sub, candidate.Email),
-        //    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        //    // Add other claims as needed
-        //};
-
-        //        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourSecretKeyHere")); // Replace with your actual secret key
-        //        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        //        var token = new JwtSecurityToken(
-        //            issuer: "YourIssuer", // Replace with your issuer
-        //            audience: "YourAudience", // Replace with your audience
-        //            claims: claims,
-        //            expires: DateTime.Now.AddHours(1), // Token expiration time
-        //            signingCredentials: creds);
-
-        //        return new JwtSecurityTokenHandler().WriteToken(token);
-        //    }
-
     }
 }
