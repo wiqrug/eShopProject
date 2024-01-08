@@ -7,7 +7,7 @@ namespace Project2.Models
     public class User
     {
         [Key]
-        [JsonIgnore]
+        //[JsonIgnore]
         //We have setter because the framework needs it
         //TODO: Merge common properties of Admin and Candidate
         public Guid UserId { get; private set; }
