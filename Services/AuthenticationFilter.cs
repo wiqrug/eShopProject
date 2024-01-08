@@ -45,3 +45,7 @@ public class AuthenticationFilter : IAsyncActionFilter
         }
     }
 }
+
+//auto einai to annotation p xrisimopoioyme pano apo kapoion controller gia na ton kanoume na 
+//apaitei authentication gia na treksei
+//[ServiceFilter(typeof(AuthenticationFilter))]
