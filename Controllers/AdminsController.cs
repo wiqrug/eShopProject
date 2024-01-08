@@ -40,6 +40,7 @@ namespace Project2.Controllers
         // but actually admins will be hardCoded
 
         //fix this to call adminsServices
+        [ServiceFilter(typeof(AuthenticationFilter))]
         [HttpPost("/admin/add-candidate")]
         public IActionResult addCandidate(CandidateDTO candidateDTO, string email, string password)
         {
