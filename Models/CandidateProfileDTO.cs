@@ -4,6 +4,9 @@ namespace Project2.Models
 {
     public class CandidateProfileDTO
     {
+
+        public int CandidateNumber { get; set; }
+
         [Required]
         [StringLength(100)]
         public string FirstName { get; set; } 
