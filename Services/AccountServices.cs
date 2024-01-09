@@ -51,7 +51,8 @@ namespace Project2.Services
                 {
                     Email = admin.Email,
                     FirstName = admin.FirstName,
-                    LastName = admin.LastName
+                    LastName = admin.LastName,
+                    Address = admin.Address
                 };
 
                 return (true, jwt, candidateProfileDTO);

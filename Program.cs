@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Project2.Models;
 using Project2.Services;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
@@ -32,6 +33,7 @@ builder.Services.AddSwaggerGen(
         options.OperationFilter<SecurityRequirementsOperationFilter>();
     });
 builder.Services.AddScoped<IPasswordHasher<Candidate>, PasswordHasher<Candidate>>();
+builder.Services.AddScoped<IPasswordHasher<Admin>, PasswordHasher<Admin>>();
 builder.Services.AddScoped<AccountServices>();
 builder.Services.AddScoped<CandidateServices>();
 builder.Services.AddScoped<AdminServices>();
