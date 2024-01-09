@@ -44,7 +44,6 @@ public class Candidate : User
     [StringLength(200)]
     public string? AddressLine2 { get; set; } = "";
 
-    [Required]
     [StringLength(100)]
     public string? CountryOfResidence { get; set; } = "";
 

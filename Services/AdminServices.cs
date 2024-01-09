@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Project2.Models;
 
 namespace Project2.Services
@@ -22,11 +23,16 @@ namespace Project2.Services
 
         public void CreateAdmin(AdminDTO admin)
         {
-            var ad = new Admin { FirstName = admin.FirstName,
+            var passwordHasherAdmin = new PasswordHasher<Admin>();
+            var encryptedPassword = passwordHasherAdmin.HashPassword(new Admin(), admin.Password);
+
+            var ad = new Admin 
+            { 
+                FirstName = admin.FirstName,
                 Address = admin.Address, Email = admin.Email,
                 LastName = admin.LastName,
                 MobileNumber = admin.MobileNumber,
-                Password = admin.Password,
+                Password = encryptedPassword,
                 role = User.Role.Admin
             };
             context.Admins.Add(ad);
@@ -36,6 +42,9 @@ namespace Project2.Services
         public void CreateCandidate(CandidateDTO candidateDTO)
         {
             int maxCandidateNumber = context.Candidates.Max(c => (int?)c.CandidateNumber) ?? 1000; // Starting from 1001
+            var passwordHasher = new PasswordHasher<Candidate>();
+            var encryptedPassword = passwordHasher.HashPassword(new Candidate(), candidateDTO.Password);
+
             var candidate = new Candidate
             {
                 // Assuming CandidateID is set elsewhere or automatically
@@ -62,7 +71,7 @@ namespace Project2.Services
                 PostalCode = candidateDTO.PostalCode,
                 LandlineNumber = candidateDTO.LandlineNumber,
                 MobileNumber = candidateDTO.MobileNumber,
-                Password = candidateDTO.Password,
+                Password = encryptedPassword,
                 role = Models.User.Role.Candidate,
              
             };

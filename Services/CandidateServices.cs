@@ -1,6 +1,8 @@
 ﻿
 
 
+using Microsoft.AspNetCore.Identity;
+
 namespace Project2.Services
 {
     public class CandidateServices
@@ -21,6 +23,9 @@ namespace Project2.Services
         public void CreateCandidate(CandidateDTO candidateDTO)
         {
             int maxCandidateNumber = context.Candidates.Max(c => (int?)c.CandidateNumber) ?? 1000; // Starting from 1001
+            var passwordHasher = new PasswordHasher<Candidate>();
+            var encryptedPassword = passwordHasher.HashPassword(new Candidate(), candidateDTO.Password);
+
             var candidate = new Candidate
             {
                 // Assuming CandidateID is set elsewhere or automatically
@@ -47,7 +52,7 @@ namespace Project2.Services
                 PostalCode = candidateDTO.PostalCode,
                 LandlineNumber = candidateDTO.LandlineNumber,
                 MobileNumber = candidateDTO.MobileNumber,
-                Password = candidateDTO.Password,
+                Password = encryptedPassword,
                 role = Models.User.Role.Candidate,
 
             };
