@@ -83,7 +83,9 @@ namespace Project2.Services
             var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateCertificatesDTO.CandidateNumber);
             var certificate = context.Certificates.FirstOrDefault(x => x.Title == candidateCertificatesDTO.Title);
 
-            if (candidate == null || certificate == null)
+            //var already = context.CandidateCertificates.FirstOrDefault(x => x.CandidateId == candidate.UserId && x.CertificateId == certificate.CertificateId);
+
+            if (candidate == null || certificate == null) // || already != null
             {
                 return false; // Or throw an exception
             }
