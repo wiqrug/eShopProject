@@ -25,8 +25,8 @@ namespace Project2.Controllers
         [HttpGet]
         public IActionResult GetQuestions()
         {
-            questionsServices.getAllQuestions();
-            return Ok();
+            var response = questionsServices.getAllQuestions();
+            return Ok(response);
         }
 
         // GET: with id

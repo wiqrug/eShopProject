@@ -41,6 +41,7 @@ builder.Services.AddScoped<CertificateServices>();
 builder.Services.AddScoped<CandidateCertificatesServices>();
 builder.Services.AddScoped<ExamService>();
 builder.Services.AddScoped<CertificateServices>();
+builder.Services.AddScoped<QuestionsServices>();
 
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
 {

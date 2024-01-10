@@ -11,17 +11,17 @@ namespace Project2.Services
             this.context = context;
         }
 
-        public void createQuestion(QuestionsDto questions)
+        public void createQuestion(QuestionsDto questionDto)
         {
             var question = new Questions()
             {
-                ExamId = questions.ExamId,
-                Question = questions.Question,
-                AnswerA = questions.AnswerA,
-                AnswerB = questions.AnswerB,
-                AnswerC = questions.AnswerC,
-                AnswerD = questions.AnswerD,
-                CorrectAnswer = questions.CorrectAnswer
+                ExamId = questionDto.ExamId,
+                Question = questionDto.Question,
+                AnswerA = questionDto.AnswerA,
+                AnswerB = questionDto.AnswerB,
+                AnswerC = questionDto.AnswerC,
+                AnswerD = questionDto.AnswerD,
+                CorrectAnswer = questionDto.CorrectAnswer
             };
             context.Questions.Add(question);
             context.SaveChanges();
