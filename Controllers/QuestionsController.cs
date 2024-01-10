@@ -21,7 +21,7 @@ namespace Project2.Controllers
             this.questionsServices = questionsServices;
         }
 
-        // GET: api/Questions
+        // GET: 
         [HttpGet]
         public IActionResult GetQuestions()
         {
@@ -29,88 +29,62 @@ namespace Project2.Controllers
             return Ok();
         }
 
-        // GET: api/Questions/5
+        // GET: with id
         [HttpGet("{id}")]
         public IActionResult GetQuestion(Guid id)
         {
             if (id == null)
             {
-                return NotFound();
+                return NotFound("No question with this id");
             }
 
             var response = questionsServices.getQuestion(id);
             return Ok(response);
         }
 
-        // PUT: api/Questions/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // PUT: with id
         [HttpPut("{id}")]
-        public IActionResult UpdateQuestions(Guid id, Questions questions)
+        public IActionResult UpdateQuestions(Guid id, QuestionsDto question)
         {
-            if (id != questions.QuestionId)
+            if(id == null)
             {
-                return BadRequest();
+                return BadRequest("No question with this id");
             }
 
-            context.Entry(questions).State = EntityState.Modified;
-
-            try
+            if(question == null)
             {
-                await context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!QuestionsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest("Provide inputs");
             }
 
-            return NoContent();
+            questionsServices.updateQuestion(id, question);
+            return Ok();
         }
 
-        // POST: api/Questions
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: 
         [HttpPost]
-        public async Task<ActionResult<Questions>> PostQuestions(QuestionsDto questions)
+        public IActionResult CreateQuestion(QuestionsDto question)
         {
-          if (context.Questions == null)
+          if (question == null)
           {
-              return Problem("Entity set 'ApplicationDBContext.Questions'  is null.");
+              return BadRequest("Missing values");
           }
 
-            
+            questionsServices.createQuestion(question);
 
-            return CreatedAtAction("GetQuestions", new { id = questions.QuestionId }, questions);
+            return Ok();
         }
 
-        // DELETE: api/Questions/5
+        // DELETE: with id
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteQuestions(Guid id)
+        public IActionResult DeleteQuestion(Guid id)
         {
-            if (context.Questions == null)
+            if (id == null)
             {
-                return NotFound();
+                return BadRequest("Who do you want me to delete?");
             }
-            var questions = await context.Questions.FindAsync(id);
-            if (questions == null)
-            {
-                return NotFound();
-            }
-
-            context.Questions.Remove(questions);
-            await context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool QuestionsExists(Guid id)
-        {
-            return (context.Questions?.Any(e => e.QuestionId == id)).GetValueOrDefault();
+                questionsServices.deleteQuestion(id);
+    
+            return Ok();
         }
     }
 }
