@@ -12,6 +12,7 @@ namespace Project2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ServiceFilter(typeof(AuthenticationFilter))]
     public class QuestionsController : ControllerBase
     {
         public QuestionsServices questionsServices;

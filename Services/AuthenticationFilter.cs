@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,10 +35,17 @@ public class AuthenticationFilter : IAsyncActionFilter
 
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out _);
 
-            // You can access the authenticated user from the principal
-            context.HttpContext.Items["User"] = principal;
+            if (principal.HasClaim(c => c.Type == ClaimTypes.Role && (c.Value == "Admin" || c.Value == "Candidate")))
+            {
+                // You can access the authenticated user from the principal
+                context.HttpContext.Items["User"] = principal;
 
-            await next();
+                await next();
+            }
+            else
+            {
+                context.Result = new ForbidResult();
+            }
         }
         catch (SecurityTokenException)
         {
