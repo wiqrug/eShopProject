@@ -20,23 +20,32 @@ public class AuthenticationFilterAdmin : IAsyncActionFilter
     }
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
-        string? cookie = context.HttpContext.Request.Cookies["currentUser"];
         string token = "";
-        if (cookie != null)
+        var authHeader = context.HttpContext.Request.Headers["Authorization"];
+        
+        if (string.IsNullOrEmpty(authHeader))
         {
-            CurrentUser? parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
-            token = parsedCookie.token;
+            token = authHeader.ToString().Split(' ')[1];
         }
         else
         {
-            context.Result = new UnauthorizedResult();
-        }
+            string? cookie = context.HttpContext.Request.Cookies["currentUser"];
 
-        if (string.IsNullOrEmpty(token))
-        {
-            throw new InvalidOperationException("The required cookie 'currentUser' was not found.");
-        }
+            if (cookie != null)
+            {
+                CurrentUser? parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
+                token = parsedCookie.token;
+            }
+            else
+            {
+                context.Result = new UnauthorizedResult();
+            }
 
+            if (string.IsNullOrEmpty(token))
+            {
+                throw new InvalidOperationException("The required cookie 'currentUser' was not found.");
+            }
+        }
 
         try
         {

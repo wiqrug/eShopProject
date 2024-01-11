@@ -4,9 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 public class CandidateDTO
 {
-
-
-
     [StringLength(30)]
     public string FirstName { get; set; }
     [StringLength(100)]
@@ -20,10 +17,6 @@ public class CandidateDTO
 
     [StringLength(300)]
     public string Password { get; set; }
-
-
-
-
 
 
 
