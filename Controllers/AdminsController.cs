@@ -40,7 +40,7 @@ namespace Project2.Controllers
         // but actually admins will be hardCoded
 
         //fix this to call adminsServices
-        [ServiceFilter(typeof(AuthenticationFilter))]
+        [ServiceFilter(typeof(AuthenticationFilterCandidate))]
         [HttpPost("/admin/add-candidate")]
         public IActionResult addCandidate(CandidateDTO candidateDTO, string email, string password)
         {
@@ -71,11 +71,9 @@ namespace Project2.Controllers
         }
 
         [HttpGet("admin/get-candidates")]   // Show List of Candidates
-        public IActionResult GetCandidates(string email, string password)
+        public IActionResult GetCandidates()
         {
-            if (adminsServices.isAdmin(email, password)) { return Ok(adminsServices.GetCandidates()); }
-            else
-            { return BadRequest("You are not an admin mofo"); };
+            return Ok(adminsServices.GetCandidates());
         }
 
         [HttpGet("admin/get-candidate-by-number/{candidateNumber}")]

@@ -104,7 +104,7 @@ namespace Project2.Services
             var claims = new List<Claim>
             {
                 new Claim("Id", admin.UserId.ToString()),
-                new Claim("Role", admin.role.ToString())
+                new Claim("Role", "Admin")
             };
 
             string strKey = configuration["JwtSettings:Key"];
@@ -141,7 +141,7 @@ namespace Project2.Services
             var claims = new List<Claim>
             {
                 new Claim("Id", candidate.UserId.ToString()),
-                new Claim("Role", candidate.role.ToString())
+                new Claim("Role", "Candidate")
             };
 
             string strKey = configuration["JwtSettings:Key"];

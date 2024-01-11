@@ -18,6 +18,8 @@ namespace Project2.Controllers
         {
             this.examService = examService;
         }
+
+        [ServiceFilter(typeof(AuthenticationFilterCandidate))]
         [HttpGet]
         public IActionResult GetAll()
         {

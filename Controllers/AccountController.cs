@@ -61,7 +61,7 @@ namespace Project2.Controllers
             return Ok("Authorized candidate");
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("authorize-admin")]
         public IActionResult AuthorizeAdmin()
         {
