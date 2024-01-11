@@ -28,7 +28,6 @@ namespace Project2.Controllers
         }
 
         
-
         [HttpPost("login")]
         public IActionResult Login(UserLogin userLogin)
         {
@@ -48,52 +47,6 @@ namespace Project2.Controllers
             };
 
             return Ok(response);
-
-
-
         }
-
-
-        [Authorize]
-        [HttpGet("authorize-authenticated-candidates")]
-        public IActionResult AuthorizeAuthenticatedCandidates()
-        {
-            return Ok("Authorized candidate");
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpGet("authorize-admin")]
-        public IActionResult AuthorizeAdmin()
-        {
-            return Ok("Authorized Admin");
-        }
-
-
-        //private string CreateJWToken(Candidate candidate)
-        //{
-        //    List<Claim> claims = new List<Claim>()
-        //    {
-        //        new Claim("id",  ""+candidate.UserID),
-        //        //new Claim("role","" +  Models.User.Role.Candidate)
-        //    };
-
-        //    string strKey = configuration["JwtSettings:Key"]!;
-
-        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(strKey));
-
-        //    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        //    var token = new JwtSecurityToken(
-        //            issuer: configuration["JwtSettings:Issuer"],
-        //            audience: configuration["JwtSettings:Audience"],
-        //            claims: claims,
-        //            expires: DateTime.Now.AddDays(1),
-        //            signingCredentials: creds
-        //        );
-
-        //    var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-        //    return jwt;
-        //}
     }
 }

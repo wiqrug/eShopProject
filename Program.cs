@@ -44,6 +44,7 @@ builder.Services.AddScoped<CertificateServices>();
 builder.Services.AddScoped<QuestionsServices>();
 builder.Services.AddScoped<AuthenticationFilterCandidate>();
 builder.Services.AddScoped<AuthenticationFilterAdmin>();
+builder.Services.AddScoped<AuthenticationFilterBoth>();
 
 /*builder.Services.AddMvc(options =>              //Auto to service kanei to AuthenticationFilter GLOBAL oper methermineuomenon esti OLA ta controllers
 {                                               //tha xrisimopoioun to filtro auto. An theloume kapoios controller na MIN to xrisimiopoiei prepei na 

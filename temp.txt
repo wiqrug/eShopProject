@@ -11,7 +11,8 @@ Read about entity framework and Table-Per-Hierarchy (TPH)
 
 Update the dbs, they should have createdAt column
 
-
+Note for Konstantinos so that even if I forget I'll have you to scold me: 
+Fix the AuthenticationFilters so that they get the token from the [Authorization] header!!!
 
 
 

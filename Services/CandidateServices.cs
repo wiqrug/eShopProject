@@ -36,7 +36,7 @@ namespace Project2.Services
                 LastName = candidateDTO.LastName,
                 Email = candidateDTO.Email,
                 Password = encryptedPassword,
-                role = Models.User.Role.Candidate,
+                role = Models.User.Role.Candidate
             };
 
             context.Candidates.Add(candidate);
@@ -45,11 +45,12 @@ namespace Project2.Services
 
         public void UpdateCandidate(int candidateNumber,CandidateDTO candidateDTO)
         {
-            //Make user able to change whatever he wants 
-
-            // x=y?t=1:t=2;
 
             var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber==candidateNumber);
+            if (candidate == null)
+            {
+                return;
+            }
 
             // Update candidate properties with values from candidateDTO
             candidate.FirstName = candidateDTO.FirstName;
@@ -76,9 +77,6 @@ namespace Project2.Services
 
             context.SaveChanges();
 
-        }
-
-        //Needs implementation
-    
+        }    
     }
 }

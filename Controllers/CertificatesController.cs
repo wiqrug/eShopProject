@@ -15,27 +15,33 @@ namespace Project2.Controllers
         {
             this.certificateServices = certificateServices;
         }
-
-        [HttpGet]   // Show List of Certificates
+        
+        // Show List of Certificates
+        [HttpGet]   
         public IActionResult GetCertificates()
         {
             return Ok(certificateServices.GetCertificates());
         }
-
-        [HttpGet("{Title}")]   // Show Certificate
+        
+        // Show Certificate
+        [HttpGet("{Title}")]   
         public IActionResult GetCertificate(string Title)
         {
            return Ok(certificateServices.GetCertificateByTitle(Title));
         }
 
-        [HttpPost]  // Create Certificate
+        // Create Certificate
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [HttpPost]  
         public IActionResult CreateCertificate(CertificateDTO certificateDTO)
         {
             certificateServices.CreateCertificate(certificateDTO);
             return Ok();
         }
 
-        [HttpDelete("{Title}")]    // Delete Certificate
+        // Delete Certificate
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [HttpDelete("{Title}")]    
         public IActionResult DeleteCertificate(string Title)
         {
             if (!certificateServices.DeleteCertificate(Title))
@@ -46,7 +52,9 @@ namespace Project2.Controllers
             return Ok();
         }
 
-        [HttpPut("{Title}")]   // Update Certificate
+        // Update Certificate
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [HttpPut("{Title}")]   
         public IActionResult UpdateCertificate(string Title, CertificateDTO certificateDTO)
         {
             certificateServices.UpdateCertificate(Title, certificateDTO);

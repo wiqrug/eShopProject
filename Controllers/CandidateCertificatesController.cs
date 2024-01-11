@@ -19,9 +19,8 @@ namespace Project2.Controllers
             this.context = context;
         }
 
+        [ServiceFilter(typeof(AuthenticationFilterBoth))]
         [HttpPost]
-        //an exeis parei certificate?
-
         public IActionResult CreateEnrollment(CandidateCertificatesDTO candidateCertificatesDTO)
         {
             
@@ -35,9 +34,7 @@ namespace Project2.Controllers
             return Ok();
         }
 
-
-
-
+        [ServiceFilter(typeof(AuthenticationFilterBoth))]
         [HttpGet("obtained/{candidateNumber}")]
         public IActionResult GetObtainedCertificates(int candidateNumber)
         {
@@ -47,12 +44,12 @@ namespace Project2.Controllers
             }
             else
             {
-                
                 var obtainedCerts = candidateCertificatesServices.GetObtainedCertificates(candidateNumber);
                 return Ok(obtainedCerts);
             }
         }
 
+        [ServiceFilter(typeof(AuthenticationFilterBoth))]
         [HttpGet("unobtained/{candidateNumber}")]
         public IActionResult GetUnobtainedCertificates(int candidateNumber)
         {
@@ -69,17 +66,8 @@ namespace Project2.Controllers
 
         }
 
-
-
-        //[HttpGet("certificate-counts")]
-        //public IActionResult GetCertificateCounts([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
-        //{
-        //    var certificateCounts = candidateCertificatesServices.GetCertificateCountsByDateRange(startDate, endDate);
-        //    return Ok(certificateCounts);
-        //}
-
+        [ServiceFilter(typeof(AuthenticationFilterBoth))]
         [HttpGet("available/{candidateNumber}")]
-
         public IActionResult GetAvailableCertificates(int candidateNumber)
         {
             if (candidateNumber == null)
@@ -91,11 +79,9 @@ namespace Project2.Controllers
                 var availableCertificates = candidateCertificatesServices.GetAvailableCertificates(candidateNumber);
                 return Ok(availableCertificates);
             }
-
         }
 
- 
-
+        [ServiceFilter(typeof(AuthenticationFilterBoth))]
         [HttpGet("api/candidate/{candidateNumber}/certificatesExamsHistory")]
         public IActionResult GetMarksPerExamPerCertificate(int? candidateNumber)
         {

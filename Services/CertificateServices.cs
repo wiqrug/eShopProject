@@ -42,8 +42,8 @@ namespace Project2.Services
 
         public void UpdateCertificate(string Title, CertificateDTO certificateDTO)
         {
-
             var certificate = context.Certificates.FirstOrDefault(x => x.Title == Title);
+
             certificate.Title = certificateDTO.Title;
             certificate.Description = certificateDTO.Description;
             certificate.Price = certificateDTO.Price;

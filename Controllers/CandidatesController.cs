@@ -15,26 +15,12 @@ namespace Project2.Controllers
         {
             this.candidateServices = candidateServices;
         }
-
-
-
-        //[HttpGet("{id}")]   // Show Candidate
-        //public IActionResult GetCandidate(int id)
-        //{
-        //    var candidate = context.Candidates.Find(id);
-
-        //    if (candidate == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(candidate);
-        //}
-
-        [HttpPost]  // Create Candidate
+        
+        // Create Candidate
+        [ServiceFilter(typeof(AuthenticationFilterBoth))]
+        [HttpPost]  
         public IActionResult CreateCandidate(CandidateDTO candidateDTO)
         {
-            //Implement this method backend guys
             if (candidateServices.EmailExists(candidateDTO.Email))
             {
                 return BadRequest("This email address is already in use");
@@ -43,13 +29,14 @@ namespace Project2.Controllers
             return Ok();
         }
 
-
-        [HttpPut("{candidatNumber}")]   // Update Candidate
+        // Update Candidate
+        [ServiceFilter(typeof(AuthenticationFilterBoth))]
+        [HttpPut("{candidateNumber}")]   
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO)
         {
             if (candidateNumber == null)
             {
-                return BadRequest("Candidate number doesnt exist");
+                return BadRequest("Candidate doesnt exist");
             }
             candidateServices.UpdateCandidate(candidateNumber, candidateDTO);
 

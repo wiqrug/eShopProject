@@ -19,14 +19,14 @@ namespace Project2.Controllers
             this.candidateServices = candidateServices;
         }
 
-        //Test admins functionality
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
         [HttpGet]
         public IActionResult GetAdmins()
         {
-
             return Ok(adminsServices.GetAdmins());
         }
 
+        //[ServiceFilter(typeof(AuthenticationFilterAdmin))] to theloume???
         [HttpPost]
         public IActionResult CreateAdmin(AdminDTO adminDTO)
         {
@@ -34,62 +34,55 @@ namespace Project2.Controllers
             return Ok();
         }
 
-
-        //Admin able to create a new Candidate
-        //In fact before doing this i must validate that user = admin
-        // but actually admins will be hardCoded
-
-        //fix this to call adminsServices
-        [ServiceFilter(typeof(AuthenticationFilterCandidate))]
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
         [HttpPost("/admin/add-candidate")]
-        public IActionResult addCandidate(CandidateDTO candidateDTO, string email, string password)
-        {
-            if (adminsServices.isAdmin(email, password)) { candidateServices.CreateCandidate(candidateDTO);
-                return Ok();
-            }
-            else { return BadRequest("User is not an admin."); }
+        public IActionResult addCandidate(CandidateDTO candidateDTO)
+        {           
+            candidateServices.CreateCandidate(candidateDTO);
+            return Ok();
         }
 
         //Remove a Candidate
-   
-        [HttpDelete("{candidateNumber}")] // Delete Candidate
-        public IActionResult DeleteCandidate(int candidateNumber,string email, string password)
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [HttpDelete("{candidateNumber}")] 
+        public IActionResult DeleteCandidate(int candidateNumber)
         {
-            if (adminsServices.isAdmin(email, password))
+            bool isDeleted = adminsServices.DeleteCandidate(candidateNumber);
+
+            if (!isDeleted)
             {
-                bool isDeleted = adminsServices.DeleteCandidate(candidateNumber);
-
-                if (!isDeleted)
-                {
-                    return NotFound();
-                }
-
-                return Ok();
+                return NotFound();
             }
-            else return BadRequest("You are not an admin bro, what are you trying to do!");
-   
+
+            return Ok();
         }
 
-        [HttpGet("admin/get-candidates")]   // Show List of Candidates
+        // Show List of Candidates
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [HttpGet("admin/get-candidates")]   
         public IActionResult GetCandidates()
         {
             return Ok(adminsServices.GetCandidates());
         }
 
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
         [HttpGet("admin/get-candidate-by-number/{candidateNumber}")]
-        public IActionResult getCandidateByNumber(int candidateNumber, string email,string password)
+        public IActionResult getCandidateByNumber(int candidateNumber)
         {
-            if (adminsServices.isAdmin(email, password))
-            {
-                var candidate = adminsServices.GetCandidateById(candidateNumber);
-                if (candidate == null)
-                { return BadRequest("Candidate is not found"); }
-                else { return Ok(candidate); }
+            var candidate = adminsServices.GetCandidateById(candidateNumber);
+            if (candidate == null)
+            { 
+                return NotFound("Candidate is not found"); 
             }
-            else return BadRequest("You are not an admin brotha");
+            else 
+            { 
+                return Ok(candidate); 
+            }
         }
-
-        [HttpPut("admin/update-candidate/{candidateNumber}")]   // Update Candidate
+        
+        // Update Candidate
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [HttpPut("admin/update-candidate/{candidateNumber}")]   
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO)
         {
                 if (candidateNumber == null)
@@ -98,12 +91,7 @@ namespace Project2.Controllers
                 }
                 candidateServices.UpdateCandidate(candidateNumber, candidateDTO);
 
-                return Ok();
-            
+                return Ok();           
         }
-
-
-
-
     }
 }

@@ -12,7 +12,6 @@ namespace Project2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ServiceFilter(typeof(AuthenticationFilterCandidate))]
     public class QuestionsController : ControllerBase
     {
         public QuestionsServices questionsServices;
@@ -22,7 +21,7 @@ namespace Project2.Controllers
             this.questionsServices = questionsServices;
         }
 
-        // GET: 
+        [ServiceFilter(typeof(AuthenticationFilterBoth))]
         [HttpGet]
         public IActionResult GetQuestions()
         {
@@ -30,7 +29,7 @@ namespace Project2.Controllers
             return Ok(response);
         }
 
-        // GET: with id
+        [ServiceFilter(typeof(AuthenticationFilterBoth))]
         [HttpGet("{id}")]
         public IActionResult GetQuestion(Guid id)
         {
@@ -43,7 +42,7 @@ namespace Project2.Controllers
             return Ok(response);
         }
 
-        // PUT: with id
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
         [HttpPut("{id}")]
         public IActionResult UpdateQuestions(Guid id, QuestionsDto question)
         {
@@ -61,7 +60,7 @@ namespace Project2.Controllers
             return Ok();
         }
 
-        // POST: 
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
         [HttpPost]
         public IActionResult CreateQuestion(QuestionsDto question)
         {
@@ -75,13 +74,13 @@ namespace Project2.Controllers
             return Ok();
         }
 
-        // DELETE: with id
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
         [HttpDelete("{id}")]
         public IActionResult DeleteQuestion(Guid id)
         {
             if (id == null)
             {
-                return BadRequest("Who do you want me to delete?");
+                return BadRequest("What do you want me to delete?");
             }
                 questionsServices.deleteQuestion(id);
     

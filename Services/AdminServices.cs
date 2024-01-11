@@ -90,7 +90,6 @@ namespace Project2.Services
         public bool DeleteCandidate(int candidateNumber)
         {
             var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
-            //var candidate = context.Candidates.Find(id);
 
             if (candidate == null)
             {
@@ -109,7 +108,6 @@ namespace Project2.Services
 
         }
 
-        //Additional check if candidate exists or no
         public Candidate GetCandidateById(int candidateNumber)
         {
             var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);

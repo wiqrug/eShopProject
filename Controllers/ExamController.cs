@@ -19,13 +19,13 @@ namespace Project2.Controllers
             this.examService = examService;
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterCandidate))]
         [HttpGet]
         public IActionResult GetAll()
         {
             var exams = examService.GetAllExams();
             return Ok(exams);
         }
+
 
         [HttpGet("{Title}")]
         public IActionResult GetByTitle(string Title)
@@ -37,13 +37,15 @@ namespace Project2.Controllers
             return Ok(exam);
         }
 
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
         [HttpPost]
-        public IActionResult Create([FromBody] ExamDto examDto, string Title)
+        public IActionResult CreateExam([FromBody] ExamDto examDto, string Title)
         {
             examService.AddExam(examDto, Title);
             return Ok();
         }
 
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
         [HttpPut("{Title}")]
         public IActionResult Update(string Title, [FromBody] ExamDto examDto)
         {
@@ -51,6 +53,7 @@ namespace Project2.Controllers
             return Ok();
         }
 
+        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
         [HttpDelete("{Title}")]
         public IActionResult Delete(string Title)
         {
