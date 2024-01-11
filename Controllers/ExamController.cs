@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Project2.Models;
 using Project2.Services;
 using System;
@@ -17,7 +18,6 @@ namespace Project2.Controllers
         {
             this.examService = examService;
         }
-
         [HttpGet]
         public IActionResult GetAll()
         {

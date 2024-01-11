@@ -43,6 +43,13 @@ builder.Services.AddScoped<ExamService>();
 builder.Services.AddScoped<CertificateServices>();
 builder.Services.AddScoped<QuestionsServices>();
 
+/*builder.Services.AddMvc(options =>              //Auto to service kanei to AuthenticationFilter GLOBAL oper methermineuomenon esti OLA ta controllers
+{                                               //tha xrisimopoioun to filtro auto. An theloume kapoios controller na MIN to xrisimiopoiei prepei na 
+    options.Filters.Add<AuthenticationFilter>();//valoume apo pano tou to annotation [AllowAnonymous] gia na epitrepei na ton xtipame xoris authentication
+});                                             //diaforetika apenergopoioume ayto to service kai vazoume pano apo kathe controller to annotation [ServiceFilter(typeof(AuthenticationFilter))]
+*/
+
+
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
 {
     string? connectioString = builder.Configuration.GetConnectionString("PeopleCertDB");

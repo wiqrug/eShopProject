@@ -92,10 +92,8 @@ namespace Project2.Controllers
         }
 
         [HttpPut("admin/update-candidate/{candidateNumber}")]   // Update Candidate
-        public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO,string email,string password)
+        public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO)
         {
-            if (adminsServices.isAdmin(email, password))
-            {
                 if (candidateNumber == null)
                 {
                     return BadRequest("Candidate number doesnt exist");
@@ -103,8 +101,7 @@ namespace Project2.Controllers
                 candidateServices.UpdateCandidate(candidateNumber, candidateDTO);
 
                 return Ok();
-            }
-            else return BadRequest("You are not an admin brotha");
+            
         }
 
 
