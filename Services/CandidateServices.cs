@@ -53,28 +53,95 @@ namespace Project2.Services
             }
 
             // Update candidate properties with values from candidateDTO
-            candidate.FirstName = candidateDTO.FirstName;
-            candidate.MiddleName = candidateDTO.MiddleName;
-            candidate.LastName = candidateDTO.LastName;
-            candidate.Gender = candidateDTO.Gender;
-            candidate.NativeLanguage = candidateDTO.NativeLanguage;
-            candidate.BirthDate = candidateDTO.BirthDate;
+            if (!string.IsNullOrWhiteSpace(candidateDTO.FirstName))
+            {
+                candidate.FirstName = candidateDTO.FirstName;
+            }
 
-            candidate.PhotoIDType = candidateDTO.PhotoIDType;
-            candidate.PhotoIDNumber = candidateDTO.PhotoIDNumber;
-            candidate.PhotoIDIssueDate = candidateDTO.PhotoIDIssueDate;
+            if (!string.IsNullOrWhiteSpace(candidateDTO.MiddleName))
+            {
+                candidate.MiddleName = candidateDTO.MiddleName;
+            }
 
-            candidate.Email = candidateDTO.Email;
-            candidate.Address = candidateDTO.Address;
-            candidate.AddressLine2 = candidateDTO.AddressLine2;
-            candidate.CountryOfResidence = candidateDTO.CountryOfResidence;
-            candidate.StateOrTerritoryOrProvince = candidateDTO.StateOrTerritoryOrProvince;
-            candidate.TownOrCity = candidateDTO.TownOrCity;
-            candidate.PostalCode = candidateDTO.PostalCode;
+            if (!string.IsNullOrWhiteSpace(candidateDTO.LastName))
+            {
+                candidate.LastName = candidateDTO.LastName;
+            }
 
-            candidate.LandlineNumber = candidateDTO.LandlineNumber;
-            candidate.MobileNumber = candidateDTO.MobileNumber;
+            if (!string.IsNullOrWhiteSpace(candidateDTO.Gender))
+            {
+                candidate.Gender = candidateDTO.Gender;
+            }
 
+            if (!string.IsNullOrWhiteSpace(candidateDTO.NativeLanguage))
+            {
+                candidate.NativeLanguage = candidateDTO.NativeLanguage;
+            }
+
+            if (candidateDTO.BirthDate != null)
+            {
+                candidate.BirthDate = candidateDTO.BirthDate;
+            }
+
+            if (!string.IsNullOrWhiteSpace(candidateDTO.PhotoIDType))
+            {
+                candidate.PhotoIDType = candidateDTO.PhotoIDType;
+            }
+
+            if (!string.IsNullOrWhiteSpace(candidateDTO.PhotoIDNumber))
+            {
+                candidate.PhotoIDNumber = candidateDTO.PhotoIDNumber;
+            }
+
+            if (candidateDTO.PhotoIDIssueDate != null)
+            {
+                candidate.PhotoIDIssueDate = candidateDTO.PhotoIDIssueDate;
+            }
+
+            if (!string.IsNullOrWhiteSpace(candidateDTO.Email))
+            {
+                candidate.Email = candidateDTO.Email;
+            }
+
+            if (!string.IsNullOrWhiteSpace(candidateDTO.Address))
+            {
+                candidate.Address = candidateDTO.Address;
+            }
+
+            if (!string.IsNullOrWhiteSpace(candidateDTO.AddressLine2))
+            {
+                candidate.AddressLine2 = candidateDTO.AddressLine2;
+            }
+
+            if (!string.IsNullOrWhiteSpace(candidateDTO.CountryOfResidence))
+            {
+                candidate.CountryOfResidence = candidateDTO.CountryOfResidence;
+            }
+
+            if (!string.IsNullOrWhiteSpace(candidateDTO.StateOrTerritoryOrProvince))
+            {
+                candidate.StateOrTerritoryOrProvince = candidateDTO.StateOrTerritoryOrProvince;
+            }
+
+            if (!string.IsNullOrWhiteSpace(candidateDTO.TownOrCity))
+            {
+                candidate.TownOrCity = candidateDTO.TownOrCity;
+            }
+
+            if (!string.IsNullOrWhiteSpace(candidateDTO.PostalCode))
+            {
+                candidate.PostalCode = candidateDTO.PostalCode;
+            }
+
+            if (!string.IsNullOrWhiteSpace(candidateDTO.LandlineNumber))
+            {
+                candidate.LandlineNumber = candidateDTO.LandlineNumber;
+            }
+
+            if (!string.IsNullOrWhiteSpace(candidateDTO.MobileNumber))
+            {
+                candidate.MobileNumber = candidateDTO.MobileNumber;
+            }
             context.SaveChanges();
 
         }    

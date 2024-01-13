@@ -47,10 +47,21 @@ namespace Project2.Services
             var exam = context.Exams.FirstOrDefault(e => e.Title == Title);
             if (exam != null)
             {
-                exam.Title = examDto.Title;
-                exam.Description = examDto.Description;
-                exam.Time = examDto.Time;
 
+                if (!string.IsNullOrWhiteSpace(examDto.Title))
+                {
+                    exam.Title = examDto.Title;
+                }
+
+                if (!string.IsNullOrWhiteSpace(examDto.Description))
+                {
+                    exam.Description = examDto.Description;
+                }
+
+                if (examDto.Time != null)
+                {
+                    exam.Time = examDto.Time;
+                }
                 context.SaveChanges();
             }
         }

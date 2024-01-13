@@ -44,11 +44,25 @@ namespace Project2.Services
         {
             var certificate = context.Certificates.FirstOrDefault(x => x.Title == Title);
 
-            certificate.Title = certificateDTO.Title;
-            certificate.Description = certificateDTO.Description;
-            certificate.Price = certificateDTO.Price;
-            certificate.ImageSrc = certificateDTO.ImageSrc;
+            if (certificateDTO.Title != null && certificateDTO.Title.Trim() != "")
+            {
+                certificate.Title = certificateDTO.Title;
+            }
 
+            if (certificateDTO.Description != null && certificateDTO.Description.Trim() != "")
+            {
+                certificate.Description = certificateDTO.Description;
+            }
+
+            if (certificateDTO.Price != null)
+            {
+                certificate.Price = certificateDTO.Price;
+            }
+
+            if (certificateDTO.ImageSrc != null && certificateDTO.ImageSrc.Trim() != "")
+            {
+                certificate.ImageSrc = certificateDTO.ImageSrc;
+            }
             context.SaveChanges();
 
         }
