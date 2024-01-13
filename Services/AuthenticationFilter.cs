@@ -10,10 +10,11 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Project2.Models;
+using Microsoft.Extensions.Configuration;
 
 public class AuthenticationFilter : IAsyncActionFilter
 {
-    public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+    public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next, IConfiguration configuration)
     {
         string token = "";
         var authHeader = context.HttpContext.Request.Headers["Authorization"];
@@ -38,7 +39,7 @@ public class AuthenticationFilter : IAsyncActionFilter
         try
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes("verysecretserverkey123");
+            var key = Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]);
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
@@ -65,6 +66,11 @@ public class AuthenticationFilter : IAsyncActionFilter
         {
             context.Result = new ForbidResult();
         }
+    }
+
+    public Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+    {
+        throw new NotImplementedException();
     }
 }
 

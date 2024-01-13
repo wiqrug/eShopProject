@@ -8,7 +8,6 @@ public class CandidateDTO
     public string FirstName { get; set; }
     [StringLength(100)]
     public string? MiddleName { get; set; } = "";
-    [Required]
     [StringLength(30)]
     public string LastName { get; set; }
     [StringLength(100)]

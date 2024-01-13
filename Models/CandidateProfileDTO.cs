@@ -7,18 +7,15 @@ namespace Project2.Models
 
         public int CandidateNumber { get; set; }
 
-        [Required]
         [StringLength(100)]
         public string FirstName { get; set; } 
 
         [StringLength(100)]
         public string MiddleName { get; set; } = "";
 
-        [Required]
         [StringLength(100)]
         public string LastName { get; set; } 
 
-        [Required]
         [StringLength(50)]
         public string Gender { get; set; } = "";
 
@@ -44,7 +41,6 @@ namespace Project2.Models
         [StringLength(200)]
         public string AddressLine2 { get; set; } = "";
 
-        [Required]
         [StringLength(100)]
         public string CountryOfResidence { get; set; } = "";
 

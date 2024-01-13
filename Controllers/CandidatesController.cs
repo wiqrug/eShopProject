@@ -39,6 +39,14 @@ namespace Project2.Controllers
         [HttpPut("{candidateNumber}")]   
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO)
         {
+            string? cookie = Request.Cookies["currentUser"];
+            CurrentUser parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
+            int? candNum = parsedCookie.candidatenumber;
+            if (candidateNumber != candNum)
+            {
+                return Unauthorized("No no no, you can't see someone else's personal info");
+            }
+
             if (candidateNumber == null)
             {
                 return BadRequest("Candidate doesnt exist");
@@ -52,7 +60,6 @@ namespace Project2.Controllers
         [HttpGet("{candidateNumber}")]
         public IActionResult getCandidateByNumber(int candidateNumber)
         {
-
             string? cookie = Request.Cookies["currentUser"];
             CurrentUser parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
             int? candNum = parsedCookie.candidatenumber;
@@ -60,7 +67,6 @@ namespace Project2.Controllers
             {
                 return Unauthorized("No no no, you can't see someone else's personal info");
             }
-
 
             var candidate = candidateServices.GetCandidateById(candidateNumber);
             if (candidate == null)

@@ -1,7 +1,6 @@
-﻿
-
-
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
+using Project2.Models;
 
 namespace Project2.Services
 {

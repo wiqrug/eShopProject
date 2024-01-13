@@ -39,16 +39,10 @@ namespace Project2.Controllers
         [HttpGet("obtained/{candidateNumber}")]
         public IActionResult GetObtainedCertificates(int candidateNumber)
         {
-            if(candidateNumber == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                var obtainedCerts = candidateCertificatesServices.GetObtainedCertificates(candidateNumber);
-                Console.WriteLine(obtainedCerts);
-                return Ok(obtainedCerts);
-            }
+            var obtainedCerts = candidateCertificatesServices.GetObtainedCertificates(candidateNumber);
+            Console.WriteLine(obtainedCerts);
+            return Ok(obtainedCerts);
+            
         }
 
         [Authorize(Roles = "Admin, Candidate")]

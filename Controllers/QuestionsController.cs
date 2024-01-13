@@ -34,11 +34,6 @@ namespace Project2.Controllers
         [HttpGet("{id}")]
         public IActionResult GetQuestion(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound("No question with this id");
-            }
-
             var response = questionsServices.getQuestion(id);
             return Ok(response);
         }
