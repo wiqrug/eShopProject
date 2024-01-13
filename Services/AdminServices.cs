@@ -107,12 +107,6 @@ namespace Project2.Services
             return candidates;
 
         }
-
-        public Candidate GetCandidateById(int candidateNumber)
-        {
-            var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
-            return candidate;
-        }
      
     }
 }

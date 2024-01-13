@@ -43,6 +43,13 @@ namespace Project2.Services
             context.SaveChanges();
         }
 
+        public Candidate GetCandidateById(int candidateNumber)
+        {
+            var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
+            return candidate;
+        }
+
+
         public void UpdateCandidate(int candidateNumber,CandidateDTO candidateDTO)
         {
 
