@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-public class AuthenticationFilterAdmin : IAsyncActionFilter
+public class AuthenticationFilter : IAsyncActionFilter
 {
     public class CurrentUser
     {
@@ -21,31 +21,24 @@ public class AuthenticationFilterAdmin : IAsyncActionFilter
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         string token = "";
-/*        var authHeader = context.HttpContext.Request.Headers["Authorization"];
-        
-        if (string.IsNullOrEmpty(authHeader))
-        {
-            token = authHeader.ToString().Split(' ')[1];
-        }
-        else
-        {
-*/            string? cookie = context.HttpContext.Request.Cookies["currentUser"];
+        var authHeader = context.HttpContext.Request.Headers["Authorization"];
 
-            if (cookie != null)
+        if (!string.IsNullOrEmpty(authHeader))
+        {
+            string[] authHeaderParts = authHeader.ToString().Split(' ');
+
+            if (authHeaderParts.Length == 2)
             {
-                CurrentUser? parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
-                token = parsedCookie.token;
+                token = authHeaderParts[1];
             }
             else
             {
+                // Handle the case where the Authorization header doesn't have the expected format
+                Console.WriteLine(authHeader);
                 context.Result = new UnauthorizedResult();
+                return; // Exit the method to avoid further processing
             }
-
-            if (string.IsNullOrEmpty(token))
-            {
-                throw new InvalidOperationException("The required cookie 'currentUser' was not found.");
-            }
-        //}
+        }
 
         try
         {
@@ -61,7 +54,7 @@ public class AuthenticationFilterAdmin : IAsyncActionFilter
 
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out _);
 
-            if (principal.HasClaim(c => c.Type == "Role" && c.Value == "Admin"))
+            if (principal.HasClaim(c => c.Type == "Role" && (c.Value == "Admin" || c.Value == "Candidate")))
             {
                 // You can access the authenticated user from the principal
                 context.HttpContext.Items["User"] = principal;

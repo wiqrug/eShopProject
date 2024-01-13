@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project2.Models;
 using Project2.Services;
@@ -31,7 +32,7 @@ namespace Project2.Controllers
         }
 
         // Create Certificate
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpPost]  
         public IActionResult CreateCertificate(CertificateDTO certificateDTO)
         {
@@ -40,7 +41,7 @@ namespace Project2.Controllers
         }
 
         // Delete Certificate
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{Title}")]    
         public IActionResult DeleteCertificate(string Title)
         {
@@ -53,7 +54,7 @@ namespace Project2.Controllers
         }
 
         // Update Certificate
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{Title}")]   
         public IActionResult UpdateCertificate(string Title, CertificateDTO certificateDTO)
         {

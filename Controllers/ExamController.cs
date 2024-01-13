@@ -37,7 +37,7 @@ namespace Project2.Controllers
             return Ok(exam);
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CreateExam([FromBody] ExamDto examDto, string Title)
         {
@@ -45,7 +45,7 @@ namespace Project2.Controllers
             return Ok();
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{Title}")]
         public IActionResult Update(string Title, [FromBody] ExamDto examDto)
         {
@@ -53,7 +53,7 @@ namespace Project2.Controllers
             return Ok();
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{Title}")]
         public IActionResult Delete(string Title)
         {

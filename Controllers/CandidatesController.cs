@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project2.Services;
@@ -15,9 +16,9 @@ namespace Project2.Controllers
         {
             this.candidateServices = candidateServices;
         }
-        
+
         // Create Candidate
-        [ServiceFilter(typeof(AuthenticationFilterBoth))]
+        [Authorize(Roles = "Admin, Candidate")]
         [HttpPost]  
         public IActionResult CreateCandidate(CandidateDTO candidateDTO)
         {
@@ -30,7 +31,7 @@ namespace Project2.Controllers
         }
 
         // Update Candidate
-        [ServiceFilter(typeof(AuthenticationFilterBoth))]
+        [Authorize(Roles = "Admin, Candidate")]
         [HttpPut("{candidateNumber}")]   
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO)
         {

@@ -12,9 +12,7 @@ Read about entity framework and Table-Per-Hierarchy (TPH)
 Update the dbs, they should have createdAt column
 
 Note for Konstantinos so that even if I forget I'll have you to scold me: 
-Fix the AuthenticationFilters so that they get the token from the [Authorization] header!!!
 Also test each API so that it works according to the right authFilter.
 Then add an API so that a candidate can see their personal info.
-Furthermore make it so that when a certificate is deleted, every CandidateCertificate associated with this.certificate is also deleted  //DONE
 
 

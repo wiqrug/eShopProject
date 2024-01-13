@@ -103,7 +103,7 @@ namespace Project2.Services
 
             var claims = new List<Claim>
             {
-                new Claim("Role", "Admin"),
+                new Claim(ClaimTypes.Role, "Admin"),
                 new Claim("Id", admin.UserId.ToString())
             };
 
@@ -140,7 +140,7 @@ namespace Project2.Services
 
             var claims = new List<Claim>
             {
-                new Claim("Role", "Candidate"),
+                new Claim(ClaimTypes.Role, "Candidate"),
                 new Claim("Id", candidate.UserId.ToString())
             };
 

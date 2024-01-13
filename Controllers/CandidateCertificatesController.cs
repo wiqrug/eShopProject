@@ -20,7 +20,7 @@ namespace Project2.Controllers
             this.context = context;
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterBoth))]
+        [Authorize(Roles = "Admin, Candidate")]
         [HttpPost]
         public IActionResult CreateEnrollment(CandidateCertificatesDTO candidateCertificatesDTO)
         {
@@ -35,8 +35,7 @@ namespace Project2.Controllers
             return Ok();
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterBoth))]
-        //[Authorize]
+        [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("obtained/{candidateNumber}")]
         public IActionResult GetObtainedCertificates(int candidateNumber)
         {
@@ -52,8 +51,7 @@ namespace Project2.Controllers
             }
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterBoth))]
-        //[Authorize]
+        [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("unobtained/{candidateNumber}")]
         public IActionResult GetUnobtainedCertificates(int candidateNumber)
         {
@@ -70,8 +68,7 @@ namespace Project2.Controllers
 
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterBoth))]
-        //[Authorize]
+        [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("available/{candidateNumber}")]
         public IActionResult GetAvailableCertificates(int candidateNumber)
         {
@@ -86,7 +83,7 @@ namespace Project2.Controllers
             }
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterBoth))]
+        [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("api/candidate/{candidateNumber}/certificatesExamsHistory")]
         public IActionResult GetMarksPerExamPerCertificate(int? candidateNumber)
         {

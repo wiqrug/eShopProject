@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project2.Models;
 using Project2.Services;
@@ -19,14 +20,14 @@ namespace Project2.Controllers
             this.candidateServices = candidateServices;
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult GetAdmins()
         {
             return Ok(adminsServices.GetAdmins());
         }
 
-        //[ServiceFilter(typeof(AuthenticationFilterAdmin))] to theloume???
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CreateAdmin(AdminDTO adminDTO)
         {
@@ -34,7 +35,7 @@ namespace Project2.Controllers
             return Ok();
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpPost("/admin/add-candidate")]
         public IActionResult addCandidate(CandidateDTO candidateDTO)
         {           
@@ -43,7 +44,7 @@ namespace Project2.Controllers
         }
 
         //Remove a Candidate
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{candidateNumber}")] 
         public IActionResult DeleteCandidate(int candidateNumber)
         {
@@ -58,14 +59,14 @@ namespace Project2.Controllers
         }
 
         // Show List of Candidates
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpGet("admin/get-candidates")]   
         public IActionResult GetCandidates()
         {
             return Ok(adminsServices.GetCandidates());
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpGet("admin/get-candidate-by-number/{candidateNumber}")]
         public IActionResult getCandidateByNumber(int candidateNumber)
         {
@@ -81,7 +82,7 @@ namespace Project2.Controllers
         }
         
         // Update Candidate
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpPut("admin/update-candidate/{candidateNumber}")]   
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO)
         {

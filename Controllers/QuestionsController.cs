@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ namespace Project2.Controllers
             this.questionsServices = questionsServices;
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterBoth))]
+        [Authorize(Roles = "Admin, Candidate")]
         [HttpGet]
         public IActionResult GetQuestions()
         {
@@ -29,7 +30,7 @@ namespace Project2.Controllers
             return Ok(response);
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterBoth))]
+        [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("{id}")]
         public IActionResult GetQuestion(Guid id)
         {
@@ -42,7 +43,7 @@ namespace Project2.Controllers
             return Ok(response);
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public IActionResult UpdateQuestions(Guid id, QuestionsDto question)
         {
@@ -60,7 +61,7 @@ namespace Project2.Controllers
             return Ok();
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CreateQuestion(QuestionsDto question)
         {
@@ -74,7 +75,7 @@ namespace Project2.Controllers
             return Ok();
         }
 
-        [ServiceFilter(typeof(AuthenticationFilterAdmin))]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteQuestion(Guid id)
         {
