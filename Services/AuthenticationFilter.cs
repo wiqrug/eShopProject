@@ -9,15 +9,10 @@ using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Project2.Models;
 
 public class AuthenticationFilter : IAsyncActionFilter
 {
-    public class CurrentUser
-    {
-        public string email { get; set; }
-        public string token { get; set; }
-        public int candidateNumber { get; set; }
-    }
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         string token = "";

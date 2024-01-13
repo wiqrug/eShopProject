@@ -6,4 +6,13 @@
         public string Password { get; set; }
 
     }
+
+    public class CurrentUser
+    {
+        public string email { get; set; }
+        public string token { get; set; }
+        public int candidatenumber { get; set; }
+    }
+
+
 }
