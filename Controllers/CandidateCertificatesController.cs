@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project2.Models;
@@ -35,6 +36,7 @@ namespace Project2.Controllers
         }
 
         [ServiceFilter(typeof(AuthenticationFilterBoth))]
+        //[Authorize]
         [HttpGet("obtained/{candidateNumber}")]
         public IActionResult GetObtainedCertificates(int candidateNumber)
         {
@@ -45,11 +47,13 @@ namespace Project2.Controllers
             else
             {
                 var obtainedCerts = candidateCertificatesServices.GetObtainedCertificates(candidateNumber);
+                Console.WriteLine(obtainedCerts);
                 return Ok(obtainedCerts);
             }
         }
 
         [ServiceFilter(typeof(AuthenticationFilterBoth))]
+        //[Authorize]
         [HttpGet("unobtained/{candidateNumber}")]
         public IActionResult GetUnobtainedCertificates(int candidateNumber)
         {
@@ -67,6 +71,7 @@ namespace Project2.Controllers
         }
 
         [ServiceFilter(typeof(AuthenticationFilterBoth))]
+        //[Authorize]
         [HttpGet("available/{candidateNumber}")]
         public IActionResult GetAvailableCertificates(int candidateNumber)
         {

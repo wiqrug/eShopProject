@@ -29,7 +29,7 @@ public class Certificate
 
     //Navigation Property
     public List<Exam> Exams { get; set; }
-
+    public ICollection<CandidateCertificates> CandidateCertificates { get; set; }
 
     // Constructor
     public Certificate()

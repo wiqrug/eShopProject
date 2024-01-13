@@ -82,6 +82,15 @@ namespace Project2.Services
                 .WithOne(c => c.Exam)
                 .HasForeignKey(c => c.ExamId);
 
+            // This is needed for the Entity Framework to be able to delete any CandidateCertificates
+            // when a Certificate is deleted. Also for this to work an extra navigation property was needed in 
+            // the certificate.cs model
+            modelBuilder.Entity<Certificate>()
+                .HasMany(c => c.CandidateCertificates)
+                .WithOne(cc => cc.Certificate)
+                .HasForeignKey(cc => cc.CertificateId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }
