@@ -109,6 +109,11 @@ namespace Project2.Services
                 candidate.Email = candidateDTO.Email;
             }
 
+            if (!string.IsNullOrWhiteSpace(candidateDTO.Password))
+            {
+                candidate.Password = candidateDTO.Password;
+            }
+
             if (!string.IsNullOrWhiteSpace(candidateDTO.Address))
             {
                 candidate.Address = candidateDTO.Address;

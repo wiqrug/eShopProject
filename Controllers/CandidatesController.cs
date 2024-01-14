@@ -35,7 +35,7 @@ namespace Project2.Controllers
         }
 
         // Update Candidate
-        [Authorize(Roles = "Admin, Candidate")]
+        [Authorize(Roles = "Candidate")]
         [HttpPut("{candidateNumber}")]   
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO)
         {
@@ -44,13 +44,9 @@ namespace Project2.Controllers
             int? candNum = parsedCookie.candidatenumber;
             if (candidateNumber != candNum)
             {
-                return Unauthorized("No no no, you can't see someone else's personal info");
+                return Unauthorized("No no no, you can't change someone else's personal info");
             }
 
-            if (candidateNumber == null)
-            {
-                return BadRequest("Candidate doesnt exist");
-            }
             candidateServices.UpdateCandidate(candidateNumber, candidateDTO);
 
             return Ok();

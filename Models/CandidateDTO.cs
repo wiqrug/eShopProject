@@ -5,17 +5,17 @@ using System.ComponentModel.DataAnnotations;
 public class CandidateDTO
 {
     [StringLength(30)]
-    public string FirstName { get; set; }
+    public string? FirstName { get; set; }
     [StringLength(100)]
     public string? MiddleName { get; set; } = "";
     [StringLength(30)]
-    public string LastName { get; set; }
+    public string? LastName { get; set; }
     [StringLength(100)]
     [EmailAddress]
-    public string Email { get; set; }
+    public string? Email { get; set; }
 
     [StringLength(300)]
-    public string Password { get; set; }
+    public string? Password { get; set; }
 
 
 

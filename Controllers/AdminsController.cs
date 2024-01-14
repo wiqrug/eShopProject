@@ -70,7 +70,7 @@ namespace Project2.Controllers
         [HttpGet("admin/get-candidate-by-number/{candidateNumber}")]
         public IActionResult getCandidateByNumber(int candidateNumber)
         {
-            var candidate = candidateServices.GetCandidateById(candidateNumber, HttpRequest);
+            var candidate = candidateServices.GetCandidateById(candidateNumber);
             if (candidate == null)
             { 
                 return NotFound("Candidate is not found"); 
