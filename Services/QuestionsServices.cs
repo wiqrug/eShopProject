@@ -11,16 +11,16 @@ namespace Project2.Services
             this.context = context;
         }
 
-        public void createQuestion(QuestionsDto questionDto)
+        public void createQuestion(QuestionsDto questionDto, Guid ExamId)
         {
-            var question = new Questions()
+            var question = new Questions(ExamId)
             {
-                ExamId = questionDto.ExamId,
                 Question = questionDto.Question,
                 AnswerA = questionDto.AnswerA,
                 AnswerB = questionDto.AnswerB,
                 AnswerC = questionDto.AnswerC,
                 AnswerD = questionDto.AnswerD,
+                ImageSrc = questionDto.ImageSrc,
                 CorrectAnswer = questionDto.CorrectAnswer
             };
             context.Questions.Add(question);
@@ -73,11 +73,17 @@ namespace Project2.Services
             {
                 question.AnswerD = newQuestion.AnswerD;
             }
+            
+            if (!string.IsNullOrWhiteSpace(newQuestion.ImageSrc))
+            {
+                question.ImageSrc = newQuestion.ImageSrc;
+            }
 
             if (!string.IsNullOrWhiteSpace(newQuestion.CorrectAnswer))
             {
                 question.CorrectAnswer = newQuestion.CorrectAnswer;
             }
+
             context.SaveChanges();
         }
 
