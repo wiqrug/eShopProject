@@ -1,4 +1,5 @@
-﻿using Project2.Models;
+﻿using Microsoft.EntityFrameworkCore.Query.Internal;
+using Project2.Models;
 
 namespace Project2.Services
 {
@@ -45,6 +46,15 @@ namespace Project2.Services
             var response = context.Questions.FirstOrDefault(x => x.QuestionId == questionId);
 
             return response;
+        }
+
+        public List<Questions> getQuestionsByTitle(string Title)
+        {
+            //var response=context.Exams.FirstOrDefault(x => x.Title == Title);
+           
+            var id = CheckExamId(Title);
+            var questions = context.Questions.Where(x => x.ExamId == id).ToList();
+            return questions;
         }
 
         public void updateQuestion(Guid questionId, QuestionsDto newQuestion)

@@ -25,7 +25,7 @@ namespace Project2.Controllers
         }
 
         [Authorize(Roles = "Admin, Candidate")]
-        [HttpGet]
+        [HttpGet("/questions/all")]
         public IActionResult GetQuestions()
         {
             var response = questionsServices.getAllQuestions();
@@ -33,7 +33,7 @@ namespace Project2.Controllers
         }
 
         [Authorize(Roles = "Admin, Candidate")]
-        [HttpGet("{id}")]
+        [HttpGet("/questions/byId{id}")]
         public IActionResult GetQuestion(Guid id)
         {
             var response = questionsServices.getQuestion(id);
@@ -91,5 +91,18 @@ namespace Project2.Controllers
     
             return Ok();
         }
+
+        [Authorize(Roles ="Admin,Candidate")]
+        [HttpGet("/questions/byTitle/{Title}")]
+        public IActionResult GetQuestionsByTitle(string Title)
+        {
+            
+            
+               var response= questionsServices.getQuestionsByTitle(Title);
+                return Ok(response);
+           
+            
+        }
+
     }
 }
