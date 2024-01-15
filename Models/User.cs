@@ -18,6 +18,7 @@ namespace Project2.Models
 
         [Required]
         public Role role { get; set; }
+        [JsonIgnore]
         [Required]
         [StringLength(300)]
         public string Password { get; set; }

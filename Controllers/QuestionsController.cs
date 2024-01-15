@@ -67,7 +67,7 @@ namespace Project2.Controllers
                 return BadRequest("Missing values");
             }
 
-            Guid? ExamId = context.Exams
+            Guid ExamId = context.Exams
                 .Where(e => e.Title == Title)
                 .Select(e => e.ExamId)
                 .FirstOrDefault();
