@@ -20,16 +20,16 @@ namespace Project2.Services
 
         public List<Certificate> GetObtainedCertificates(int candidateNumber)
         {
-            // Fetching the candidate
+            
             Candidate candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
             if (candidate == null)
             {
-                // If the candidate is not found, return an empty list
+                
                 return new List<Certificate>();
             }
             List<Certificate> ObtainedCerts = new List<Certificate>();
 
-            // Modify the query to use eager loading correctly
+            
             var boughtCertificates = context.CandidateCertificates
                                             .Where(x => x.CandidateId == candidate.UserId)
                                             .Include(x => x.Certificate)
@@ -138,7 +138,7 @@ namespace Project2.Services
                 return new List<Exam>();
             }
 
-            // Searching for certificates of this candidtate
+            
             var certificates = context.CandidateCertificates
                                     .Where(x => x.CandidateId == candidate.UserId)
                                     .Include(x => x.Certificate)
@@ -164,76 +164,11 @@ namespace Project2.Services
         }
 
 
-        //We need to have a date that is initialized when the exam is passed
-        //public CertificateCountResult GetCertificateCountsByDateRange(DateTime startDate, DateTime endDate)
-        //{
-        //    var result = new CertificateCountResult();
-
-        //    var certificatesInRange = context.CandidateCertificates
-        //                                     .Where(cc => cc.CreatedAt >= startDate && cc.CreatedAt <= endDate)
-        //                                     .ToList();
-
-        //    foreach (var certificate in certificatesInRange)
-        //    {
-        //        if (certificate.CandidateScore.HasValue && certificate.CandidateScore.Value >= passingScore)
-        //        {
-        //            result.PassedCount++;
-        //        }
-        //        else
-        //        {
-        //            result.FailedCount++;
-        //        }
-        //    }
-
-        //    return result;
-        //}
+        
 
 
-        //public List<Certificate> GetObtainedCertificatesByDate(int candidateNumber, DateTime startDate, DateTime endDate)
-        //{
-        //    Candidate candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
-        //    if (candidate == null)
-        //    {
-        //        return new List<Certificate>();
-        //    }
-
-        //    List<Certificate> ObtainedCerts = new List<Certificate>();
-
-        //    var boughtCertificates = context.CandidateCertificates
-        //                                    .Where(x => x.CandidateId == candidate.UserId)
-
-        //                                    .ToList();
-
-        //    foreach (var certificate in boughtCertificates)
-        //    {
-        //        int passedExamsCount = 0;
-
-        //        foreach (var exam in certificate.Exams)
-        //        {
-        //            if (exam.AwardedMarks > 50)
-        //            {
-        //                passedExamsCount++;
-        //            }
-        //        }
-
-        //        if (passedExamsCount == certificate.Exams.Count)
-        //        {
-        //            ObtainedCerts.Add(certificate);
-        //        }
-        //    }
-
-        //    List<Certificate> ObtainedCertsByDate = new List<Certificate>();
-
-        //    foreach (var certificate in ObtainedCerts)
-        //    {
-        //        if (certificate.CreatedAt >= startDate && certificate.CreatedAt <= endDate)
-        //        {
-        //            ObtainedCertsByDate.Add(certificate);
-        //        }
-        //    }
-
-        //    return ObtainedCertsByDate;
-        //}
+        
+       
 
     }
 }

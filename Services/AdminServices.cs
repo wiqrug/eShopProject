@@ -4,7 +4,7 @@ using Project2.Models;
 
 namespace Project2.Services
 {
-    //Admin should be able to do Candidates CRUD
+    
     public class AdminServices
     {
         private readonly ApplicationDBContext context;
@@ -14,7 +14,7 @@ namespace Project2.Services
             this.context = context;
         }
 
-        //Following code is to test if we are able to add admin and get admin
+        
         public List<Admin> GetAdmins()
         {
             var admins = context.Admins.ToList();

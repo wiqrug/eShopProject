@@ -12,14 +12,14 @@ namespace Project2.Controllers
     public class CandidateCertificatesController : ControllerBase
     {
         private readonly CandidateCertificatesServices candidateCertificatesServices;
-        private readonly ApplicationDBContext context;
+        
 
-        public CandidateCertificatesController(CandidateCertificatesServices candidateCertificatesServices,ApplicationDBContext context)
+        public CandidateCertificatesController(CandidateCertificatesServices candidateCertificatesServices)
         {
             this.candidateCertificatesServices = candidateCertificatesServices;
-            this.context = context;
+           
         }
-
+        //create candCert
         [Authorize(Roles = "Admin, Candidate")]
         [HttpPost]
         public IActionResult CreateEnrollment(CandidateCertificatesDTO candidateCertificatesDTO)
@@ -34,7 +34,7 @@ namespace Project2.Controllers
 
             return Ok();
         }
-
+        //get Obtained(paid) Certif
         [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("obtained/{candidateNumber}")]
         public IActionResult GetObtainedCertificates(int candidateNumber)
@@ -44,7 +44,7 @@ namespace Project2.Controllers
             return Ok(obtainedCerts);
             
         }
-
+        //get paid Certif but not passed
         [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("unobtained/{candidateNumber}")]
         public IActionResult GetUnobtainedCertificates(int candidateNumber)
@@ -61,7 +61,7 @@ namespace Project2.Controllers
             }
 
         }
-
+        //get all unpaid Cert
         [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("available/{candidateNumber}")]
         public IActionResult GetAvailableCertificates(int candidateNumber)
@@ -76,7 +76,7 @@ namespace Project2.Controllers
                 return Ok(availableCertificates);
             }
         }
-
+        //get marksPerCertPerExam
         [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("api/candidate/{candidateNumber}/certificatesExamsHistory")]
         public IActionResult GetMarksPerExamPerCertificate(int? candidateNumber)
@@ -91,51 +91,7 @@ namespace Project2.Controllers
                     return Ok(x);
             }
 
-            //var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber)!;
-
-            //if (context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber) == null)
-            //{
-            //    return NotFound("Candidate not found!");
-            //}
-
-            //// Searching for certificates of this candidtate
-            //var certificates = context.CandidateCertificates
-            //                        .Where(x => x.CandidateID == candidate.UserID)
-            //                        .Include(x => x.Certificate)  // Eagerly load Certificate
-            //                                                      //.ThenInclude(c => c.Exams)    // Eagerly load Exams related to Certificate
-            //                        .Select(x => x.Certificate)
-            //                        .ToList();
-
-
-            //var CertificatesMarks = new Dictionary<string, List<Exam>>();
-
-            //foreach (var cert in certificates)
-            //{
-            //    var examAwardedMarks = context.CandidateExams
-            //                .Where(x => x.CandidateID == candidate.UserID)
-            //                .Select(x => x.Exam)
-            //                .ToList();
-
-            //    CertificatesMarks[cert.TitleOfCertificate] = examAwardedMarks;
-            //}
-
-            //return Ok(CertificatesMarks);
-
-            //Needs fix (same does service)
-
-            //[HttpGet("ByDate/{candidate-number}")]
-            //public IActionResult GetObtainedCertificatesByDate(int candidateNumber, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
-            //{
-            //    if (candidateNumber == null)
-            //    {
-            //        return BadRequest();
-            //    }
-            //    else
-            //    {
-            //        var obtainedCertsByDate = candidateCertificatesServices.GetObtainedCertificatesByDate(candidateNumber, startDate, endDate);
-            //        return Ok(obtainedCertsByDate);
-            //    }
-            //}
+            
         }
     }
 }

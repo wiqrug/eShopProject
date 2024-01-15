@@ -7,9 +7,7 @@ namespace Project2.Models
     public class Admin : User
     {
 
-        //These properties could be inherited by user, since Admin,Marker and QualityControl,Candidate already have this
-        //Reduces Redundancy
-        //Enopoihsh me User etsi k allios?
+        
 
         [Required]
         [StringLength(30)]

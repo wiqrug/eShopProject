@@ -13,12 +13,12 @@ namespace Project2.Controllers
     public class ExamsController : ControllerBase
     {
         private readonly ExamService examService;
-        private readonly ApplicationDBContext context;
+        
 
-        public ExamsController(ExamService examService, ApplicationDBContext context)
+        public ExamsController(ExamService examService)
         {
             this.examService = examService;
-            this.context = context;
+            
         }
 
         [HttpGet]
@@ -43,14 +43,9 @@ namespace Project2.Controllers
         [HttpPost]
         public IActionResult CreateExam([FromBody] ExamDto examDto, string Title)
         {
-            Guid? CertificateId = context.Certificates
-                                    .Where(e => e.Title == Title)
-                                    .Select(e => e.CertificateId)
-                                    .FirstOrDefault();
-
-            if (CertificateId == null)
+            if (examService.CheckExam==null)
             {
-                return BadRequest("Invalid Certificate Title");
+                return Ok("Exam added successfully");
             }
 
             examService.AddExam(examDto, Title);

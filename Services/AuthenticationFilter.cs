@@ -74,6 +74,3 @@ public class AuthenticationFilter : IAsyncActionFilter
     }
 }
 
-//        [ServiceFilter(typeof(AuthenticationFilterCandidate))]
-//to parapano annotation tha to vazoume pano apo kathe controller/action pou theloume 
-//na kanei authenticate protou to xtipisei to front-end

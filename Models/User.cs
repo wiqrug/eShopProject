@@ -7,8 +7,8 @@ namespace Project2.Models
     public class User
     {
         [Key]
-        //[JsonIgnore]
-        //We have setter because the framework needs it
+        
+       
         public Guid UserId { get; private set; }
 
         [Required]
@@ -18,6 +18,7 @@ namespace Project2.Models
 
         [Required]
         public Role role { get; set; }
+        [JsonIgnore]
         [Required]
         [StringLength(300)]
         public string Password { get; set; }

@@ -1,15 +1,4 @@
-TODOS
 
-
-na ftiaksoume ta models
-
-Candidate Model is done and is functional.
-
-Need to create Admin,Marker,qc.
-
-Read about entity framework and Table-Per-Hierarchy (TPH)
-
-Update the dbs, they should have createdAt column
 
 
  

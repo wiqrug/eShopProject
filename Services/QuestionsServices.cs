@@ -10,7 +10,14 @@ namespace Project2.Services
         {
             this.context = context;
         }
-
+        public Guid CheckExamId(string Title)
+        {
+            Guid ExamId = context.Exams
+                .Where(e => e.Title == Title)
+                .Select(e => e.ExamId)
+                .FirstOrDefault();
+            return ExamId;
+        }
         public void createQuestion(QuestionsDto questionDto, Guid ExamId)
         {
             var question = new Questions(ExamId)

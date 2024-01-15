@@ -16,12 +16,12 @@ namespace Project2.Controllers
     public class QuestionsController : ControllerBase
     {
         public QuestionsServices questionsServices;
-        private readonly ApplicationDBContext context;
+        
 
-        public QuestionsController(QuestionsServices questionsServices, ApplicationDBContext context)
+        public QuestionsController(QuestionsServices questionsServices)
         {
             this.questionsServices = questionsServices;
-            this.context = context;
+            
         }
 
         [Authorize(Roles = "Admin, Candidate")]
@@ -67,16 +67,13 @@ namespace Project2.Controllers
                 return BadRequest("Missing values");
             }
 
-            Guid? ExamId = context.Exams
-                .Where(e => e.Title == Title)
-                .Select(e => e.ExamId)
-                .FirstOrDefault();
+           
 
-            if (ExamId == null)
+            if (questionsServices.CheckExamId == null)
             {
                 return BadRequest("Invalid Exam Title");
             }
-
+            Guid ExamId = questionsServices.CheckExamId(Title);
             questionsServices.createQuestion(question,ExamId);
 
             return Ok();
