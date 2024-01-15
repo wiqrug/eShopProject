@@ -52,7 +52,7 @@ namespace Project2.Controllers
 
             return Ok();
         }
-
+        // get candidate by candidateNumber
         [Authorize(Roles = "Candidate")]
         [HttpGet("{candidateNumber}")]
         public IActionResult getCandidateByNumber(int candidateNumber)

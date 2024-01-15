@@ -21,15 +21,13 @@ namespace Project2.Services
 
         public void CreateCandidate(CandidateDTO candidateDTO)
         {
-            int maxCandidateNumber = context.Candidates.Max(c => (int?)c.CandidateNumber) ?? 1000; // Starting from 1001
+            int maxCandidateNumber = context.Candidates.Max(c => (int?)c.CandidateNumber) ?? 1000; 
             var passwordHasher = new PasswordHasher<Candidate>();
             var encryptedPassword = passwordHasher.HashPassword(new Candidate(), candidateDTO.Password);
 
             var candidate = new Candidate
             {
-                // Assuming CandidateID is set elsewhere or automatically
-
-                // Direct mapping from DTO to Candidate properties
+                                
                 CandidateNumber = maxCandidateNumber + 1,
                 FirstName = candidateDTO.FirstName,
                 LastName = candidateDTO.LastName,
@@ -58,7 +56,7 @@ namespace Project2.Services
                 return;
             }
 
-            // Update candidate properties with values from candidateDTO
+            
             if (!string.IsNullOrWhiteSpace(candidateDTO.FirstName))
             {
                 candidate.FirstName = candidateDTO.FirstName;

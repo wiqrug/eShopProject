@@ -31,16 +31,14 @@ namespace Project2.Models
 
         public  Certificate Certificate { get; set; }
 
-        //Constructor
-        //Delete this later
-        //Added CertificateID = certificateId and also argument in the constructor
+        
         public Exam(Guid certificateId)
         {
             ExamId = Guid.NewGuid();
             CertificateId = certificateId;
         }
 
-        //Added empty constructor
+       
         public Exam() {
             ExamId = Guid.NewGuid();
         }

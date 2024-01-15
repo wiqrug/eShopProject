@@ -27,9 +27,7 @@ namespace Project2.Services
         {
             var certificate = new Certificate
             {
-                // Assuming CertificateID is set elsewhere or automatically
-
-                // Direct mapping from DTO to Certificate properties
+                
                 Title = certificateDTO.Title,
                 Description = certificateDTO.Description,
                 Price = certificateDTO.Price,

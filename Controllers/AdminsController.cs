@@ -27,7 +27,7 @@ namespace Project2.Controllers
             return Ok(adminsServices.GetAdmins());
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CreateAdmin(AdminDTO adminDTO)
         {

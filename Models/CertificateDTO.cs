@@ -6,7 +6,7 @@ namespace Project2.Models
     {
 
   
-        [StringLength(200)] // Adjust the length based on your requirements
+        [StringLength(200)] 
         public string Title { get; set; }
 
         [StringLength(150)]

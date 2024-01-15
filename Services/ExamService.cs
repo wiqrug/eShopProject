@@ -24,18 +24,30 @@ namespace Project2.Services
             return context.Exams.FirstOrDefault(e => e.Title == Title);
         }
 
+        
+
+        public Guid CheckExam(string Title)
+        {
+            Guid certificateId = context.Certificates
+                                   .Where(e => e.Title == Title)
+                                   .Select(e => e.CertificateId)
+                                   .FirstOrDefault();
+            return certificateId;
+        }
         public void AddExam(ExamDto examDto, string Title)
         {
             Guid certificateId = context.Certificates
-                                    .Where(e => e.Title == Title)
-                                    .Select(e => e.CertificateId)
-                                    .FirstOrDefault();
-            //must be a check if certificateId is null or not
+                                   .Where(e => e.Title == Title)
+                                   .Select(e => e.CertificateId)
+                                   .FirstOrDefault();
+           
             var exam = new Exam(certificateId)
             {
                 Title = examDto.Title,
                 Description = examDto.Description,
                 Time = examDto.Time,
+                
+                
             };
 
             context.Exams.Add(exam);

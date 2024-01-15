@@ -167,27 +167,7 @@ namespace Project2.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        //    private string CreateJWToken(Candidate candidate)
-        //    {
-        //        var claims = new[]
-        //        {
-        //    new Claim(JwtRegisteredClaimNames.Sub, candidate.Email),
-        //    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        //    // Add other claims as needed
-        //};
-
-        //        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourSecretKeyHere")); // Replace with your actual secret key
-        //        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        //        var token = new JwtSecurityToken(
-        //            issuer: "YourIssuer", // Replace with your issuer
-        //            audience: "YourAudience", // Replace with your audience
-        //            claims: claims,
-        //            expires: DateTime.Now.AddHours(1), // Token expiration time
-        //            signingCredentials: creds);
-
-        //        return new JwtSecurityTokenHandler().WriteToken(token);
-        //    }
+        
 
     }
 }

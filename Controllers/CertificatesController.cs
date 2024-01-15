@@ -24,7 +24,7 @@ namespace Project2.Controllers
             return Ok(certificateServices.GetCertificates());
         }
         
-        // Show Certificate
+        // Show Certificate with Title
         [HttpGet("{Title}")]   
         public IActionResult GetCertificate(string Title)
         {
