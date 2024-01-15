@@ -42,6 +42,7 @@ namespace Project2.Controllers
             string? cookie = Request.Cookies["currentUser"];
             CurrentUser parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
             int? candNum = parsedCookie.candidatenumber;
+            Console.WriteLine(candNum);
             if (candidateNumber != candNum)
             {
                 return Unauthorized("No no no, you can't change someone else's personal info");

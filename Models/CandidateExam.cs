@@ -38,7 +38,6 @@ namespace Project2.Models
         public CandidateExam()
         {
             CandidateExamId = Guid.NewGuid();
-            TakenAt = DateTime.Now;
         }
     }
 }
