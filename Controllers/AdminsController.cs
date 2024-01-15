@@ -24,23 +24,48 @@ namespace Project2.Controllers
         [HttpGet]
         public IActionResult GetAdmins()
         {
-            return Ok(adminsServices.GetAdmins());
+            try
+            {
+                return Ok(adminsServices.GetAdmins());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
 
         //[Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CreateAdmin(AdminDTO adminDTO)
         {
-            adminsServices.CreateAdmin(adminDTO);
-            return Ok();
+            try
+            {
+                adminsServices.CreateAdmin(adminDTO);
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost("/admin/add-candidate")]
         public IActionResult addCandidate(CandidateDTO candidateDTO)
-        {           
-            candidateServices.CreateCandidate(candidateDTO);
-            return Ok();
+        {
+            try
+            {
+                if (adminsServices.EmailExists(candidateDTO.Email))
+                {
+                    return BadRequest("This email address is already in use");
+                }
+                candidateServices.CreateCandidate(candidateDTO);
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
 
         //Remove a Candidate
@@ -48,14 +73,21 @@ namespace Project2.Controllers
         [HttpDelete("{candidateNumber}")] 
         public IActionResult DeleteCandidate(int candidateNumber)
         {
-            bool isDeleted = adminsServices.DeleteCandidate(candidateNumber);
-
-            if (!isDeleted)
+            try
             {
-                return NotFound();
-            }
+                bool isDeleted = adminsServices.DeleteCandidate(candidateNumber);
 
-            return Ok();
+                if (!isDeleted)
+                {
+                    return NotFound();
+                }
+
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
 
         // Show List of Candidates
@@ -63,21 +95,39 @@ namespace Project2.Controllers
         [HttpGet("admin/get-candidates")]   
         public IActionResult GetCandidates()
         {
-            return Ok(adminsServices.GetCandidates());
+            try
+            {
+
+                return Ok(adminsServices.GetCandidates());
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
+
+
+
 
         [Authorize(Roles = "Admin")]
         [HttpGet("admin/get-candidate-by-number/{candidateNumber}")]
         public IActionResult getCandidateByNumber(int candidateNumber)
         {
-            var candidate = candidateServices.GetCandidateById(candidateNumber);
-            if (candidate == null)
-            { 
-                return NotFound("Candidate is not found"); 
+            try
+            {
+                var candidate = candidateServices.GetCandidateById(candidateNumber);
+                if (candidate == null)
+                {
+                    return NotFound("Candidate is not found");
+                }
+                else
+                {
+                    return Ok(candidate);
+                }
             }
-            else 
-            { 
-                return Ok(candidate); 
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
         
@@ -86,13 +136,20 @@ namespace Project2.Controllers
         [HttpPut("admin/update-candidate/{candidateNumber}")]   
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO)
         {
+            try
+            {
                 if (candidateNumber == null)
                 {
                     return BadRequest("Candidate number doesnt exist");
                 }
                 candidateServices.UpdateCandidate(candidateNumber, candidateDTO);
 
-                return Ok();           
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
     }
 }

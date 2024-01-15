@@ -29,7 +29,8 @@ namespace Project2.Services
             var ad = new Admin 
             { 
                 FirstName = admin.FirstName,
-                Address = admin.Address, Email = admin.Email,
+                Address = admin.Address,
+                Email = admin.Email,
                 LastName = admin.LastName,
                 MobileNumber = admin.MobileNumber,
                 Password = encryptedPassword,
@@ -37,6 +38,11 @@ namespace Project2.Services
             };
             context.Admins.Add(ad);
             context.SaveChanges();
+        }
+        public bool EmailExists(string email)
+        {
+            var emailCount = context.Users.Count(u => u.Email == email);
+            return emailCount > 0;
         }
 
         public void CreateCandidate(CandidateDTO candidateDTO)
@@ -79,13 +85,7 @@ namespace Project2.Services
             context.Candidates.Add(candidate);
             context.SaveChanges();
         }
-        public bool isAdmin(string email, string password)
-        {
-            var user = context.Users.FirstOrDefault(x => x.Email == email && x.Password == password);
-
-            // Check if a user was found and if the user is an Admin
-            return user != null && user.role == User.Role.Admin;
-        }
+        
 
         public bool DeleteCandidate(int candidateNumber)
         {
