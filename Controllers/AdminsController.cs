@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project2.Models;
 using Project2.Services;
@@ -50,7 +49,7 @@ namespace Project2.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPost("/admin/add-candidate")]
+        [HttpPost("addCandidate")]
         public IActionResult addCandidate(CandidateDTO candidateDTO)
         {
             try
@@ -92,7 +91,7 @@ namespace Project2.Controllers
 
         // Show List of Candidates
         [Authorize(Roles = "Admin")]
-        [HttpGet("admin/get-candidates")]   
+        [HttpGet("getCandidates")]   
         public IActionResult GetCandidates()
         {
             try
@@ -110,7 +109,7 @@ namespace Project2.Controllers
 
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("admin/get-candidate-by-number/{candidateNumber}")]
+        [HttpGet("getCandidateByNumber/{candidateNumber}")]
         public IActionResult getCandidateByNumber(int candidateNumber)
         {
             try
@@ -133,7 +132,7 @@ namespace Project2.Controllers
         
         // Update Candidate
         [Authorize(Roles = "Admin")]
-        [HttpPut("admin/update-candidate/{candidateNumber}")]   
+        [HttpPut("updateCandidate/{candidateNumber}")]   
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO)
         {
             try

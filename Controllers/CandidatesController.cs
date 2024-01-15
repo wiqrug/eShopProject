@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using Project2.Services;
 using Project2.Models;
-using static AuthenticationFilter;
 
 namespace Project2.Controllers
 {
@@ -42,6 +38,7 @@ namespace Project2.Controllers
             string? cookie = Request.Cookies["currentUser"];
             CurrentUser parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
             int? candNum = parsedCookie.candidatenumber;
+            Console.WriteLine(candNum);
             if (candidateNumber != candNum)
             {
                 return Unauthorized("No no no, you can't change someone else's personal info");
@@ -56,13 +53,13 @@ namespace Project2.Controllers
         [HttpGet("{candidateNumber}")]
         public IActionResult getCandidateByNumber(int candidateNumber)
         {
-            string? cookie = Request.Cookies["currentUser"];
-            CurrentUser parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
+           /* string? cookie = Request.Cookies["currentUser"];
+            CurrentUser? parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
             int? candNum = parsedCookie.candidatenumber;
             if (candidateNumber !=  candNum)
             {
                 return Unauthorized("No no no, you can't see someone else's personal info");
-            }
+            }*/
 
             var candidate = candidateServices.GetCandidateById(candidateNumber);
             if (candidate == null)

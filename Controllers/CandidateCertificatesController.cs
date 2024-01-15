@@ -78,7 +78,7 @@ namespace Project2.Controllers
         }
         //get marksPerCertPerExam
         [Authorize(Roles = "Admin, Candidate")]
-        [HttpGet("api/candidate/{candidateNumber}/certificatesExamsHistory")]
+        [HttpGet("candidate/{candidateNumber}/certificatesExamsHistory")]
         public IActionResult GetMarksPerExamPerCertificate(int? candidateNumber)
         {
             if (candidateNumber == null)
