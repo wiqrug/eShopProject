@@ -30,7 +30,7 @@ namespace Project2.Services
                                     .Where(e => e.Title == Title)
                                     .Select(e => e.CertificateId)
                                     .FirstOrDefault();
-
+            //must be a check if certificateId is null or not
             var exam = new Exam(certificateId)
             {
                 Title = examDto.Title,

@@ -29,9 +29,9 @@ namespace Project2.Models
                 TakenAt = DateTime.Now;
             }
         }
-
+        
         public DateTime TakenAt { get; set; }
-
+       
         public Candidate Candidate { get; set; }
         public Exam Exam { get; set; }
 

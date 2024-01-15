@@ -22,7 +22,10 @@ namespace Project2.Models
         public string AnswerC { get; set; }
         [Required]
         public string AnswerD { get; set; }
-            
+
+        [Required]
+        public string ImageSrc { get; set; }
+
         [Required]
         [RegularExpression("(a|b|c|d)", ErrorMessage = "Value must be a,b,c or d")]
         public string CorrectAnswer { get; set; }
@@ -34,6 +37,12 @@ namespace Project2.Models
         public Questions()
         {
             QuestionId = Guid.NewGuid();
+        }
+
+        public Questions(Guid examid)
+        {
+            QuestionId = Guid.NewGuid();
+            ExamId = examid;
         }
 
 

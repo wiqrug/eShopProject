@@ -16,10 +16,12 @@ namespace Project2.Controllers
     public class QuestionsController : ControllerBase
     {
         public QuestionsServices questionsServices;
+        private readonly ApplicationDBContext context;
 
-        public QuestionsController(QuestionsServices questionsServices)
+        public QuestionsController(QuestionsServices questionsServices, ApplicationDBContext context)
         {
             this.questionsServices = questionsServices;
+            this.context = context;
         }
 
         [Authorize(Roles = "Admin, Candidate")]
@@ -58,14 +60,24 @@ namespace Project2.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public IActionResult CreateQuestion(QuestionsDto question)
+        public IActionResult CreateQuestion(QuestionsDto question, string Title)
         {
-          if (question == null)
-          {
-              return BadRequest("Missing values");
-          }
+            if (question == null)
+            {
+                return BadRequest("Missing values");
+            }
 
-            questionsServices.createQuestion(question);
+            Guid? ExamId = context.Exams
+                .Where(e => e.Title == Title)
+                .Select(e => e.ExamId)
+                .FirstOrDefault();
+
+            if (ExamId == null)
+            {
+                return BadRequest("Invalid Exam Title");
+            }
+
+            questionsServices.createQuestion(question,ExamId);
 
             return Ok();
         }
