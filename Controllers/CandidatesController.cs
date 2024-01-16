@@ -22,54 +22,70 @@ namespace Project2.Controllers
         [HttpPost]  
         public IActionResult CreateCandidate(CandidateDTO candidateDTO)
         {
-            if (candidateServices.EmailExists(candidateDTO.Email))
+            try
             {
-                return BadRequest("This email address is already in use");
+                if (candidateServices.EmailExists(candidateDTO.Email))
+                {
+                    return BadRequest("This email address is already in use");
+                }
+                candidateServices.CreateCandidate(candidateDTO);
+                return Ok();
             }
-            candidateServices.CreateCandidate(candidateDTO);
-            return Ok();
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
-
+        
         // Update Candidate
         [Authorize(Roles = "Candidate")]
         [HttpPut("{candidateNumber}")]   
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO)
         {
-            string? cookie = Request.Cookies["currentUser"];
-            CurrentUser parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
-            int? candNum = parsedCookie.candidatenumber;
-            Console.WriteLine(candNum);
-            if (candidateNumber != candNum)
+            try
             {
-                return Unauthorized("No no no, you can't change someone else's personal info");
+                string? cookie = Request.Cookies["currentUser"];
+                CurrentUser parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
+                int? candNum = parsedCookie.candidatenumber;
+                Console.WriteLine(candNum);
+                if (candidateNumber != candNum)
+                {
+                    return Unauthorized("No no no, you can't change someone else's personal info");
+                }
+
+                candidateServices.UpdateCandidate(candidateNumber, candidateDTO);
+
+                return Ok();
             }
-
-            candidateServices.UpdateCandidate(candidateNumber, candidateDTO);
-
-            return Ok();
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
+
+
         // get candidate by candidateNumber
         [Authorize(Roles = "Candidate")]
         [HttpGet("{candidateNumber}")]
         public IActionResult getCandidateByNumber(int candidateNumber)
         {
-           /* string? cookie = Request.Cookies["currentUser"];
-            CurrentUser? parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
-            int? candNum = parsedCookie.candidatenumber;
-            if (candidateNumber !=  candNum)
+            try
             {
-                return Unauthorized("No no no, you can't see someone else's personal info");
-            }*/
-
-            var candidate = candidateServices.GetCandidateById(candidateNumber);
-            if (candidate == null)
-            {
-                return NotFound("Candidate is not found");
+                var candidate = candidateServices.GetCandidateById(candidateNumber);
+                if (candidate == null)
+                {
+                    return NotFound("Candidate is not found");
+                }
+                else
+                {
+                    return Ok(candidate);
+                }
             }
-            else
+            catch 
             {
-                return Ok(candidate);
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
+                
         }
 
     }

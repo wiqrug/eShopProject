@@ -17,6 +17,11 @@ namespace Project2.Services
             this.context = context;
         }
 
+        public List<CandidateCertificates> GetAll()
+        {
+            var candidateCertificate = context.CandidateCertificates.ToList();
+            return candidateCertificate;
+        }
 
         public List<Certificate> GetObtainedCertificates(int candidateNumber)
         {
