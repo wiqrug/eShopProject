@@ -15,5 +15,11 @@
         
     }
 
+    public class CandidateInfo
+    {
+        public Candidate candidate { get; set; }
+        public int? mark { get; set; }
+        public Guid RecordId { get; set; }
+    }
 
 }

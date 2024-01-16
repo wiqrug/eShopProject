@@ -86,6 +86,7 @@ namespace Project2.Controllers
                     return Unauthorized("Invalid or missing custom authorization header, who are u?");
                 }
 
+                candidateExamServices.UpdateCandidateExam(candidateExamId, candidateExamDTO);
                 
                 return Ok();
             }

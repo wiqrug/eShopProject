@@ -169,5 +169,39 @@ namespace Project2.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        //update mark in candidateCertificate
+        [Authorize(Roles = "Admin")]
+        [HttpPut("Certificates/{recordId}")]
+        public IActionResult UpdateCandidateCertificate(Guid recordId, [FromBody]int mark)
+        {
+            try
+            {
+                candidateCertificatesServices.UpdateCandidateCertificate(recordId, mark);
+                return Ok();
+            } catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+            
+        }
+
+        //Delete candidateCertificate
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("Certificates/{recordId}")]
+        public IActionResult DeleteCandidateCertificate(Guid recordId)
+        {
+            try
+            {
+                candidateCertificatesServices.DeleteCandidateCertificate(recordId);
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+
+        }
+
     }
 }
