@@ -23,22 +23,30 @@ namespace Project2.Controllers
         [HttpPost("login")]
         public IActionResult Login(UserLogin userLogin)
         {
-
-            var (success, token, user) = accountServices.Login(userLogin);
-
-            if (!success)
+            try
             {
-                ModelState.AddModelError("Error", "Email or password is not valid");
-                return BadRequest(ModelState);
+                //throw new Exception("Simulated exception"); 
+
+                var (success, token, user) = accountServices.Login(userLogin);
+
+                if (!success)
+                {
+                    ModelState.AddModelError("Error", "Email or password is not valid");
+                    return BadRequest(ModelState);
+                }
+
+                var response = new
+                {
+                    Token = token,
+                    User = user
+                };
+
+                return Ok(response);
             }
-
-            var response = new
+            catch (Exception ex)
             {
-                Token = token,
-                User = user
-            };
-
-            return Ok(response);
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
     }
 }
