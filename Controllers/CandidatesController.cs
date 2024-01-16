@@ -18,7 +18,6 @@ namespace Project2.Controllers
         }
 
         // Create Candidate
-        [Authorize(Roles = "Admin, Candidate")]
         [HttpPost]  
         public IActionResult CreateCandidate(CandidateDTO candidateDTO)
         {
@@ -35,8 +34,8 @@ namespace Project2.Controllers
         [HttpPut("{candidateNumber}")]   
         public IActionResult UpdateCandidate(int candidateNumber, CandidateDTO candidateDTO)
         {
-            string? cookie = Request.Cookies["currentUser"];
-            CurrentUser parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
+            string? cookie = Request.Headers["currentUser"];
+            CurrentUser? parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
             int? candNum = parsedCookie.candidatenumber;
             Console.WriteLine(candNum);
             if (candidateNumber != candNum)
