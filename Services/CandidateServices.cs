@@ -27,7 +27,7 @@ namespace Project2.Services
 
             var candidate = new Candidate
             {
-                                
+
                 CandidateNumber = maxCandidateNumber + 1,
                 role = Models.User.Role.Candidate,
                 FirstName = candidateDTO?.FirstName,
@@ -41,7 +41,7 @@ namespace Project2.Services
                 PhotoIDIssueDate = candidateDTO?.PhotoIDIssueDate,
                 Email = candidateDTO?.Email,
                 Password = encryptedPassword,
-                Address = candidateDTO? .Address,
+                Address = candidateDTO?.Address,
                 AddressLine2 = candidateDTO?.AddressLine2,
                 CountryOfResidence = candidateDTO?.CountryOfResidence,
                 StateOrTerritoryOrProvince = candidateDTO?.StateOrTerritoryOrProvince,

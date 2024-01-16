@@ -19,7 +19,10 @@ namespace Project2.Services
 
         public List<CandidateCertificates> GetAll()
         {
-            var candidateCertificate = context.CandidateCertificates.ToList();
+            var candidateCertificate = context.CandidateCertificates
+                .Include(x=>x.Candidate)
+                .Include(x=>x.Certificate)
+                .ToList();
             return candidateCertificate;
         }
 
@@ -181,13 +184,18 @@ namespace Project2.Services
 
             return CertificatesMarks;
         }
+        public List<CandidateCertificates> GetCandidatesByCert(Guid id)
+        {
+            var cert = context.CandidateCertificates.Where(t => t.CertificateId == id).Include(q => q.Candidate);
+            var cands = cert.ToList();
+            return cands;
+        }
 
 
-        
 
 
-        
-       
+
+
 
     }
 }

@@ -45,6 +45,9 @@ namespace Project2.Services
             return emailCount > 0;
         }        
 
+       
+        
+
         public bool DeleteCandidate(int candidateNumber)
         {
             var candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
