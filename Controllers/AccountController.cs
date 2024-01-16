@@ -43,7 +43,7 @@ namespace Project2.Controllers
 
                 return Ok(response);
             }
-            catch (Exception ex)
+            catch 
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }

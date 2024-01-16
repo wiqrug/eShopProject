@@ -50,7 +50,7 @@ namespace Project2.Services
 
         public List<Questions> getQuestionsByTitle(string Title)
         {
-            //var response=context.Exams.FirstOrDefault(x => x.Title == Title);
+            
            
             var id = CheckExamId(Title);
             var questions = context.Questions.Where(x => x.ExamId == id).ToList();

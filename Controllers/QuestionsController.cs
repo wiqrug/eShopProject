@@ -25,83 +25,126 @@ namespace Project2.Controllers
         }
 
         [Authorize(Roles = "Admin, Candidate")]
-        [HttpGet("all")]
+        [HttpGet]
         public IActionResult GetQuestions()
         {
-            var response = questionsServices.getAllQuestions();
-            return Ok(response);
+            try
+            {
+                var response = questionsServices.getAllQuestions();
+                return Ok(response);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
 
         [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("{id}")]
         public IActionResult GetQuestion(Guid id)
         {
-            var response = questionsServices.getQuestion(id);
-            return Ok(response);
+            try
+            {
+                var response = questionsServices.getQuestion(id);
+                return Ok(response);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public IActionResult UpdateQuestions(Guid id, QuestionsDto question)
         {
-            if(id == null)
+            try
             {
-                return BadRequest("No question with this id");
-            }
+                if (id == null)
+                {
+                    return BadRequest("No question with this id");
+                }
 
-            if(question == null)
+                if (question == null)
+                {
+                    return BadRequest("Provide inputs");
+                }
+
+                questionsServices.updateQuestion(id, question);
+                return Ok();
+            }
+            catch
             {
-                return BadRequest("Provide inputs");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
-
-            questionsServices.updateQuestion(id, question);
-            return Ok();
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CreateQuestion(QuestionsDto question, string Title)
         {
-            if (question == null)
+            try
             {
-                return BadRequest("Missing values");
+                if (question == null)
+                {
+                    return BadRequest("Missing values");
+                }
+
+
+
+                if (questionsServices.CheckExamId == null)
+                {
+                    return BadRequest("Invalid Exam Title");
+                }
+                Guid ExamId = questionsServices.CheckExamId(Title);
+                questionsServices.createQuestion(question, ExamId);
+
+                return Ok();
             }
-
-           
-
-            if (questionsServices.CheckExamId == null)
+            catch
             {
-                return BadRequest("Invalid Exam Title");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
-            Guid ExamId = questionsServices.CheckExamId(Title);
-            questionsServices.createQuestion(question,ExamId);
-
-            return Ok();
         }
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteQuestion(Guid id)
         {
-            if (id == null)
+            try
             {
-                return BadRequest("What do you want me to delete?");
-            }
+                if (id == null)
+                {
+                    return BadRequest("No value for Id");
+                }
                 questionsServices.deleteQuestion(id);
-    
-            return Ok();
+
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
 
         [Authorize(Roles ="Admin,Candidate")]
         [HttpGet("Exam/{Title}")]
         public IActionResult GetQuestionsByTitle(string Title)
         {
-            
-            
-               var response= questionsServices.getQuestionsByTitle(Title);
+            try
+            {
+                var response = questionsServices.getQuestionsByTitle(Title);
+                if(response == null)
+                {
+                    BadRequest("No questions matching the exam Title");
+                }
                 return Ok(response);
-           
-            
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+                       
         }
 
     }

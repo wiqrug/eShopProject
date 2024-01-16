@@ -24,48 +24,84 @@ namespace Project2.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var exams = examService.GetAllExams();
-            return Ok(exams);
+            try
+            {
+                var exams = examService.GetAllExams();
+                return Ok(exams);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+            
         }
 
 
         [HttpGet("{Title}")]
         public IActionResult GetByTitle(string Title)
         {
-            var exam = examService.GetExamByTitle(Title);
-            if (exam == null)
-                return NotFound();
+            try
+            {
+                var exam = examService.GetExamByTitle(Title);
+                if (exam == null)
+                    return NotFound();
 
-            return Ok(exam);
+                return Ok(exam);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CreateExam([FromBody] ExamDto examDto, string Title)
         {
-            if (examService.CheckExam==null)
+            try
             {
-                return Ok("Exam added successfully");
-            }
+                if (examService.CheckExam == null)
+                {
+                    return Ok("Exam added successfully");
+                }
 
-            examService.AddExam(examDto, Title);
-            return Ok();
+                examService.AddExam(examDto, Title);
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{Title}")]
         public IActionResult Update(string Title, [FromBody] ExamDto examDto)
         {
-            examService.UpdateExam(Title, examDto);
-            return Ok();
+            try
+            {
+                examService.UpdateExam(Title, examDto);
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{Title}")]
         public IActionResult Delete(string Title)
         {
-            examService.DeleteExam(Title);
-            return Ok();
+            try
+            {
+                examService.DeleteExam(Title);
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
     }
 }

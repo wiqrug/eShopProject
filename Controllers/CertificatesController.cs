@@ -20,14 +20,28 @@ namespace Project2.Controllers
         [HttpGet]   
         public IActionResult GetCertificates()
         {
-            return Ok(certificateServices.GetCertificates());
+            try
+            {
+                return Ok(certificateServices.GetCertificates());
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
         
         // Show Certificate with Title
         [HttpGet("{Title}")]   
         public IActionResult GetCertificate(string Title)
         {
-           return Ok(certificateServices.GetCertificateByTitle(Title));
+            try
+            {
+                return Ok(certificateServices.GetCertificateByTitle(Title));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
 
         // Create Certificate
@@ -35,8 +49,15 @@ namespace Project2.Controllers
         [HttpPost]  
         public IActionResult CreateCertificate(CertificateDTO certificateDTO)
         {
-            certificateServices.CreateCertificate(certificateDTO);
-            return Ok();
+            try
+            {
+                certificateServices.CreateCertificate(certificateDTO);
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
 
         // Delete Certificate
@@ -44,12 +65,19 @@ namespace Project2.Controllers
         [HttpDelete("{Title}")]    
         public IActionResult DeleteCertificate(string Title)
         {
-            if (!certificateServices.DeleteCertificate(Title))
+            try
             {
-                return NotFound("This certificate does not exist!");
-            }
+                if (!certificateServices.DeleteCertificate(Title))
+                {
+                    return NotFound("This certificate does not exist!");
+                }
 
-            return Ok();
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
 
         // Update Certificate
@@ -57,8 +85,15 @@ namespace Project2.Controllers
         [HttpPut("{Title}")]   
         public IActionResult UpdateCertificate(string Title, CertificateDTO certificateDTO)
         {
-            certificateServices.UpdateCertificate(Title, certificateDTO);
-            return Ok();
+            try
+            {
+                certificateServices.UpdateCertificate(Title, certificateDTO);
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
     }
 }

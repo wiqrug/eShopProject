@@ -12,6 +12,12 @@ namespace Project2.Services
             this.context = context;
         }
 
+        public List<CandidateExam> GetCandidateExam()
+        {
+            var candidateExam = context.CandidateExams.ToList();
+            return candidateExam;
+
+        }
 
 
         public bool CreateCandidateExam(CandidateExamDTO candidateExamDTO)
@@ -39,6 +45,23 @@ namespace Project2.Services
             context.CandidateExams.Add(enrollment);
             context.SaveChanges();
             return true;
+        }
+        public bool DeleteCandidateExam(Guid candidateId)
+        {
+           
+            var candidateExam = context.CandidateExams.FirstOrDefault(x => x.CandidateId == candidateId);
+
+            if (candidateExam == null)
+            {
+                return false;
+            }
+            else
+            {
+                context.CandidateExams.Remove(candidateExam);
+                context.SaveChanges();
+
+                return true;
+            }
         }
     }
 }

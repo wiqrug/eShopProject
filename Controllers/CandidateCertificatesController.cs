@@ -19,78 +19,129 @@ namespace Project2.Controllers
             this.candidateCertificatesServices = candidateCertificatesServices;
            
         }
+
+        //get all
+        [Authorize(Roles="Admin")]
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            try
+            {
+                return Ok(candidateCertificatesServices.GetAll());
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
         //create candCert
         [Authorize(Roles = "Admin, Candidate")]
         [HttpPost]
         public IActionResult CreateEnrollment(CandidateCertificatesDTO candidateCertificatesDTO)
         {
-            
-            bool success = candidateCertificatesServices.CreateCandidateCertificate(candidateCertificatesDTO);
-
-            if (!success)
+            try
             {
-                return BadRequest("Candidate or Certificate does not exist.");
-            }
+                bool success = candidateCertificatesServices.CreateCandidateCertificate(candidateCertificatesDTO);
 
-            return Ok();
+                if (!success)
+                {
+                    return BadRequest("Candidate or Certificate does not exist.");
+                }
+
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
+
         //get Obtained(paid) Certif
         [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("obtained/{candidateNumber}")]
         public IActionResult GetObtainedCertificates(int candidateNumber)
         {
-            var obtainedCerts = candidateCertificatesServices.GetObtainedCertificates(candidateNumber);
-            Console.WriteLine(obtainedCerts);
-            return Ok(obtainedCerts);
-            
+            try
+            {
+                var obtainedCerts = candidateCertificatesServices.GetObtainedCertificates(candidateNumber);
+                Console.WriteLine(obtainedCerts);
+                return Ok(obtainedCerts);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
+
         //get paid Certif but not passed
         [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("unobtained/{candidateNumber}")]
         public IActionResult GetUnobtainedCertificates(int candidateNumber)
         {
-            if (candidateNumber == null)
+            try
             {
-                return BadRequest();
+                if (candidateNumber == null)
+                {
+                    return BadRequest("The candidateNumber does not exist!");
+                }
+                else
+                {
+
+                    var UnobtainedCertificates = candidateCertificatesServices.GetUnobtainedCertificates(candidateNumber);
+                    return Ok(UnobtainedCertificates);
+                }
             }
-            else
+            catch
             {
-
-                var UnobtainedCertificates = candidateCertificatesServices.GetUnobtainedCertificates(candidateNumber);
-                return Ok(UnobtainedCertificates);
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
-
         }
+
         //get all unpaid Cert
         [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("available/{candidateNumber}")]
         public IActionResult GetAvailableCertificates(int candidateNumber)
         {
-            if (candidateNumber == null)
+            try
             {
-                return BadRequest();
+                if (candidateNumber == null)
+                {
+                    return BadRequest("The candidateNumber does not exist!");
+                }
+                else
+                {
+                    var availableCertificates = candidateCertificatesServices.GetAvailableCertificates(candidateNumber);
+                    return Ok(availableCertificates);
+                }
             }
-            else
+            catch
             {
-                var availableCertificates = candidateCertificatesServices.GetAvailableCertificates(candidateNumber);
-                return Ok(availableCertificates);
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
         //get marksPerCertPerExam
         [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("candidate/{candidateNumber}/certificatesExamsHistory")]
         public IActionResult GetMarksPerExamPerCertificate(int? candidateNumber)
         {
-            if (candidateNumber == null)
+            try
             {
-                return BadRequest("Couldn't find candidate without specifics!");
-            }
-            else 
-            {
-                var x = candidateCertificatesServices.GetMarksPerExamPerCertificate(candidateNumber);
+                if (candidateNumber == null)
+                {
+                    return BadRequest("The candidateNumber does not exist!");
+                }
+                else
+                {
+                    var x = candidateCertificatesServices.GetMarksPerExamPerCertificate(candidateNumber);
                     return Ok(x);
+                }
             }
-
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
             
         }
     }
