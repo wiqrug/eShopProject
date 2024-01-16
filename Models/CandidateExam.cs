@@ -16,8 +16,8 @@ namespace Project2.Models
         [ForeignKey("Exam")]
         public Guid ExamId { get; set; }
 
-        private int _examMark;
-        public int ExamMark
+        private int? _examMark;
+        public int? ExamMark
         {
             get
             {

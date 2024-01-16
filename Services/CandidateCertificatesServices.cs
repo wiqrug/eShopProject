@@ -33,13 +33,6 @@ namespace Project2.Services
             return response;
         }
 
-        public List<CandidateCertificates> GetCandidatesByCert(Guid id)
-        {
-            var cert = context.CandidateCertificates.Where(t => t.CertificateId == id).Include(q => q.Candidate);
-            var cands = cert.ToList();
-            return cands;
-        }
-
         public List<Certificate> GetObtainedCertificates(int candidateNumber)
         {
             
@@ -184,10 +177,15 @@ namespace Project2.Services
 
             return CertificatesMarks;
         }
-        public List<CandidateCertificates> GetCandidatesByCert(Guid id)
+        public List<Candidate> GetCandidatesByCert(string title)
         {
-            var cert = context.CandidateCertificates.Where(t => t.CertificateId == id).Include(q => q.Candidate);
-            var cands = cert.ToList();
+            /*var cert = context.CandidateCertificates.Where(t => t.CertificateId == id).Include(q => q.Candidate);
+            var cands = cert.ToList();*/
+            var cert = context.Certificates.FirstOrDefault(t => t.Title == title);
+            var certs = context.CandidateCertificates.Where(x => x.CertificateId == cert.CertificateId)
+                        .Include(q => q.Candidate)
+                        .Select(s => s.Candidate);
+            var cands = certs.ToList();
             return cands;
         }
 

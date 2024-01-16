@@ -131,15 +131,6 @@ namespace Project2.Controllers
             return Ok(certs);
         }
 
-        //get all certs with all their cands
-        [Authorize(Roles = "Admin")]
-        [HttpGet("Certificates/{id}")]
-        public IActionResult GetCandidatesByCert(Guid id)
-        {
-            var certs = candidateCertificatesServices.GetCandidatesByCert(id);
-            return Ok(certs);
-        }
-
         //get marksPerCertPerExam
         [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("candidate/{candidateNumber}/certificatesExamsHistory")]
@@ -165,12 +156,12 @@ namespace Project2.Controllers
         }
         //get all certs with all their cands
         [Authorize(Roles = "Admin")]
-        [HttpGet("Certificates/{id}")]
-        public IActionResult GetCandidatesByCert(Guid id)
+        [HttpGet("Certificates/{title}")]
+        public IActionResult GetCandidatesByCert(string title)
         {
             try
             {
-                var certs = candidateCertificatesServices.GetCandidatesByCert(id);
+                var certs = candidateCertificatesServices.GetCandidatesByCert(title);
                 return Ok(certs);
             }
             catch

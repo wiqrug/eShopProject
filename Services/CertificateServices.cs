@@ -1,4 +1,5 @@
-﻿using Project2.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Project2.Models;
 
 namespace Project2.Services
 {
@@ -21,6 +22,13 @@ namespace Project2.Services
         {
             var certificate = context.Certificates.FirstOrDefault(x => x.Title == Title);
             return certificate;
+        }
+
+        public Certificate GetCandidatesByCertificate(string Title)
+        {
+            var cert = context.Certificates.Where(x => x.Title == Title).Include(c => c.CandidateCertificates).SingleOrDefault();
+            
+            return cert;
         }
 
         public void CreateCertificate(CertificateDTO certificateDTO)
