@@ -43,11 +43,11 @@ namespace Project2.Controllers
         {
             try
             {
-                string? cookie = Request.Cookies["currentUser"];
-                CurrentUser parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
+                string? cookie = Request.Headers["currentUser"];
+                CurrentUser? parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
                 int? candNum = parsedCookie.candidatenumber;
                 Console.WriteLine(candNum);
-                if (candidateNumber != candNum)
+                if (candidateNumber != candNum || candidateNumber == 0)
                 {
                     return Unauthorized("No no no, you can't change someone else's personal info");
                 }
@@ -70,6 +70,9 @@ namespace Project2.Controllers
         {
             try
             {
+                string? cookie = Request.Headers["currentUser"];
+                CurrentUser? parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
+                int? candNum = parsedCookie.candidatenumber;
                 var candidate = candidateServices.GetCandidateById(candidateNumber);
                 if (candidate == null)
                 {

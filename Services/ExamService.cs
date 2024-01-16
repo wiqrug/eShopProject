@@ -25,7 +25,6 @@ namespace Project2.Services
             var exam = context.Exams.Where(e => e.Title == Title).Include(q => q.Questions);
             var response = exam.FirstOrDefault(e => e.Title == Title);
             return response;
-            //return context.Exams.FirstOrDefault(e => e.Title == Title);
         }
 
         

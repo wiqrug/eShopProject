@@ -23,6 +23,20 @@ namespace Project2.Services
             return candidateCertificate;
         }
 
+        public List<CandidateCertificates> GetCertificates()
+        {
+            var certs = context.CandidateCertificates.Where(x => x.Certificate != null).Include(q => q.Candidate);
+            var response = certs.ToList();
+            return response;
+        }
+
+        public List<CandidateCertificates> GetCandidatesByCert(Guid id)
+        {
+            var cert = context.CandidateCertificates.Where(t => t.CertificateId == id).Include(q => q.Candidate);
+            var cands = cert.ToList();
+            return cands;
+        }
+
         public List<Certificate> GetObtainedCertificates(int candidateNumber)
         {
             

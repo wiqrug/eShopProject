@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Project2.Models;
 using Project2.Services;
 
@@ -119,6 +120,24 @@ namespace Project2.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
+        }
+
+        //get all certs with all their cands
+        [Authorize(Roles = "Admin")]
+        [HttpGet("Certificates")]
+        public IActionResult GetCertificates()
+        {
+            var certs = candidateCertificatesServices.GetCertificates();
+            return Ok(certs);
+        }
+
+        //get all certs with all their cands
+        [Authorize(Roles = "Admin")]
+        [HttpGet("Certificates/{id}")]
+        public IActionResult GetCandidatesByCert(Guid id)
+        {
+            var certs = candidateCertificatesServices.GetCandidatesByCert(id);
+            return Ok(certs);
         }
 
         //get marksPerCertPerExam
