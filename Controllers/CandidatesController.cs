@@ -53,13 +53,13 @@ namespace Project2.Controllers
         [HttpGet("{candidateNumber}")]
         public IActionResult getCandidateByNumber(int candidateNumber)
         {
-           /* string? cookie = Request.Cookies["currentUser"];
+            string? cookie = Request.Headers["currentUser"];
             CurrentUser? parsedCookie = JsonConvert.DeserializeObject<CurrentUser>(cookie);
             int? candNum = parsedCookie.candidatenumber;
-            if (candidateNumber !=  candNum)
+            if (candidateNumber != candNum)
             {
                 return Unauthorized("No no no, you can't see someone else's personal info");
-            }*/
+            }
 
             var candidate = candidateServices.GetCandidateById(candidateNumber);
             if (candidate == null)
