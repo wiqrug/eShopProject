@@ -27,13 +27,28 @@ namespace Project2.Services
 
             var candidate = new Candidate
             {
-                                
+
                 CandidateNumber = maxCandidateNumber + 1,
-                FirstName = candidateDTO.FirstName,
-                LastName = candidateDTO.LastName,
-                Email = candidateDTO.Email,
+                role = Models.User.Role.Candidate,
+                FirstName = candidateDTO?.FirstName,
+                MiddleName = candidateDTO?.MiddleName,
+                LastName = candidateDTO?.LastName,
+                Gender = candidateDTO?.Gender,
+                NativeLanguage = candidateDTO?.NativeLanguage,
+                BirthDate = candidateDTO?.BirthDate,
+                PhotoIDType = candidateDTO?.PhotoIDType,
+                PhotoIDNumber = candidateDTO?.PhotoIDNumber,
+                PhotoIDIssueDate = candidateDTO?.PhotoIDIssueDate,
+                Email = candidateDTO?.Email,
                 Password = encryptedPassword,
-                role = Models.User.Role.Candidate
+                Address = candidateDTO?.Address,
+                AddressLine2 = candidateDTO?.AddressLine2,
+                CountryOfResidence = candidateDTO?.CountryOfResidence,
+                StateOrTerritoryOrProvince = candidateDTO?.StateOrTerritoryOrProvince,
+                TownOrCity = candidateDTO?.TownOrCity,
+                PostalCode = candidateDTO?.PostalCode,
+                LandlineNumber = candidateDTO?.LandlineNumber,
+                MobileNumber = candidateDTO?.MobileNumber
             };
 
             context.Candidates.Add(candidate);

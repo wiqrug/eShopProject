@@ -144,5 +144,20 @@ namespace Project2.Controllers
             }
             
         }
+        //get all certs with all their cands
+        [Authorize(Roles = "Admin")]
+        [HttpGet("Certificates/{id}")]
+        public IActionResult GetCandidatesByCert(Guid id)
+        {
+            try
+            {
+                var certs = candidateCertificatesServices.GetCandidatesByCert(id);
+                return Ok(certs);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }
