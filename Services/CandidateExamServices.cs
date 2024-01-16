@@ -38,7 +38,7 @@ namespace Project2.Services
                 
                 CandidateId = candidate.CandidateId,
                 ExamId = exam.ExamId,
-                ExamMark=candidateExamDTO.ExamMark,
+                //ExamMark=candidateExamDTO.ExamMark,
 
             };
 
@@ -62,6 +62,20 @@ namespace Project2.Services
 
                 return true;
             }
+        }
+
+        public void UpdateCandidateExam(Guid candidateExamId, CandidateExamDTO candidateExamDTO)
+        {
+            var candidateExam= context.CandidateExams.FirstOrDefault(x=>x.CandidateExamId == candidateExamId);
+            if (candidateExam == null)
+            {
+                return;
+            }
+            if (candidateExamDTO.ExamMark!=null)
+            {
+                candidateExam.ExamMark=candidateExamDTO.ExamMark;
+            }
+            context.SaveChanges();
         }
     }
 }
