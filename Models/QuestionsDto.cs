@@ -6,7 +6,6 @@ namespace Project2.Models
 {
     public class QuestionsDto
     {
-        public Guid ExamId { get; set; }
         public string Question { get; set; }
         public string AnswerA { get; set; }
         public string AnswerB { get; set; }
