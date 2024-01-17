@@ -57,15 +57,12 @@ namespace Project2.Services
             context.SaveChanges();
         }
 
-        public void UpdateExam(string Title, ExamDto examDto, string certificateTitle)
+        public void UpdateExam(string Title, ExamDto examDto)
         {
             var exam = context.Exams.FirstOrDefault(e => e.Title == Title);
-            
-                
-            Guid certificateId = context.Certificates
-                                   .Where(e => e.Title == certificateTitle)
-                                   .Select(e => e.CertificateId)
-                                   .FirstOrDefault();
+            var certificate = context.Certificates.FirstOrDefault(c=> c.Title == examDto.CertificateTitle);
+            var certificateId = certificate.CertificateId;
+
             if (exam != null)
             {
 
@@ -83,7 +80,7 @@ namespace Project2.Services
                 {
                     exam.Time = examDto.Time;
                 }
-                if (certificateId != Guid.Empty)
+                if (exam.CertificateId != Guid.Empty)
                 {
                     exam.CertificateId = certificateId;
                 }

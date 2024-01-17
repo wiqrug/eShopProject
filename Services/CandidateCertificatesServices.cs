@@ -52,7 +52,7 @@ namespace Project2.Services
 
             foreach (var candidateCertificate in boughtCertificates)
             {
-                if (candidateCertificate.Mark >= 50)
+                if (candidateCertificate.Mark >= 50 || candidateCertificate.Mark == null)
                 {
                     ObtainedCerts.Add(candidateCertificate.Certificate);
                 }
@@ -82,7 +82,7 @@ namespace Project2.Services
 
             foreach (var candidateCertificate in boughtCertificates)
             {
-                if (candidateCertificate.Mark < 50)
+                if (candidateCertificate.Mark < 50 || candidateCertificate.Mark == null)
                 {
                     UnobtainedCertificates.Add(candidateCertificate.Certificate);
                 }

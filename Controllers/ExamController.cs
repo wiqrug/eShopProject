@@ -76,11 +76,11 @@ namespace Project2.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{Title}")]
-        public IActionResult Update(string Title, [FromBody] ExamDto examDto, string certificateTitle)
+        public IActionResult Update(string Title, [FromBody] ExamDto examDto)
         {
             try
             {
-                examService.UpdateExam(Title, examDto,certificateTitle);
+                examService.UpdateExam(Title, examDto);
                 return Ok("Exam updated");
             }
             catch

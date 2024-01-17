@@ -8,5 +8,6 @@ namespace Project2.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public int Time { get; set; }
+        public string CertificateTitle { get; set; }
     }
 }
