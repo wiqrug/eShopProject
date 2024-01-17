@@ -26,7 +26,7 @@
     {
         public string? Title { get; set; }
         public string? Description { get; set; }
-        public int? Time { get; set; }
+        public string? Time { get; set; }
         public string? CertificateTitle { get; set; }
     }
 }

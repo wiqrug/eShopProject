@@ -78,15 +78,15 @@ namespace Project2.Controllers
         [HttpPut("{Title}")]
         public IActionResult Update(string Title, [FromBody] ExamUpdateDto examDto)
         {
-            try
-            {
+            /*try
+            {*/
                 examService.UpdateExam(Title, examDto);
                 return Ok("Exam updated");
-            }
+            /*}
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
-            }
+            }*/
         }
 
         [Authorize(Roles = "Admin")]

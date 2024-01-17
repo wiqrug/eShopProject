@@ -61,7 +61,11 @@ namespace Project2.Services
         {
             var exam = context.Exams.FirstOrDefault(e => e.Title == Title);
             var certificate = context.Certificates.FirstOrDefault(c=> c.Title == examDto.CertificateTitle);
-            var certificateId = certificate.CertificateId;
+
+            Guid certificateId = context.Certificates
+                                   .Where(e => e.Title == examDto.CertificateTitle)
+                                   .Select(e => e.CertificateId)
+                                   .FirstOrDefault();
 
             if (exam != null)
             {
@@ -78,9 +82,9 @@ namespace Project2.Services
 
                 if (examDto.Time != null)
                 {
-                    exam.Time = (int)examDto.Time;
+                    exam.Time = Int32.Parse(examDto.Time);
                 }
-                if (exam.CertificateId != Guid.Empty)
+                if (certificateId != Guid.Empty)
                 {
                     exam.CertificateId = certificateId;
                 }
