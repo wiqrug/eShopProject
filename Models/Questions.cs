@@ -28,7 +28,7 @@ namespace Project2.Models
 
         [Required]
         [RegularExpression("(a|b|c|d)", ErrorMessage = "Value must be a,b,c or d")]
-        public string CorrectAnswer { get; set; }
+        public char CorrectAnswer { get; set; }
    
 
         //Navigation property

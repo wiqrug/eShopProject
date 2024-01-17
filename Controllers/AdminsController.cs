@@ -39,8 +39,15 @@ namespace Project2.Controllers
         {
             try
             {
-                adminsServices.CreateAdmin(adminDTO);
-                return Ok("Admin created");
+                bool success = adminsServices.CreateAdmin(adminDTO);
+                if (!success)
+                {
+                    return Ok("Admin created");
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
             catch
             {

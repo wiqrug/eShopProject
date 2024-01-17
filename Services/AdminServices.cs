@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Project2.Models;
 
 namespace Project2.Services
@@ -21,8 +22,15 @@ namespace Project2.Services
             return admins;
         }
 
-        public void CreateAdmin(AdminDTO admin)
+        public bool CreateAdmin(AdminDTO admin)
         {
+            var emailExists = context.Users.Any(e => e.Email == admin.Email);
+
+            if(emailExists)
+            {
+                return false;
+            }
+
             var passwordHasherAdmin = new PasswordHasher<Admin>();
             var encryptedPassword = passwordHasherAdmin.HashPassword(new Admin(), admin.Password);
 
@@ -38,6 +46,7 @@ namespace Project2.Services
             };
             context.Admins.Add(ad);
             context.SaveChanges();
+            return true;
         }
         public bool EmailExists(string email)
         {

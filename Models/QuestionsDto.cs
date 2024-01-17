@@ -12,7 +12,7 @@ namespace Project2.Models
         public string AnswerC { get; set; }
         public string AnswerD { get; set; }
         public string ImageSrc { get; set; }
-        public string CorrectAnswer { get; set; }
-
+        public char CorrectAnswer { get; set; }
+        public Guid ExamId { get; set; }
     }
 }

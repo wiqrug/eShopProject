@@ -19,8 +19,12 @@ namespace Project2.Services
                 .FirstOrDefault();
             return ExamId;
         }
-        public void createQuestion(QuestionsDto questionDto, Guid ExamId)
+        public bool createQuestion(QuestionsDto questionDto, Guid ExamId)
         {
+            if (!char.IsBetween((char)questionDto.CorrectAnswer, 'a', 'd'))
+            {
+                return false;
+            }
             var question = new Questions(ExamId)
             {
                 Question = questionDto.Question,
@@ -33,6 +37,7 @@ namespace Project2.Services
             };
             context.Questions.Add(question);
             context.SaveChanges();
+            return true;
         }
 
         public List<Questions> getAllQuestions()
@@ -57,13 +62,17 @@ namespace Project2.Services
             return questions;
         }
 
-        public void updateQuestion(Guid questionId, QuestionsDto newQuestion)
+        public bool updateQuestion(Guid questionId, QuestionsUpdateDto newQuestion)
         {
             var question = context.Questions.FirstOrDefault(x => x.QuestionId == questionId);
+            Guid examId = context.Exams
+                .Where(e => e.Title == newQuestion.ExamTitle)
+                .Select(e => e.ExamId)
+                .FirstOrDefault();
 
             if (question == null)
             {
-                return;
+                return false;
             }
 
             if (!string.IsNullOrWhiteSpace(newQuestion.Question))
@@ -96,12 +105,22 @@ namespace Project2.Services
                 question.ImageSrc = newQuestion.ImageSrc;
             }
 
-            if (!string.IsNullOrWhiteSpace(newQuestion.CorrectAnswer))
+            if (newQuestion.CorrectAnswer != null && char.IsBetween((char)newQuestion.CorrectAnswer, 'a', 'd'))
             {
-                question.CorrectAnswer = newQuestion.CorrectAnswer;
+                question.CorrectAnswer = (char)newQuestion.CorrectAnswer;
+            }
+            else
+            {
+                return false;
+            }
+
+            if (examId != Guid.Empty)
+            {
+                question.ExamId = examId;
             }
 
             context.SaveChanges();
+            return true;
         }
 
         public void deleteQuestion(Guid questionId)

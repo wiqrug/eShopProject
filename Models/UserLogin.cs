@@ -29,4 +29,17 @@
         public string? Time { get; set; }
         public string? CertificateTitle { get; set; }
     }
+
+    public class QuestionsUpdateDto
+    {
+        public string? Question { get; set; }
+        public string? AnswerA { get; set; }
+        public string? AnswerB { get; set; }
+        public string? AnswerC { get; set; }
+        public string? AnswerD { get; set; }
+        public string? ImageSrc { get; set; }
+        public char? CorrectAnswer { get; set; }
+        public Guid? ExamId { get; set; }
+        public string? ExamTitle { get; set; }
+    }
 }

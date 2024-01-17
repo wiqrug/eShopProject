@@ -56,7 +56,7 @@ namespace Project2.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public IActionResult UpdateQuestions(Guid id, QuestionsDto question)
+        public IActionResult UpdateQuestions(Guid id, QuestionsUpdateDto question)
         {
             try
             {
@@ -70,8 +70,17 @@ namespace Project2.Controllers
                     return BadRequest("Provide inputs");
                 }
 
-                questionsServices.updateQuestion(id, question);
-                return Ok("Questions updated");
+                bool success = questionsServices.updateQuestion(id, question);
+
+                if(success)
+                {
+                    return Ok("Questions updated");
+                }
+                else
+                {
+                    return BadRequest("Wrong input values");
+                }
+                
             }
             catch
             {
@@ -97,9 +106,15 @@ namespace Project2.Controllers
                     return BadRequest("Invalid Exam Title");
                 }
                 Guid ExamId = questionsServices.CheckExamId(Title);
-                questionsServices.createQuestion(question, ExamId);
 
-                return Ok("Question created");
+                bool success = questionsServices.createQuestion(question, ExamId);
+
+                if(success)
+                {
+                    return Ok("Question created");
+                }
+                else { return BadRequest("Wrong input values"); }
+                
             }
             catch
             {
