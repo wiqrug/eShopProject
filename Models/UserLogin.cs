@@ -1,4 +1,6 @@
-﻿namespace Project2.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Project2.Models
 {
     public class UserLogin
     {
@@ -38,7 +40,9 @@
         public string? AnswerC { get; set; }
         public string? AnswerD { get; set; }
         public string? ImageSrc { get; set; }
-        public char? CorrectAnswer { get; set; }
+        [MaxLength(1)]
+        [RegularExpression("(a|b|c|d)", ErrorMessage = "Value must be a,b,c or d")]
+        public string? CorrectAnswer { get; set; }
         public string? ExamTitle { get; set; }
     }
 }

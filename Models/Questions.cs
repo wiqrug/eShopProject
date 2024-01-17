@@ -27,8 +27,9 @@ namespace Project2.Models
         public string ImageSrc { get; set; }
 
         [Required]
+        [MaxLength(1)]
         [RegularExpression("(a|b|c|d)", ErrorMessage = "Value must be a,b,c or d")]
-        public char CorrectAnswer { get; set; }
+        public string CorrectAnswer { get; set; }
    
 
         //Navigation property

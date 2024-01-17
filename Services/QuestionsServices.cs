@@ -105,13 +105,9 @@ namespace Project2.Services
                 question.ImageSrc = newQuestion.ImageSrc;
             }
 
-            if (newQuestion.CorrectAnswer != null && char.IsBetween((char)newQuestion.CorrectAnswer, 'a', 'd'))
+            if (!string.IsNullOrWhiteSpace(newQuestion.CorrectAnswer))
             {
-                question.CorrectAnswer = (char)newQuestion.CorrectAnswer;
-            }
-            else
-            {
-                return false;
+                question.CorrectAnswer = newQuestion.CorrectAnswer;
             }
 
             if (examId != Guid.Empty)
