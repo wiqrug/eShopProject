@@ -46,10 +46,10 @@ namespace Project2.Services
             context.SaveChanges();
             return true;
         }
-        public bool DeleteCandidateExam(Guid candidateId)
+        public bool DeleteCandidateExam(Guid CandidateExamId)
         {
            
-            var candidateExam = context.CandidateExams.FirstOrDefault(x => x.CandidateId == candidateId);
+            var candidateExam = context.CandidateExams.FirstOrDefault(x => x.CandidateExamId == CandidateExamId);
 
             if (candidateExam == null)
             {
@@ -66,14 +66,14 @@ namespace Project2.Services
 
         public void UpdateCandidateExam(Guid candidateExamId, CandidateExamDTO candidateExamDTO)
         {
-            var candidateExam= context.CandidateExams.FirstOrDefault(x=>x.CandidateExamId == candidateExamId);
+            var candidateExam = context.CandidateExams.FirstOrDefault(x=>x.CandidateExamId == candidateExamId);
             if (candidateExam == null)
             {
                 return;
             }
-            if (candidateExamDTO.ExamMark!=null)
+            if (candidateExamDTO.ExamMark != null)
             {
-                candidateExam.ExamMark=candidateExamDTO.ExamMark;
+                candidateExam.ExamMark = candidateExamDTO.ExamMark;
             }
             context.SaveChanges();
         }

@@ -196,7 +196,7 @@ namespace Project2.Services
             return result;
         }
 
-        public void UpdateCandidateCertificate(Guid RecordId, int mark)
+        public void UpdateCandidateCertificate(Guid RecordId, CandidateCertificatesDTO candidateCertificatesDTO)
         {
             var candidateCertificate = context.CandidateCertificates.FirstOrDefault(x => x.RecordId == RecordId);
             if (candidateCertificate == null)
@@ -205,7 +205,7 @@ namespace Project2.Services
             }
             if (candidateCertificate.Mark != null)
             {
-                candidateCertificate.Mark = mark;
+                candidateCertificate.Mark = candidateCertificatesDTO.Mark;
             }
             context.SaveChanges();
         }

@@ -173,11 +173,11 @@ namespace Project2.Controllers
         //update mark in candidateCertificate
         [Authorize(Roles = "Admin")]
         [HttpPut("Certificates/{recordId}")]
-        public IActionResult UpdateCandidateCertificate(Guid recordId, [FromBody]int mark)
+        public IActionResult UpdateCandidateCertificate(Guid recordId, CandidateCertificatesDTO candidateCertificatesDTO)
         {
             try
             {
-                candidateCertificatesServices.UpdateCandidateCertificate(recordId, mark);
+                candidateCertificatesServices.UpdateCandidateCertificate(recordId, candidateCertificatesDTO);
                 return Ok();
             } catch
             {
