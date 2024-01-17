@@ -39,7 +39,6 @@
         public string? AnswerD { get; set; }
         public string? ImageSrc { get; set; }
         public char? CorrectAnswer { get; set; }
-        public Guid? ExamId { get; set; }
         public string? ExamTitle { get; set; }
     }
 }
