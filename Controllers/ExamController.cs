@@ -44,7 +44,7 @@ namespace Project2.Controllers
             {
                 var exam = examService.GetExamByTitle(Title);
                 if (exam == null)
-                    return NotFound();
+                    return NotFound("There is no exam with such Title");
 
                 return Ok(exam);
             }
@@ -62,11 +62,11 @@ namespace Project2.Controllers
             {
                 if (examService.CheckExam == null)
                 {
-                    return Ok("Exam added successfully");
+                    return NotFound();
                 }
 
                 examService.AddExam(examDto, Title);
-                return Ok();
+                return Ok("Exam created");
             }
             catch
             {
@@ -76,12 +76,12 @@ namespace Project2.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{Title}")]
-        public IActionResult Update(string Title, [FromBody] ExamDto examDto)
+        public IActionResult Update(string Title, [FromBody] ExamDto examDto, string certificateTitle)
         {
             try
             {
-                examService.UpdateExam(Title, examDto);
-                return Ok();
+                examService.UpdateExam(Title, examDto,certificateTitle);
+                return Ok("Exam updated");
             }
             catch
             {

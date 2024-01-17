@@ -175,7 +175,7 @@ namespace Project2.Controllers
             try
             {
                 candidateCertificatesServices.UpdateCandidateCertificate(recordId, candidateCertificatesDTO);
-                return Ok();
+                return Ok("Update done successful");
             } catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
@@ -190,8 +190,12 @@ namespace Project2.Controllers
         {
             try
             {
-                candidateCertificatesServices.DeleteCandidateCertificate(recordId);
-                return Ok();
+               bool result= candidateCertificatesServices.DeleteCandidateCertificate(recordId);
+                if (!result) 
+                {
+                    return NotFound("recordId does not match!");
+                }
+                return Ok("Delete was successful");
             }
             catch
             {

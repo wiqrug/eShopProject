@@ -52,7 +52,7 @@ namespace Project2.Controllers
             try
             {
                 certificateServices.CreateCertificate(certificateDTO);
-                return Ok();
+                return Ok("Certificate created");
             }
             catch
             {
@@ -88,7 +88,7 @@ namespace Project2.Controllers
             try
             {
                 certificateServices.UpdateCertificate(Title, certificateDTO);
-                return Ok();
+                return Ok("Certificate updated");
             }
             catch
             {

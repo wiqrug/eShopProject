@@ -4,7 +4,7 @@ using Project2.Models;
 
 namespace Project2.Services
 {
-    
+
     public class AdminServices
     {
         private readonly ApplicationDBContext context;
@@ -14,7 +14,7 @@ namespace Project2.Services
             this.context = context;
         }
 
-        
+
         public List<Admin> GetAdmins()
         {
             var admins = context.Admins.ToList();
@@ -26,8 +26,8 @@ namespace Project2.Services
             var passwordHasherAdmin = new PasswordHasher<Admin>();
             var encryptedPassword = passwordHasherAdmin.HashPassword(new Admin(), admin.Password);
 
-            var ad = new Admin 
-            { 
+            var ad = new Admin
+            {
                 FirstName = admin.FirstName,
                 Address = admin.Address,
                 Email = admin.Email,
@@ -45,8 +45,8 @@ namespace Project2.Services
             return emailCount > 0;
         }        
 
-       
-        
+
+
 
         public bool DeleteCandidate(int candidateNumber)
         {
@@ -68,6 +68,56 @@ namespace Project2.Services
             return candidates;
 
         }
-     
+
+        public bool DeleteAdmin(Guid userId)
+        {
+            var admin = context.Admins.FirstOrDefault(x => x.UserId == userId);
+
+            if (admin == null)
+            {
+                return false;
+            }
+
+            context.Admins.Remove(admin);
+            context.SaveChanges();
+
+            return true;
+        }
+
+        public void UpdateAdmin(Guid userId, AdminDTO adminDTO)
+        {
+
+            var admin = context.Admins.FirstOrDefault(x => x.UserId == userId);
+            if (admin == null)
+            {
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(adminDTO.FirstName))
+            {
+                admin.FirstName = adminDTO.FirstName;
+            }
+            if (!string.IsNullOrWhiteSpace(adminDTO.LastName))
+            {
+                admin.LastName = adminDTO.LastName;
+            }
+            if (!string.IsNullOrWhiteSpace(adminDTO.Address))
+            {
+                admin.Address = adminDTO.Address;
+            }
+            if (!string.IsNullOrWhiteSpace(adminDTO.MobileNumber))
+            {
+                admin.MobileNumber = adminDTO.MobileNumber;
+            }
+            if (!string.IsNullOrWhiteSpace(adminDTO.Password))
+            {
+                admin.Password = adminDTO.Password;
+            }
+            if (!string.IsNullOrWhiteSpace(adminDTO.Email))
+            {
+                admin.Email = adminDTO.Email;
+            }
+            context.SaveChanges();
+        }
     }
 }

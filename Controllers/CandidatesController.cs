@@ -28,7 +28,7 @@ namespace Project2.Controllers
                     return BadRequest("This email address is already in use");
                 }
                 candidateServices.CreateCandidate(candidateDTO);
-                return Ok();
+                return Ok("Candidate created");
             }
             catch
             {
@@ -49,12 +49,12 @@ namespace Project2.Controllers
                 Console.WriteLine(candNum);
                 if (candidateNumber != candNum || candidateNumber == 0)
                 {
-                    return Unauthorized("No no no, you can't change someone else's personal info");
+                    return Unauthorized("You are unauthorized to do this action");
                 }
 
                 candidateServices.UpdateCandidate(candidateNumber, candidateDTO);
 
-                return Ok();
+                return Ok("Candidate updated");
             }
             catch
             {
@@ -76,7 +76,7 @@ namespace Project2.Controllers
                 var candidate = candidateServices.GetCandidateById(candidateNumber);
                 if (candidate == null)
                 {
-                    return NotFound("Candidate is not found");
+                    return NotFound("There is no Candidate with this candidateNumber");
                 }
                 else
                 {

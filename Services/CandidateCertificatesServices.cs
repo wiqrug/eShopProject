@@ -203,18 +203,22 @@ namespace Project2.Services
             {
                 return;
             }
-            if (candidateCertificate.Mark != null)
-            {
-                candidateCertificate.Mark = candidateCertificatesDTO.Mark;
-            }
+           
+            
+            candidateCertificate.Mark = candidateCertificatesDTO.Mark;
             context.SaveChanges();
         }
 
-        public void DeleteCandidateCertificate(Guid RecordId)
+        public bool DeleteCandidateCertificate(Guid RecordId)
         {
             var candCert = context.CandidateCertificates.FirstOrDefault(x => x.RecordId == RecordId);
+            if (candCert == null)
+            {
+                return false;
+            }
             context.CandidateCertificates.Remove(candCert);
             context.SaveChanges();
+            return true;
         }
 
 
