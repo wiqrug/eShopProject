@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using Project2.Models;
 using Project2.Services;
 
@@ -155,7 +152,7 @@ namespace Project2.Controllers
             
         }
         //get all certs with all their cands
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("Certificates/{title}")]
         public IActionResult GetCandidatesByCert(string title)
         {
@@ -171,7 +168,7 @@ namespace Project2.Controllers
         }
 
         //update mark in candidateCertificate
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Candidate")]
         [HttpPut("Certificates/{recordId}")]
         public IActionResult UpdateCandidateCertificate(Guid recordId, CandidateCertificatesDTO candidateCertificatesDTO)
         {
