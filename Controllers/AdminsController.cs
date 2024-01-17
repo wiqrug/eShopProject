@@ -40,7 +40,7 @@ namespace Project2.Controllers
             try
             {
                 adminsServices.CreateAdmin(adminDTO);
-                return Ok();
+                return Ok("Admin created");
             }
             catch
             {
@@ -81,7 +81,7 @@ namespace Project2.Controllers
                     return NotFound("There is no Candidate with this candidateNumber");
                 }
 
-                return Ok();
+                return Ok("Candidate deleted");
             }
             catch
             {
@@ -143,7 +143,7 @@ namespace Project2.Controllers
                 }
                 candidateServices.UpdateCandidate(candidateNumber, candidateDTO);
 
-                return Ok();
+                return Ok("update done");
             }
             catch
             {
@@ -162,7 +162,7 @@ namespace Project2.Controllers
                 {
                     return NotFound("There is no Admin with this userId");
                 }
-                return Ok();
+                return Ok("Admin was deleted");
             }
             catch
             {
@@ -182,7 +182,7 @@ namespace Project2.Controllers
                 }
                adminsServices.UpdateAdmin(userId, adminDTO);
 
-                return Ok();
+                return Ok("Admin updated");
             }
             catch
             {
