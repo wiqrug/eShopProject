@@ -128,7 +128,7 @@ namespace Project2.Controllers
         }
 
         [Authorize(Roles ="Admin,Candidate")]
-        [HttpGet("byExamTitle/{Title}")]
+        [HttpGet("Exam/{Title}")]
         public IActionResult GetQuestionsByTitle(string Title)
         {
             try

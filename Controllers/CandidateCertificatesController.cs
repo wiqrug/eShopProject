@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Project2.Models;
 using Project2.Services;
 
@@ -121,6 +122,15 @@ namespace Project2.Controllers
             }
         }
 
+        //get all certs with all their cands
+        [Authorize(Roles = "Admin")]
+        [HttpGet("Certificates")]
+        public IActionResult GetCertificates()
+        {
+            var certs = candidateCertificatesServices.GetCertificates();
+            return Ok(certs);
+        }
+
         //get marksPerCertPerExam
         [Authorize(Roles = "Admin, Candidate")]
         [HttpGet("candidate/{candidateNumber}/certificatesExamsHistory")]
@@ -146,12 +156,12 @@ namespace Project2.Controllers
         }
         //get all certs with all their cands
         [Authorize(Roles = "Admin")]
-        [HttpGet("Certificates/{id}")]
-        public IActionResult GetCandidatesByCert(Guid id)
+        [HttpGet("Certificates/{title}")]
+        public IActionResult GetCandidatesByCert(string title)
         {
             try
             {
-                var certs = candidateCertificatesServices.GetCandidatesByCert(id);
+                var certs = candidateCertificatesServices.GetCandidatesByCert(title);
                 return Ok(certs);
             }
             catch
@@ -159,5 +169,39 @@ namespace Project2.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        //update mark in candidateCertificate
+        [Authorize(Roles = "Admin")]
+        [HttpPut("Certificates/{recordId}")]
+        public IActionResult UpdateCandidateCertificate(Guid recordId, CandidateCertificatesDTO candidateCertificatesDTO)
+        {
+            try
+            {
+                candidateCertificatesServices.UpdateCandidateCertificate(recordId, candidateCertificatesDTO);
+                return Ok();
+            } catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+            
+        }
+
+        //Delete candidateCertificate
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("Certificates/{recordId}")]
+        public IActionResult DeleteCandidateCertificate(Guid recordId)
+        {
+            try
+            {
+                candidateCertificatesServices.DeleteCandidateCertificate(recordId);
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+
+        }
+
     }
 }

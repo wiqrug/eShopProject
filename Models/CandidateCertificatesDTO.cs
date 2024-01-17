@@ -8,6 +8,6 @@ namespace Project2.Models
         public int CandidateNumber { get; set; }
         public string Title { get; set; }
 
-
+        public int Mark {  get; set; }
     }
 }

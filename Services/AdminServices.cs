@@ -43,7 +43,7 @@ namespace Project2.Services
         {
             var emailCount = context.Users.Count(u => u.Email == email);
             return emailCount > 0;
-        }
+        }        
 
 
 

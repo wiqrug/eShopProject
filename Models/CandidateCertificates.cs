@@ -16,7 +16,7 @@ public class CandidateCertificates
     [Required]
     [ForeignKey("Certificate")]
     public Guid CertificateId { get; set; }
-    private int? _mark=0;
+    private int? _mark;
     public int? Mark
     {
         get

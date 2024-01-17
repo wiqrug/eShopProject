@@ -20,24 +20,31 @@ namespace Project2.Services
         public List<CandidateCertificates> GetAll()
         {
             var candidateCertificate = context.CandidateCertificates
-                .Include(x=>x.Candidate)
-                .Include(x=>x.Certificate)
+                .Include(x => x.Candidate)
+                .Include(x => x.Certificate)
                 .ToList();
             return candidateCertificate;
         }
 
+        public List<CandidateCertificates> GetCertificates()
+        {
+            var certs = context.CandidateCertificates.Where(x => x.Certificate != null).Include(q => q.Candidate);
+            var response = certs.ToList();
+            return response;
+        }
+
         public List<Certificate> GetObtainedCertificates(int candidateNumber)
         {
-            
+
             Candidate candidate = context.Candidates.FirstOrDefault(x => x.CandidateNumber == candidateNumber);
             if (candidate == null)
             {
-                
+
                 return new List<Certificate>();
             }
             List<Certificate> ObtainedCerts = new List<Certificate>();
 
-            
+
             var boughtCertificates = context.CandidateCertificates
                                             .Where(x => x.CandidateId == candidate.UserId)
                                             .Include(x => x.Certificate)
@@ -95,7 +102,7 @@ namespace Project2.Services
 
             if (candidate == null || certificate == null || already != null)
             {
-                return false; 
+                return false;
             }
 
             CandidateCertificates enrollment = new CandidateCertificates
@@ -146,7 +153,7 @@ namespace Project2.Services
                 return new List<Exam>();
             }
 
-            
+
             var certificates = context.CandidateCertificates
                                     .Where(x => x.CandidateId == candidate.UserId)
                                     .Include(x => x.Certificate)
@@ -170,15 +177,45 @@ namespace Project2.Services
 
             return CertificatesMarks;
         }
-        public List<CandidateCertificates> GetCandidatesByCert(Guid id)
+        public List<CandidateInfo> GetCandidatesByCert(string title)
         {
-            var cert = context.CandidateCertificates.Where(t => t.CertificateId == id).Include(q => q.Candidate);
-            var cands = cert.ToList();
-            return cands;
+            /*var cert = context.CandidateCertificates.Where(t => t.CertificateId == id).Include(q => q.Candidate);
+            var cands = cert.ToList();*/
+
+            var result = context.CandidateCertificates
+                .Where(cc => cc.Certificate.Title == title)  // Assuming Certificate is a navigation property in CandidateCertificates
+                .Include(cc => cc.Candidate)
+                .Select(cc => new CandidateInfo
+                {
+                    candidate = cc.Candidate,
+                    mark = cc.Mark,
+                    RecordId = cc.RecordId
+                })
+                .ToList();
+
+            return result;
         }
 
+        public void UpdateCandidateCertificate(Guid RecordId, CandidateCertificatesDTO candidateCertificatesDTO)
+        {
+            var candidateCertificate = context.CandidateCertificates.FirstOrDefault(x => x.RecordId == RecordId);
+            if (candidateCertificate == null)
+            {
+                return;
+            }
+            if (candidateCertificate.Mark != null)
+            {
+                candidateCertificate.Mark = candidateCertificatesDTO.Mark;
+            }
+            context.SaveChanges();
+        }
 
-
+        public void DeleteCandidateCertificate(Guid RecordId)
+        {
+            var candCert = context.CandidateCertificates.FirstOrDefault(x => x.RecordId == RecordId);
+            context.CandidateCertificates.Remove(candCert);
+            context.SaveChanges();
+        }
 
 
 

@@ -9,11 +9,17 @@
 
     public class CurrentUser
     {
-        public string email { get; set; }
+        public string firstName { get; set; }
         public string token { get; set; }
         public int candidatenumber { get; set; }
         
     }
 
+    public class CandidateInfo
+    {
+        public Candidate candidate { get; set; }
+        public int? mark { get; set; }
+        public Guid RecordId { get; set; }
+    }
 
 }
