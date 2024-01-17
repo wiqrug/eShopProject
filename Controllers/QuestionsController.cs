@@ -62,7 +62,7 @@ namespace Project2.Controllers
             {
                 if (id == null)
                 {
-                    return BadRequest("No question with this id");
+                    return NotFound("No question with this id");
                 }
 
                 if (question == null)
@@ -71,7 +71,7 @@ namespace Project2.Controllers
                 }
 
                 questionsServices.updateQuestion(id, question);
-                return Ok();
+                return Ok("Questions updated");
             }
             catch
             {
@@ -99,7 +99,7 @@ namespace Project2.Controllers
                 Guid ExamId = questionsServices.CheckExamId(Title);
                 questionsServices.createQuestion(question, ExamId);
 
-                return Ok();
+                return Ok("Question created");
             }
             catch
             {
@@ -119,7 +119,7 @@ namespace Project2.Controllers
                 }
                 questionsServices.deleteQuestion(id);
 
-                return Ok();
+                return Ok("Question deleted");
             }
             catch
             {
@@ -136,7 +136,7 @@ namespace Project2.Controllers
                 var response = questionsServices.getQuestionsByTitle(Title);
                 if(response == null)
                 {
-                    BadRequest("No questions matching the exam Title");
+                   return BadRequest("No questions matching the exam Title");
                 }
                 return Ok(response);
             }

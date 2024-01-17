@@ -46,7 +46,7 @@ namespace Project2.Controllers
                     return BadRequest("The Candidate already took this exam");
                 }
 
-                return Ok();
+                return Ok("CandidateExam created");
             }
             catch
             {
@@ -65,7 +65,7 @@ namespace Project2.Controllers
                 {
                     return BadRequest("Failed to delete, the candidateId does not exist");
                 }
-                return Ok();
+                return Ok("CandidateExam deleted");
             }
             catch
             {
@@ -88,7 +88,7 @@ namespace Project2.Controllers
 
                 candidateExamServices.UpdateCandidateExam(candidateExamId, candidateExamDTO);
                 
-                return Ok();
+                return Ok("Update was successful");
             }
             catch (Exception ex)
             {
