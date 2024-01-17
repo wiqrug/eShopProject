@@ -76,7 +76,7 @@ namespace Project2.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{Title}")]
-        public IActionResult Update(string Title, [FromBody] ExamDto examDto)
+        public IActionResult Update(string Title, [FromBody] ExamUpdateDto examDto)
         {
             try
             {
