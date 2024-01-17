@@ -21,7 +21,7 @@ namespace Project2.Services
         }
         public bool createQuestion(QuestionsDto questionDto, Guid ExamId)
         {
-            if (!char.IsBetween((char)questionDto.CorrectAnswer, 'a', 'd'))
+            if (!string.IsNullOrWhiteSpace(questionDto.CorrectAnswer))
             {
                 return false;
             }
