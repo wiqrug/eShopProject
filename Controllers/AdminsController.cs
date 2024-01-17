@@ -27,7 +27,7 @@ namespace Project2.Controllers
             {
                 return Ok(adminsServices.GetAdmins());
             }
-            catch (Exception ex)
+            catch 
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
@@ -78,7 +78,7 @@ namespace Project2.Controllers
 
                 if (!isDeleted)
                 {
-                    return NotFound();
+                    return NotFound("There is no Candidate with this candidateNumber");
                 }
 
                 return Ok();
@@ -139,9 +139,48 @@ namespace Project2.Controllers
             {
                 if (candidateNumber == null)
                 {
-                    return BadRequest("Candidate number doesnt exist");
+                    return NotFound("Candidate number doesnt exist");
                 }
                 candidateServices.UpdateCandidate(candidateNumber, candidateDTO);
+
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [Authorize(Roles ="Admin")]
+        [HttpDelete("deleteAdmin/{userId}")]
+        public IActionResult DeleteAdmin(Guid userId)
+        {
+            try
+            {
+                bool isDeleted = adminsServices.DeleteAdmin(userId);
+                if (isDeleted)
+                {
+                    return NotFound("There is no Admin with this userId");
+                }
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("updateAdmin/{userId}")]
+        public IActionResult UpdateAdmin(Guid userId, AdminDTO adminDTO)
+        {
+            try
+            {
+                if (userId == null)
+                {
+                    return BadRequest("A userId needs to be provided");
+                }
+               adminsServices.UpdateAdmin(userId, adminDTO);
 
                 return Ok();
             }
