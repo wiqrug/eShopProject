@@ -204,5 +204,15 @@ namespace Project2.Controllers
 
         }
 
+        //Search by number+title
+        [Authorize(Roles = "Admin")]
+        [HttpGet("{candidateNumber}/{title}")]
+        public IActionResult SearchWithNumberAndTitle(int candidateNumber, string title)
+        {
+            
+            var response = candidateCertificatesServices.SearchWithNumberAndTitle(candidateNumber, title);
+            return Ok(response);
+        }
+
     }
 }

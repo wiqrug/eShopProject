@@ -14,7 +14,7 @@ namespace Project2.Models
         public string firstName { get; set; }
         public string token { get; set; }
         public int candidatenumber { get; set; }
-        
+
     }
 
     public class CandidateInfo
@@ -44,5 +44,11 @@ namespace Project2.Models
         [RegularExpression("(a|b|c|d)", ErrorMessage = "Value must be a,b,c or d")]
         public string? CorrectAnswer { get; set; }
         public string? ExamTitle { get; set; }
+    }
+
+    public class CandAndCert
+    {
+        public int CandidateNumber { get; set; }
+        public string CertificateTitle { get; set; }
     }
 }

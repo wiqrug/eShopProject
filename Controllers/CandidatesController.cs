@@ -25,7 +25,9 @@ namespace Project2.Controllers
             {
                 if (candidateServices.EmailExists(candidateDTO.Email))
                 {
-                    return BadRequest("This email address is already in use");
+                    ModelState.AddModelError("Error", "This email address is already in use");
+                    Console.WriteLine(ModelState);
+                    return BadRequest(ModelState);
                 }
                 candidateServices.CreateCandidate(candidateDTO);
                 return Ok("Candidate created");

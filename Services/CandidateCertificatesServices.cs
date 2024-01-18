@@ -179,8 +179,6 @@ namespace Project2.Services
         }
         public List<CandidateInfo> GetCandidatesByCert(string title)
         {
-            /*var cert = context.CandidateCertificates.Where(t => t.CertificateId == id).Include(q => q.Candidate);
-            var cands = cert.ToList();*/
 
             var result = context.CandidateCertificates
                 .Where(cc => cc.Certificate.Title == title)  // Assuming Certificate is a navigation property in CandidateCertificates
@@ -194,6 +192,22 @@ namespace Project2.Services
                 .ToList();
 
             return result;
+        }
+
+        public CandidateCertificates SearchWithNumberAndTitle(int candidateNumber, string title)
+        {
+            var cert = context.Certificates
+                .Where(c => c.Title == title)
+                .Select(x => x.CertificateId)
+                .FirstOrDefault();
+            var cand = context.Candidates
+                .Where(c => c.CandidateNumber == candidateNumber)
+                .Select(x => x.UserId)
+                .FirstOrDefault();
+            var candcert = context.CandidateCertificates
+                .FirstOrDefault(a => a.CandidateId == cand && a.CertificateId == cert);
+
+            return candcert;
         }
 
         public void UpdateCandidateCertificate(Guid RecordId, CandidateCertificatesDTO candidateCertificatesDTO)
